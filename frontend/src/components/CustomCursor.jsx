@@ -121,7 +121,7 @@ export default function CustomCursor() {
                         top: 0, left: 0,
                         width: 6, height: 6,
                         borderRadius: '50%',
-                        background: '#00ff88',
+                        background: 'rgba(16, 185, 129, 0.65)',
                         pointerEvents: 'none',
                         zIndex: 9997,
                         willChange: 'transform',

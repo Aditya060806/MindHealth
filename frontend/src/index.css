@@ -633,26 +633,27 @@ select.form-input option {
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.12);
-  animation: particle-float linear infinite;
+  pointer-events: none;
+  animation: particle-float ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
 @keyframes particle-float {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(105vh) translateX(0) scale(0.85);
     opacity: 0;
   }
-
-  10% {
-    opacity: 1;
+  15% {
+    opacity: var(--p-opacity, 0.35);
   }
-
-  90% {
-    opacity: 1;
+  50% {
+    transform: translateY(50vh) translateX(var(--drift-x, 20px)) scale(1.1);
   }
-
+  85% {
+    opacity: var(--p-opacity, 0.35);
+  }
   100% {
-    transform: translateY(-100px) rotate(720deg);
+    transform: translateY(-40px) translateX(calc(var(--drift-x, 20px) * -0.7)) scale(0.9);
     opacity: 0;
   }
 }
@@ -669,3 +670,133 @@ select.form-input option {
     transform: scaleY(1);
   }
 }
+
+/* ── Premium Micro-Animations ────────────────────────────────────────── */
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-bg-anim {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes subtle-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+.breathe-anim {
+  animation: subtle-breathe 4s ease-in-out infinite;
+}
+
+@keyframes border-glow-pulse {
+  0%, 100% {
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 20px 0 rgba(16, 185, 129, 0.08);
+  }
+}
+
+.border-glow-anim {
+  animation: border-glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes step-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(5, 150, 105, 0); }
+}
+
+.step-active-pulse {
+  animation: step-pulse 2s ease-in-out infinite;
+}
+
+/* ── Enhanced Glass Card ─────────────────────────────────────────────── */
+.glass-card-premium {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  box-shadow:
+    0 4px 24px -4px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-card-premium:hover {
+  box-shadow:
+    0 12px 40px -8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(16, 185, 129, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ── Card Hover Lift ─────────────────────────────────────────────────── */
+.card-hover-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1),
+              0 4px 16px -4px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Gradient Border ─────────────────────────────────────────────────── */
+.gradient-border {
+  position: relative;
+  border-radius: 16px;
+  background-clip: padding-box;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.4), rgba(13,148,136,0.2), rgba(16,185,129,0.4));
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* ── Enhanced Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #10b981, #059669);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #059669, #047857);
+  background-clip: content-box;
+}
+
+/* ── Smooth Focus Ring ───────────────────────────────────────────────── */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2),
+              0 0 0 1px rgba(16, 185, 129, 0.4);
+}

@@ -1,37 +1,24 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom'
+import { Brain } from 'lucide-react'
 
 /* ─────────────────────────────────────────────────────────────────────────
-   CinematicTransition — full-screen dark panel wipe between routes.
-
-   Corrected sequence (fixes initial-load stuck preloader):
-     ENTER (new page mounts):
-       panel: scaleY 1 → 0   (starts covering screen, slides UP to reveal)
-       content: opacity 0 → 1 after 1.4s delay (fades in once panel is gone)
-     EXIT (old page unmounts):
-       content: opacity → 0 immediately
-       panel: scaleY 0 → 1   (slides UP from bottom to cover old page)
-
-   This means ANY initial page load also auto-reveals after ~1.5s — no stuck
-   preloader because "animate" = reveal, not "cover".
+   CinematicTransition — full-screen light wipe with emerald accent between routes.
 ───────────────────────────────────────────────────────────────────────── */
 
 const ease = [0.76, 0, 0.24, 1]
 
 const panelVariants = {
-    // When a new page mounts: panel is FULLY covering the screen to start
     initial: {
         scaleY: 1,
         transformOrigin: 'top',
     },
-    // Animate: panel slides UP off screen, revealing the page beneath
     animate: {
         scaleY: 0,
         transformOrigin: 'top',
         transition: { duration: 0.55, ease, delay: 0.1 },
     },
-    // Exit: panel slides UP from bottom, covering screen before old page leaves
     exit: {
         scaleY: 1,
         transformOrigin: 'bottom',
@@ -40,14 +27,11 @@ const panelVariants = {
 }
 
 const contentVariants = {
-    // Content hidden while panel is covering
     initial: { opacity: 0 },
-    // Content fades in after panel has retracted (~0.65s total)
     animate: {
         opacity: 1,
         transition: { duration: 0.45, delay: 0.65, ease: 'easeOut' },
     },
-    // Content fades out immediately when leaving
     exit: {
         opacity: 0,
         transition: { duration: 0.18, ease: 'easeIn' },
@@ -71,7 +55,7 @@ export default function CinematicTransition({ children }) {
                 {children}
             </motion.div>
 
-            {/* Dark wipe panel — on top, pointer-events none so it never blocks clicks */}
+            {/* Wipe panel — on top, pointer-events none so it never blocks clicks */}
             <motion.div
                 key={location.pathname + '-panel'}
                 variants={panelVariants}
@@ -96,20 +80,38 @@ export default function CinematicTransition({ children }) {
                     boxShadow: '0 0 20px 2px rgba(16,185,129,0.4)',
                 }} />
 
-                {/* Brand mark centred on the panel */}
+                {/* Brand mark badge centred on the panel */}
                 <div style={{
                     position: 'absolute',
                     top: '50%', left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    color: '#059669',
-                    fontSize: 12,
-                    fontWeight: 800,
-                    letterSpacing: '0.35em',
-                    textTransform: 'uppercase',
-                    fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 12,
                     userSelect: 'none',
                 }}>
-                    MindHealth
+                    <div style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: 10,
+                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+                    }}>
+                        <Brain size={18} color="#ffffff" />
+                    </div>
+                    <span style={{
+                        color: '#0f172a',
+                        fontSize: 14,
+                        fontWeight: 800,
+                        letterSpacing: '0.25em',
+                        textTransform: 'uppercase',
+                        fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                    }}>
+                        Mind<span style={{ color: '#059669' }}>Health</span>
+                    </span>
                 </div>
             </motion.div>
         </>

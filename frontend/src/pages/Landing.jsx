@@ -48,7 +48,7 @@ const features = [
 ]
 
 const steps = [
-    { n: '01', title: 'Create Account', desc: 'Sign up for free in under 30 seconds.', icon: Zap },
+    { n: '01', title: 'Start Assessment', desc: 'Begin your journey — no account needed.', icon: Zap },
     { n: '02', title: 'Behaviour Test', desc: 'Complete a short lifestyle questionnaire.', icon: Brain },
     { n: '03', title: 'Chat Session', desc: 'Talk freely with your AI counsellor.', icon: MessageCircle },
     { n: '04', title: 'Face & Voice Scan', desc: 'Brief multimodal emotion analysis.', icon: Camera },
@@ -480,29 +480,13 @@ export default function Landing() {
                         {/* Actions */}
                         <div className="flex items-center gap-3">
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => nav('/login')}
-                                style={{
-                                    fontSize: 12, fontWeight: 600, letterSpacing: '0.08em',
-                                    textTransform: 'uppercase',
-                                    color: 'rgba(255,255,255,0.6)',
-                                    background: 'none', border: 'none',
-                                    padding: '8px 16px',
-                                    transition: 'color 0.25s',
-                                }}
-                                onHoverStart={e => { }}
-                            >
-                                Sign In
-                            </motion.button>
-                            <motion.button
                                 whileHover={{ scale: 1.03, boxShadow: '0 0 28px rgba(0,255,136,0.45)' }}
                                 whileTap={{ scale: 0.97 }}
-                                onClick={() => nav('/register')}
+                                onClick={() => nav('/behaviour')}
                                 className="at-btn-primary"
                                 style={{ padding: '9px 22px', fontSize: 11, borderRadius: 6 }}
                             >
-                                Get Started
+                                Start Assessment
                             </motion.button>
                         </div>
                     </div>
@@ -663,7 +647,7 @@ export default function Landing() {
                                 <motion.button
                                     whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(0,255,136,0.45), 0 8px 32px rgba(0,0,0,0.3)' }}
                                     whileTap={{ scale: 0.97 }}
-                                    onClick={() => nav('/register')}
+                                    onClick={() => nav('/behaviour')}
                                     className="at-btn-primary group flex items-center gap-2.5"
                                     style={{ padding: '14px 32px', fontSize: 12 }}
                                 >
@@ -674,11 +658,11 @@ export default function Landing() {
                                 <motion.button
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
-                                    onClick={() => nav('/login')}
+                                    onClick={() => nav('/dashboard')}
                                     className="at-btn-secondary group flex items-center gap-2"
                                     style={{ padding: '14px 28px', fontSize: 12 }}
                                 >
-                                    Sign In
+                                    View Dashboard
                                     <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-200" />
                                 </motion.button>
                             </motion.div>
@@ -1244,21 +1228,21 @@ export default function Landing() {
                         <motion.button
                             whileHover={{ scale: 1.04, boxShadow: '0 0 60px rgba(0,255,136,0.55), 0 16px 50px rgba(0,0,0,0.5)' }}
                             whileTap={{ scale: 0.97 }}
-                            onClick={() => nav('/register')}
+                            onClick={() => nav('/behaviour')}
                             className="at-btn-primary group flex items-center gap-3"
                             style={{ fontSize: 12, padding: '18px 48px' }}
                         >
-                            Get Started Free
+                            Start Free Assessment
                             <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
                         </motion.button>
                         <motion.button
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            onClick={() => nav('/login')}
+                            onClick={() => nav('/dashboard')}
                             className="at-btn-secondary group flex items-center gap-2"
                             style={{ fontSize: 12, padding: '18px 36px' }}
                         >
-                            Sign In to Dashboard
+                            View Dashboard
                         </motion.button>
                     </div>
 
@@ -1289,27 +1273,13 @@ export default function Landing() {
 
                         <div className="flex items-center gap-3">
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => nav('/login')}
-                                style={{
-                                    fontSize: 12, fontWeight: 600, letterSpacing: '0.08em',
-                                    textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)',
-                                    background: 'none', border: 'none', padding: '8px 16px', transition: 'color 0.25s',
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.color = '#00ff88'}
-                                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
-                            >
-                                Sign In
-                            </motion.button>
-                            <motion.button
                                 whileHover={{ scale: 1.03, boxShadow: '0 0 28px rgba(0,255,136,0.45)' }}
                                 whileTap={{ scale: 0.97 }}
-                                onClick={() => nav('/register')}
+                                onClick={() => nav('/behaviour')}
                                 className="at-btn-primary"
                                 style={{ padding: '9px 22px', fontSize: 11, borderRadius: 6 }}
                             >
-                                Register
+                                Start Assessment
                             </motion.button>
                         </div>
                     </div>

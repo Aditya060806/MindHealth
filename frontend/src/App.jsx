@@ -2,12 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
-import { GoogleOAuthProvider } from '@react-oauth/google'
-import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { AuthProvider } from './contexts/AuthContext'
 import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import ForgotPassword from './pages/ForgotPassword'
 import BehaviourTest from './pages/BehaviourTest'
 import ChatCounselling from './pages/ChatCounselling'
 import FaceEmotion from './pages/FaceEmotion'
@@ -18,11 +14,6 @@ import Particles from './components/Particles'
 import CustomCursor from './components/CustomCursor'
 import CinematicTransition from './components/CinematicTransition'
 
-function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth()
-  return isAuthenticated ? children : <Navigate to="/login" replace />
-}
-
 /* Separate component so useLocation hook works inside BrowserRouter */
 function AppRoutes() {
   const location = useLocation()
@@ -30,7 +21,7 @@ function AppRoutes() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Particle backdrop only on inner pages (Landing has its own WebGL bg) */}
+      {/* Particle backdrop only on inner pages (Landing has its own background) */}
       {!isLanding && <Particles />}
 
       <div className="relative z-10">
@@ -39,33 +30,26 @@ function AppRoutes() {
             <Route path="/" element={
               <CinematicTransition><Landing /></CinematicTransition>
             } />
-            <Route path="/login" element={
-              <CinematicTransition><Login /></CinematicTransition>
-            } />
-            <Route path="/register" element={
-              <CinematicTransition><Register /></CinematicTransition>
-            } />
-            <Route path="/forgot-password" element={
-              <CinematicTransition><ForgotPassword /></CinematicTransition>
-            } />
             <Route path="/behaviour" element={
-              <ProtectedRoute><CinematicTransition><BehaviourTest /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><BehaviourTest /></CinematicTransition>
             } />
             <Route path="/chat" element={
-              <ProtectedRoute><CinematicTransition><ChatCounselling /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><ChatCounselling /></CinematicTransition>
             } />
             <Route path="/face" element={
-              <ProtectedRoute><CinematicTransition><FaceEmotion /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><FaceEmotion /></CinematicTransition>
             } />
             <Route path="/voice" element={
-              <ProtectedRoute><CinematicTransition><VoiceAnalysis /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><VoiceAnalysis /></CinematicTransition>
             } />
             <Route path="/severity" element={
-              <ProtectedRoute><CinematicTransition><FinalSeverity /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><FinalSeverity /></CinematicTransition>
             } />
             <Route path="/dashboard" element={
-              <ProtectedRoute><CinematicTransition><Dashboard /></CinematicTransition></ProtectedRoute>
+              <CinematicTransition><Dashboard /></CinematicTransition>
             } />
+            {/* Catch-all: redirect stale auth routes to landing */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AnimatePresence>
       </div>
@@ -76,31 +60,29 @@ function AppRoutes() {
 function App() {
   return (
     <AuthProvider>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-        <BrowserRouter>
-          {/* Custom cursor — rendered above everything */}
-          <CustomCursor />
+      <BrowserRouter>
+        {/* Custom cursor — rendered above everything */}
+        <CustomCursor />
 
-          <AppRoutes />
+        <AppRoutes />
 
-          <Toaster position="top-right"
-            containerStyle={{ top: 40, right: 40 }}
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'rgba(255, 255, 255, 0.96)',
-                color: '#0f172a',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                boxShadow: '0 12px 36px -4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0,0,0,0.04)',
-                backdropFilter: 'blur(16px)',
-                padding: '16px',
-                borderRadius: '14px',
-                fontSize: '14px',
-                fontWeight: '600'
-              }
-            }} />
-        </BrowserRouter>
-      </GoogleOAuthProvider>
+        <Toaster position="top-right"
+          containerStyle={{ top: 40, right: 40 }}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: 'rgba(255, 255, 255, 0.96)',
+              color: '#0f172a',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              boxShadow: '0 12px 36px -4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0,0,0,0.04)',
+              backdropFilter: 'blur(16px)',
+              padding: '16px',
+              borderRadius: '14px',
+              fontSize: '14px',
+              fontWeight: '600'
+            }
+          }} />
+      </BrowserRouter>
     </AuthProvider>
   )
 }
