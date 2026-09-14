@@ -88,14 +88,15 @@ function App() {
             toastOptions={{
               duration: 4000,
               style: {
-                background: 'rgba(15,23,42,0.95)',
-                color: '#e2e8f0',
-                border: '1px solid rgba(0,245,255,0.2)',
-                backdropFilter: 'blur(12px)',
+                background: 'rgba(255, 255, 255, 0.96)',
+                color: '#0f172a',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                boxShadow: '0 12px 36px -4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0,0,0,0.04)',
+                backdropFilter: 'blur(16px)',
                 padding: '16px',
-                borderRadius: '12px',
+                borderRadius: '14px',
                 fontSize: '14px',
-                fontWeight: '500'
+                fontWeight: '600'
               }
             }} />
         </BrowserRouter>

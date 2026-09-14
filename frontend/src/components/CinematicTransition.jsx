@@ -82,27 +82,18 @@ export default function CinematicTransition({ children }) {
                     position: 'fixed',
                     inset: 0,
                     zIndex: 9000,
-                    pointerEvents: 'none',  // NEVER blocks interaction even mid-animation
-                    background: '#04100c',
-                    /* Scanline noise */
-                    backgroundImage: `
-                        repeating-linear-gradient(
-                            0deg,
-                            transparent,
-                            transparent 2px,
-                            rgba(0,255,136,0.015) 2px,
-                            rgba(0,255,136,0.015) 4px
-                        )
-                    `,
+                    pointerEvents: 'none',
+                    background: '#f8fafc',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
                 }}
             >
-                {/* Green leading-edge glow at the bottom of the panel */}
+                {/* Emerald leading-edge glow at the bottom of the panel */}
                 <div style={{
                     position: 'absolute',
                     bottom: 0, left: 0, right: 0,
-                    height: 2,
-                    background: 'linear-gradient(90deg, transparent, #00ff88, transparent)',
-                    boxShadow: '0 0 20px 4px rgba(0,255,136,0.5)',
+                    height: 3,
+                    background: 'linear-gradient(90deg, transparent, #10b981, transparent)',
+                    boxShadow: '0 0 20px 2px rgba(16,185,129,0.4)',
                 }} />
 
                 {/* Brand mark centred on the panel */}
@@ -110,12 +101,12 @@ export default function CinematicTransition({ children }) {
                     position: 'absolute',
                     top: '50%', left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    color: 'rgba(0,255,136,0.28)',
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: '0.32em',
+                    color: '#059669',
+                    fontSize: 12,
+                    fontWeight: 800,
+                    letterSpacing: '0.35em',
                     textTransform: 'uppercase',
-                    fontFamily: 'Inter, system-ui, sans-serif',
+                    fontFamily: "'Space Grotesk', system-ui, sans-serif",
                     userSelect: 'none',
                 }}>
                     MindHealth

@@ -260,17 +260,15 @@ export default function ChatCounselling() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="w-full max-w-[950px] mx-auto mt-6 bg-[#0a0f12]/80 backdrop-blur-2xl p-8 space-y-6 relative overflow-hidden group shadow-[0_0_50px_rgba(0,0,0,0.6)] border border-white/[0.04] rounded-[2rem]"
+            className="w-full max-w-[950px] mx-auto mt-6 bg-white/95 backdrop-blur-xl p-8 space-y-6 relative overflow-hidden group shadow-[0_12px_40px_-8px_rgba(15,23,42,0.08)] border border-slate-200/90 rounded-3xl"
         >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-emerald-500/20 transition-colors duration-700 pointer-events-none" />
-
             <div className="flex items-center gap-4 mb-2 relative z-10">
-                <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                    <Zap size={24} className="text-emerald-400" />
+                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-600">
+                    <Zap size={24} />
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-white tracking-tight font-display">AI Assessment Summary</h2>
-                    <p className="text-[10px] text-emerald-400/80 font-black uppercase tracking-[0.2em] mt-1">Based on your conversation</p>
+                    <h2 className="text-xl font-bold text-slate-900 tracking-tight font-display">AI Assessment Summary</h2>
+                    <p className="text-xs text-emerald-700 font-bold uppercase tracking-wider mt-1">Based on clinical chat dialogue</p>
                 </div>
             </div>
 
@@ -280,7 +278,7 @@ export default function ChatCounselling() {
                     { label: 'Duration', value: data.duration },
                     { label: 'Severity', value: data.severity },
                     { label: 'Sentiment', value: data.sentiment },
-                    { label: 'Risk Level', value: data.risk_level || 'Low', color: data.risk_level === 'High' ? 'text-red-400' : data.risk_level === 'Medium' ? 'text-yellow-400' : 'text-emerald-400' },
+                    { label: 'Risk Level', value: data.risk_level || 'Low', color: data.risk_level === 'High' ? 'text-red-600' : data.risk_level === 'Medium' ? 'text-amber-600' : 'text-emerald-600' },
                     { label: 'Triggers', value: data.triggers?.join(', ') || 'None' },
                     { label: 'Impact on Life', value: data.impact_on_daily_life ? 'Yes' : 'No' },
                     { label: 'Emotions', value: data.emotions?.join(', ') || 'Not specified' },
@@ -288,18 +286,18 @@ export default function ChatCounselling() {
                     { label: 'Coping Methods', value: data.coping_strategy || 'None identified' },
                     { label: 'Support Available', value: data.support_available ? 'Yes' : 'No' }
                 ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-black/20 border border-white/5 rounded-2xl hover:bg-white/5 transition-colors group/item">
-                        <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{item.label}</span>
-                        <span className={`text-sm font-bold ${item.color || 'text-white'} group-hover/item:text-emerald-400 transition-colors`}>
+                    <div key={i} className="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl hover:bg-slate-100 transition-colors group/item">
+                        <span className="text-slate-500 text-[11px] font-bold uppercase tracking-wider">{item.label}</span>
+                        <span className={`text-sm font-bold ${item.color || 'text-slate-900'} group-hover/item:text-emerald-700 transition-colors`}>
                             {item.value || 'N/A'}
                         </span>
                     </div>
                 ))}
 
                 {data.additional_notes && data.additional_notes.trim() !== '' && (
-                    <div className="col-span-1 md:col-span-2 flex flex-col items-start p-4 bg-black/20 border border-white/5 rounded-2xl hover:bg-white/5 transition-colors group/item mt-2">
-                        <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">Additional Notes</span>
-                        <span className="text-sm font-medium text-slate-200 group-hover/item:text-emerald-400 transition-colors leading-relaxed">
+                    <div className="col-span-1 md:col-span-2 flex flex-col items-start p-4 bg-slate-50 border border-slate-200 rounded-2xl mt-2">
+                        <span className="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-1.5">Additional Notes</span>
+                        <span className="text-sm font-medium text-slate-700 leading-relaxed">
                             {data.additional_notes}
                         </span>
                     </div>
@@ -307,14 +305,14 @@ export default function ChatCounselling() {
             </div>
 
             <div className="pt-4 relative z-10">
-                <p className="text-xs text-slate-500 italic mb-6 text-center opacity-60">
-                    "This summary is an AI-generated assessment. Please proceed to the next step for a multi-modal analysis."
+                <p className="text-xs text-slate-500 italic mb-6 text-center">
+                    "This summary is an AI-generated assessment. Proceed to the next step for multi-modal validation."
                 </p>
                 <button
                     onClick={() => nav('/face')}
-                    className="w-full py-5 text-sm font-bold uppercase tracking-widest bg-emerald-500 text-[#000000] rounded-xl shadow-[0_0_16px_rgba(0,255,136,0.35)] flex items-center justify-center gap-4 group hover:shadow-[0_0_24px_rgba(0,255,136,0.5)] transition-all"
+                    className="w-full py-4 text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-[0_4px_14px_rgba(5,150,105,0.3)] flex items-center justify-center gap-3 transition-all"
                 >
-                    <span className="relative z-10 flex items-center gap-3">
+                    <span className="relative z-10 flex items-center gap-2.5">
                         Proceed to Next Step → Face Analysis <CheckCircle size={18} fill="currentColor" />
                     </span>
                 </button>
@@ -330,8 +328,7 @@ export default function ChatCounselling() {
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
-                        style={{ background: '#04100c' }}
+                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-slate-50"
                     >
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0 }}
@@ -339,21 +336,20 @@ export default function ChatCounselling() {
                             transition={{ duration: 0.5 }}
                             className="flex flex-col items-center gap-6"
                         >
-                            <div className="flex items-center justify-center gap-4 mb-2">
-                                <motion.div animate={{ boxShadow: ['0 0 24px rgba(0,255,136,0.25)', '0 0 64px rgba(0,255,136,0.65)', '0 0 24px rgba(0,255,136,0.25)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, rgba(0,255,136,0.22) 0%, rgba(0,204,106,0.07) 100%)', border: '1.5px solid rgba(0,255,136,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <Brain size={26} style={{ color: '#00ff88' }} />
+                            <div className="flex items-center justify-center gap-3.5 mb-2">
+                                <motion.div animate={{ boxShadow: ['0 0 16px rgba(16,185,129,0.2)', '0 0 32px rgba(16,185,129,0.35)', '0 0 16px rgba(16,185,129,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(20,184,166,0.08) 100%)', border: '1.5px solid rgba(16,185,129,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <Brain size={26} className="text-emerald-600" />
                                 </motion.div>
-                                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 800, letterSpacing: '0.09em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #ffffff 10%, #d1fae5 55%, #6ee7b7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
+                                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '30px', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #0f172a 20%, #065f46 70%, #059669 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
                                     MINDHEALTH
                                 </span>
                             </div>
-                            <div className="w-48 h-1 rounded-full overflow-hidden mt-2" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                            <div className="w-48 h-1.5 rounded-full overflow-hidden mt-2 bg-slate-200">
                                 <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: "100%" }}
                                     transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full"
-                                    style={{ background: '#00ff88' }}
+                                    className="h-full bg-emerald-600"
                                 />
                             </div>
                         </motion.div>
@@ -361,15 +357,17 @@ export default function ChatCounselling() {
                 )}
             </AnimatePresence>
 
-            {/* The root wrapper using exact inline styles from Landing */}
-            <div className="relative flex flex-col items-center justify-center py-16 px-4 overflow-hidden" style={{ minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", background: '#04100c' }}>
-                {/* The Root Background */}
+            <div className="relative flex flex-col items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 min-h-screen font-sans">
+                {/* Clean Light Background Gradients */}
                 <div className="absolute inset-0 z-0 pointer-events-none print:hidden">
                     <div
                         className="absolute inset-0 pointer-events-none"
                         style={{
-                            background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(8,8,8,0.9) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 0% 50%, rgba(8,8,8,0.5) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 100% 20%, rgba(0,255,136,0.04) 0%, transparent 60%)',
-                            zIndex: 0
+                            background: `
+                            radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 70%),
+                            radial-gradient(ellipse 60% 50% at 100% 50%, rgba(20,184,166,0.06) 0%, transparent 60%),
+                            radial-gradient(ellipse 50% 50% at 0% 100%, rgba(226,232,240,0.6) 0%, transparent 70%)
+                            `
                         }}
                         aria-hidden="true"
                     />
@@ -380,25 +378,22 @@ export default function ChatCounselling() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.5 }}
-                    className="w-full max-w-5xl mx-auto z-10 relative flex flex-col items-center space-y-10"
+                    className="w-full max-w-5xl mx-auto z-10 relative flex flex-col items-center space-y-8"
                 >
                     <div className="flex flex-col gap-6 w-full">
                         <button
                             onClick={() => nav('/behaviour')}
-                            className="flex items-center gap-2 text-slate-400 transition-colors text-xs font-bold uppercase tracking-widest w-fit group"
-                            style={{ transition: 'color 0.3s ease' }}
-                            onMouseEnter={e => e.currentTarget.style.color = '#00ff88'}
-                            onMouseLeave={e => e.currentTarget.style.color = 'rgb(148, 163, 184)'}
+                            className="flex items-center gap-2 text-slate-600 hover:text-emerald-700 transition-colors text-xs font-bold uppercase tracking-wider w-fit group"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Step 1 – Behaviour Analysis
                         </button>
-                        {/* Premium Branded Header - SCALED UP */}
-                        <div className="flex items-center justify-center gap-6 mb-6 mt-4 print:hidden">
-                            <motion.div animate={{ boxShadow: ['0 0 30px rgba(0,255,136,0.3)', '0 0 80px rgba(0,255,136,0.7)', '0 0 30px rgba(0,255,136,0.3)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 72, height: 72, borderRadius: 20, background: 'linear-gradient(135deg, rgba(0,255,136,0.22) 0%, rgba(0,204,106,0.07) 100%)', border: '2px solid rgba(0,255,136,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                <Brain size={38} style={{ color: '#00ff88' }} />
+                        {/* Premium Branded Header */}
+                        <div className="flex items-center justify-center gap-4 mb-4 mt-2 print:hidden">
+                            <motion.div animate={{ boxShadow: ['0 0 16px rgba(16,185,129,0.2)', '0 0 32px rgba(16,185,129,0.35)', '0 0 16px rgba(16,185,129,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 60, height: 60, borderRadius: 16, background: 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(20,184,166,0.08) 100%)', border: '1.5px solid rgba(16,185,129,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <Brain size={32} className="text-emerald-600" />
                             </motion.div>
-                            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '52px', fontWeight: 800, letterSpacing: '0.09em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #ffffff 10%, #d1fae5 55%, #6ee7b7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
+                            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '44px', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #0f172a 20%, #065f46 70%, #059669 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
                                 MINDHEALTH
                             </span>
                         </div>
@@ -407,46 +402,30 @@ export default function ChatCounselling() {
                         </div>
                     </div>
 
-                    <div className="text-center space-y-3">
-                        <h1
-                            className="text-4xl md:text-5xl tracking-tight mb-3"
-                            style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
-                                fontWeight: 900,
-                                lineHeight: 0.95,
-                                letterSpacing: '-0.03em',
-                                background: 'linear-gradient(120deg, #00ff88 0%, #00cc6a 40%, #ffffff 70%, #00ff88 100%)',
-                                backgroundSize: '250% auto',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text'
-                            }}
-                        >
+                    <div className="text-center space-y-2">
+                        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-display">
                             AI Counselling Chat
                         </h1>
-                        <p className="text-lg font-medium opacity-80" style={{ color: 'rgba(148,163,184,0.72)' }}>Step 2/4 — Share your thoughts in a safe and private space</p>
-                        <div className="h-px w-24 mx-auto mt-4" style={{ background: 'rgba(255,255,255,0.05)' }} />
+                        <p className="text-base font-medium text-slate-600">Step 2/4 — Share your thoughts in a secure, confidential environment</p>
+                        <div className="h-px w-24 mx-auto mt-3 bg-slate-200" />
                     </div>
 
-                    {/* The Main Glassmorphic Chat Card - EXACT Feature card inline styles */}
-                    <div className="w-full max-w-4xl mx-auto h-[80vh] flex flex-col overflow-hidden"
-                        style={{ position: 'relative', zIndex: 10, background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderRadius: '24px', boxShadow: '0 40px 80px rgba(0,0,0,0.5)' }}>
+                    {/* The Main Glassmorphic Chat Card */}
+                    <div className="w-full max-w-4xl mx-auto h-[78vh] flex flex-col overflow-hidden bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.08),0_4px_16px_rgba(15,23,42,0.03)]"
+                        style={{ position: 'relative', zIndex: 10 }}>
 
                         {/* The Chat Header */}
-                        <div className="p-6 flex items-center justify-between z-10 relative" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                        <div className="p-5 flex items-center justify-between z-10 relative border-b border-slate-200">
                             <div className="flex flex-col">
-                                <h3 className="leading-tight flex items-center gap-2 text-lg" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: '#f0f0f0' }}>
+                                <h3 className="leading-tight flex items-center gap-2 text-base font-bold text-slate-900 font-display">
                                     AI Counsellor
-                                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 10px rgba(0,255,136,0.8)' }} className="animate-pulse" />
+                                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#059669' }} className="animate-pulse" />
                                 </h3>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={resetChat}
-                                    className="p-2.5 rounded-xl transition-all"
-                                    style={{ color: 'rgba(255,255,255,0.5)' }}
-                                    onMouseEnter={e => { e.currentTarget.style.color = '#ff4d4d'; e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)' }}
-                                    onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.backgroundColor = 'transparent' }}
+                                    className="p-2 rounded-xl transition-all text-slate-400 hover:text-red-500 hover:bg-red-50"
                                     title="Reset Chat"
                                 >
                                     <motion.div whileHover={{ rotate: 15 }} whileTap={{ scale: 0.9 }}>
@@ -458,7 +437,7 @@ export default function ChatCounselling() {
 
                         {/* Chat Area */}
                         <div
-                            className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar bg-transparent relative"
+                            className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 custom-scrollbar bg-slate-50/50 relative"
                             ref={chatContainerRef}
                             onScroll={handleScroll}
                         >
@@ -469,18 +448,17 @@ export default function ChatCounselling() {
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
-                                        className="p-5 rounded-2xl border border-dashed"
-                                        style={{ background: 'rgba(239,68,68,0.05)', borderColor: 'rgba(239,68,68,0.2)', boxShadow: '0 4px 15px rgba(239,68,68,0.1)' }}
+                                        className="p-5 rounded-2xl border border-dashed border-red-300 bg-red-50/80 shadow-sm"
                                     >
                                         <div className="flex items-start gap-4">
-                                            <div className="p-2 rounded-lg" style={{ background: 'rgba(239,68,68,0.1)' }}>
-                                                <AlertTriangle size={20} style={{ color: '#ef4444' }} />
+                                            <div className="p-2 rounded-lg bg-red-100 text-red-600">
+                                                <AlertTriangle size={20} />
                                             </div>
                                             <div>
-                                                <p className="font-black text-[10px] uppercase tracking-widest mb-2" style={{ color: '#fecaca' }}>Emergency Crisis Support</p>
-                                                <p className="text-xs leading-relaxed font-medium" style={{ color: 'rgba(203,213,225,0.8)' }}>
-                                                    If you are in immediate danger, please reach out: <br />
-                                                    <span className="font-bold" style={{ color: '#ef4444' }}>KIRAN: 1800-599-0019</span> | <span className="font-bold" style={{ color: '#ef4444' }}>iCALL: 9152987821</span>
+                                                <p className="font-bold text-xs uppercase tracking-wider mb-1 text-red-800">Emergency Crisis Support</p>
+                                                <p className="text-xs leading-relaxed font-medium text-slate-700">
+                                                    If you are in immediate danger, please reach out immediately: <br />
+                                                    <span className="font-bold text-red-700">KIRAN: 1800-599-0019</span> | <span className="font-bold text-red-700">iCALL: 9152987821</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -496,27 +474,26 @@ export default function ChatCounselling() {
                                     className={`flex w-full items-start ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     {msg.sender === 'bot' && (
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mr-3 mt-1">
-                                            <Brain size={14} className="text-emerald-400" />
+                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mr-3 mt-1 shadow-sm">
+                                            <Brain size={16} className="text-emerald-600" />
                                         </div>
                                     )}
 
                                     <div className={`flex flex-col w-fit max-w-[85%] md:max-w-[70%] ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                                         <div
-                                            className="relative group transition-all duration-300"
+                                            className="relative group transition-all duration-200"
                                             style={msg.sender === 'user'
-                                                ? { background: 'linear-gradient(135deg, #00ff88, #00cc6a)', color: '#000000', borderRadius: '16px 0 16px 16px', padding: '16px 20px', fontSize: '15px', fontWeight: 500, boxShadow: '0 4px 20px rgba(0,255,136,0.15)' }
-                                                : { background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '0 16px 16px 16px', color: 'rgba(240,240,240,0.9)', padding: '16px 20px', fontSize: '15px', lineHeight: 1.6, fontWeight: 400 }
+                                                ? { background: 'linear-gradient(135deg, #059669, #0d9488)', color: '#ffffff', borderRadius: '16px 0 16px 16px', padding: '14px 18px', fontSize: '14px', fontWeight: 500, boxShadow: '0 4px 14px rgba(5,150,105,0.25)' }
+                                                : { background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '0 16px 16px 16px', color: '#1e293b', padding: '14px 18px', fontSize: '14px', lineHeight: 1.6, fontWeight: 400, boxShadow: '0 2px 8px rgba(15,23,42,0.04)' }
                                             }
                                         >
                                             {msg.sender === 'bot' && !loading && msg.message && (
                                                 <button
                                                     onClick={() => handleCopy(msg.message, msg.id)}
-                                                    className="absolute -right-12 top-2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                                                    style={{ background: 'rgba(255,255,255,0.1)', color: copiedId === msg.id ? '#00ff88' : '#cbd5e1' }}
+                                                    className="absolute -right-10 top-2 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-white border border-slate-200 shadow-sm text-slate-500 hover:text-emerald-700"
                                                     title="Copy Message"
                                                 >
-                                                    {copiedId === msg.id ? <Check size={14} /> : <Copy size={14} />}
+                                                    {copiedId === msg.id ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
                                                 </button>
                                             )}
                                             <div className="whitespace-pre-wrap">
@@ -526,8 +503,7 @@ export default function ChatCounselling() {
                                                     msg.sender === 'bot' && (
                                                         <div className="flex gap-1.5 h-6 items-center px-1 py-1">
                                                             {[0, 0.2, 0.4].map(d => (
-                                                                <motion.div key={d} className="w-1.5 h-1.5 rounded-full"
-                                                                    style={{ background: '#00ff88' }}
+                                                                <motion.div key={d} className="w-1.5 h-1.5 rounded-full bg-emerald-600"
                                                                     animate={{ y: [0, -4, 0] }}
                                                                     transition={{ duration: 0.6, repeat: Infinity, delay: d }} />
                                                             ))}
@@ -537,20 +513,20 @@ export default function ChatCounselling() {
                                             </div>
 
                                             {msg.sender === 'user' && getEmotionEmoji(msg.message) && (
-                                                <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                                <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-white border border-slate-200 shadow-sm">
                                                     {getEmotionEmoji(msg.message)}
                                                 </div>
                                             )}
                                         </div>
-                                        <div className={`mt-2 flex items-center gap-2 text-[10px] tabular-nums ${msg.sender === 'user' ? 'justify-end pr-1' : 'justify-start pl-1'}`} style={{ opacity: 0.4, fontWeight: 400 }}>
+                                        <div className={`mt-1.5 flex items-center gap-1.5 text-[10px] tabular-nums text-slate-400 ${msg.sender === 'user' ? 'justify-end pr-1' : 'justify-start pl-1'}`}>
                                             {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
-                                            {msg.sender === 'user' && <CheckCircle size={10} style={{ color: '#00ff88' }} />}
+                                            {msg.sender === 'user' && <CheckCircle size={10} className="text-emerald-600" />}
                                         </div>
                                     </div>
 
                                     {msg.sender === 'user' && (
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center ml-3 mt-1">
-                                            <span className="text-xs font-bold text-white">{user?.full_name?.charAt(0) || 'U'}</span>
+                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center ml-3 mt-1 shadow-sm">
+                                            <span className="text-xs font-bold text-slate-700">{user?.full_name?.charAt(0) || 'U'}</span>
                                         </div>
                                     )}
                                 </motion.div>
@@ -558,14 +534,13 @@ export default function ChatCounselling() {
 
                             {loading && (
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start items-start">
-                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mr-3 mt-1">
-                                        <Brain size={14} className="text-emerald-400" />
+                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mr-3 mt-1 shadow-sm">
+                                        <Brain size={16} className="text-emerald-600" />
                                     </div>
-                                    <div className="flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '0 16px 16px 16px', padding: '16px 20px' }}>
+                                    <div className="flex items-center gap-3 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                                         <div className="flex gap-1.5 h-3 items-center">
                                             {[0, 0.2, 0.4].map(d => (
-                                                <motion.div key={d} className="w-2 h-2 rounded-full"
-                                                    style={{ background: '#00ff88' }}
+                                                <motion.div key={d} className="w-2 h-2 rounded-full bg-emerald-600"
                                                     animate={{ y: [0, -6, 0] }}
                                                     transition={{ duration: 0.6, repeat: Infinity, delay: d }} />
                                             ))}
@@ -583,8 +558,7 @@ export default function ChatCounselling() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.8 }}
                                         onClick={scrollToBottom}
-                                        className="absolute bottom-6 right-8 p-3 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 z-20"
-                                        style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}
+                                        className="absolute bottom-6 right-8 p-3 rounded-full flex items-center justify-center shadow-md bg-white border border-slate-200 text-slate-600 hover:text-emerald-700 hover:shadow-lg transition-all z-20"
                                     >
                                         <ArrowDown size={18} />
                                     </motion.button>
@@ -593,7 +567,7 @@ export default function ChatCounselling() {
                         </div>
 
                         {/* The Input Area */}
-                        <div className="px-6 py-5 relative z-10 bg-transparent flex items-end gap-4 w-full" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                        <div className="px-5 py-4 relative z-10 bg-white border-t border-slate-200 flex items-end gap-3 w-full">
                             <textarea
                                 value={input}
                                 onChange={e => { setInput(e.target.value); handleInputResize(e); }}
@@ -601,15 +575,15 @@ export default function ChatCounselling() {
                                 onFocus={() => setIsFocused(true)}
                                 onBlur={() => setIsFocused(false)}
                                 placeholder="Describe how you're feeling today..."
-                                className="w-full rounded-xl px-5 py-4 flex-1 outline-none transition-all resize-none custom-scrollbar"
+                                className="w-full rounded-xl px-4 py-3 flex-1 outline-none transition-all resize-none custom-scrollbar"
                                 style={{
-                                    background: 'rgba(0,0,0,0.5)',
-                                    border: isFocused ? '1px solid #00ff88' : '1px solid rgba(255,255,255,0.1)',
-                                    color: '#fff',
+                                    background: '#f8fafc',
+                                    border: isFocused ? '1.5px solid #059669' : '1px solid #cbd5e1',
+                                    color: '#0f172a',
                                     fontSize: '14px',
                                     lineHeight: '1.5',
-                                    minHeight: '52px',
-                                    boxShadow: isFocused ? '0 0 0 1px #00ff88' : 'none',
+                                    minHeight: '50px',
+                                    boxShadow: isFocused ? '0 0 0 2px rgba(5,150,105,0.15)' : 'none',
                                     overflowY: 'auto'
                                 }}
                                 disabled={loading || showSummary}
@@ -618,47 +592,27 @@ export default function ChatCounselling() {
                             {loading && !showSummary ? (
                                 <motion.button
                                     onClick={stopGeneration}
-                                    className="p-4 rounded-xl transition-all flex items-center justify-center flex-shrink-0"
-                                    style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#ef4444', boxShadow: '0 0 15px rgba(239, 68, 68, 0.3)', height: '52px' }}
-                                    onMouseEnter={e => {
-                                        e.currentTarget.style.background = '#ef4444'
-                                        e.currentTarget.style.color = '#ffffff'
-                                    }}
-                                    onMouseLeave={e => {
-                                        e.currentTarget.style.background = 'rgba(239, 68, 68, 0.15)'
-                                        e.currentTarget.style.color = '#ef4444'
-                                    }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    className="p-3.5 rounded-xl transition-all flex items-center justify-center flex-shrink-0 bg-red-50 border border-red-300 text-red-600 hover:bg-red-600 hover:text-white"
+                                    style={{ height: '50px', width: '50px' }}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
                                     title="Stop generating"
                                 >
-                                    <Square fill="currentColor" size={20} />
+                                    <Square fill="currentColor" size={18} />
                                 </motion.button>
                             ) : (
                                 <motion.button
                                     onClick={send}
                                     disabled={!input.trim() || showSummary}
-                                    className="p-4 rounded-xl transition-all flex items-center justify-center flex-shrink-0"
+                                    className="p-3.5 rounded-xl transition-all flex items-center justify-center flex-shrink-0"
                                     style={(!input.trim() || showSummary)
-                                        ? { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.3)', height: '52px' }
-                                        : { background: 'rgba(0,255,136,0.15)', border: '1px solid rgba(0,255,136,0.4)', color: '#00ff88', boxShadow: '0 0 15px rgba(0,255,136,0.3)', height: '52px' }
+                                        ? { background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#94a3b8', height: '50px', width: '50px' }
+                                        : { background: 'linear-gradient(135deg, #059669, #0d9488)', color: '#ffffff', boxShadow: '0 4px 14px rgba(5,150,105,0.3)', height: '50px', width: '50px' }
                                     }
-                                    onMouseEnter={e => {
-                                        if (input.trim() && !showSummary) {
-                                            e.currentTarget.style.background = '#00ff88'
-                                            e.currentTarget.style.color = '#000000'
-                                        }
-                                    }}
-                                    onMouseLeave={e => {
-                                        if (input.trim() && !showSummary) {
-                                            e.currentTarget.style.background = 'rgba(0,255,136,0.15)'
-                                            e.currentTarget.style.color = '#00ff88'
-                                        }
-                                    }}
-                                    whileHover={input.trim() && !showSummary ? { scale: 1.05 } : {}}
-                                    whileTap={input.trim() && !showSummary ? { scale: 0.95 } : {}}
+                                    whileHover={input.trim() && !showSummary ? { scale: 1.02 } : {}}
+                                    whileTap={input.trim() && !showSummary ? { scale: 0.98 } : {}}
                                 >
-                                    <Send size={20} fill={input.trim() && !showSummary ? "currentColor" : "none"} />
+                                    <Send size={18} fill={input.trim() && !showSummary ? "currentColor" : "none"} />
                                 </motion.button>
                             )}
                         </div>
@@ -672,17 +626,14 @@ export default function ChatCounselling() {
                                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
-                                className="flex justify-center w-full max-w-4xl pt-4"
+                                className="flex justify-center w-full max-w-4xl pt-2"
                             >
                                 <button
                                     onClick={finishChat}
-                                    className="w-full max-w-sm py-5 text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-4 group transition-all"
-                                    style={{ background: 'linear-gradient(135deg, #00ff88, #00cc6a)', color: '#000000', fontWeight: 800, boxShadow: '0 8px 25px rgba(0,255,136,0.3)' }}
-                                    onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 30px rgba(0,255,136,0.5)'}
-                                    onMouseLeave={e => e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,255,136,0.3)'}
+                                    className="w-full max-w-sm py-4 text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-3 font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-[0_4px_14px_rgba(5,150,105,0.3)] hover:shadow-[0_6px_20px_rgba(5,150,105,0.4)] transition-all"
                                 >
-                                    <span className="relative z-10 flex items-center gap-3">
-                                        Done Chatting <Zap size={18} fill="currentColor" />
+                                    <span className="relative z-10 flex items-center gap-2.5">
+                                        Done Chatting <Zap size={16} fill="currentColor" />
                                     </span>
                                 </button>
                             </motion.div>

@@ -1,32 +1,23 @@
-# ── MindCare AI Backend ──────────────────────────────────────────────────────
-# Lightweight Python 3.10 base image
 FROM python:3.10-slim
 
-# Set working directory
-WORKDIR /app
-
-# Install system-level dependencies required by librosa / soundfile / opencv
+# Install system audio and vision dependencies required by Librosa and OpenCV
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libsndfile1 \
     ffmpeg \
+    libsndfile1 \
     libgl1 \
+    libglib2.0-0 \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python dependencies first (leverages Docker layer cache)
+WORKDIR /app
+
+# Install Python packages
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the backend source code
+# Copy backend source code & pre-trained models
 COPY . .
 
-# Ensure the Pre-trained_Models directory exists at runtime
-RUN mkdir -p /app/Pre-trained_Models
+EXPOSE 8000
 
-# Ensure the uploads directory exists at runtime
-RUN mkdir -p /app/uploads
-
-# Hugging Face Spaces requires port 7860
-EXPOSE 7860
-
-# Start the FastAPI app with Uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]

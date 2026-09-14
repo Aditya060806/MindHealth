@@ -99,16 +99,16 @@ export default function Register() {
     }
 
     return (
-        <div className="relative min-h-screen bg-[#05110d] overflow-hidden font-sans flex items-center justify-center p-4 py-12 md:py-20">
-            {/* Background Animations to match Landing.jsx */}
+        <div className="relative min-h-screen bg-slate-50 overflow-hidden font-sans flex items-center justify-center p-4 py-12 md:py-20">
+            {/* Background Animations */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div
                     className="absolute inset-0"
                     style={{
                         background: `
-                        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(8,8,8,0.9) 0%, transparent 70%),
-                        radial-gradient(ellipse 60% 50% at 0% 50%, rgba(8,8,8,0.5) 0%, transparent 60%),
-                        radial-gradient(ellipse 40% 40% at 100% 20%, rgba(0,255,136,0.04) 0%, transparent 60%)
+                        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 70%),
+                        radial-gradient(ellipse 60% 50% at 100% 50%, rgba(20,184,166,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse 50% 50% at 0% 100%, rgba(226,232,240,0.5) 0%, transparent 70%)
                         `
                     }}
                 />
@@ -123,31 +123,31 @@ export default function Register() {
                 {/* ── Brand / Header ─────────────────────────────────── */}
                 <div className="text-center mb-8 flex flex-col items-center">
                     <motion.div
-                        className="flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border border-emerald-500/30"
+                        className="flex items-center justify-center w-16 h-16 rounded-2xl mb-4 border border-emerald-500/30"
                         style={{
-                            background: 'linear-gradient(135deg, rgba(0,255,136,0.22) 0%, rgba(0,204,106,0.07) 100%)',
-                            boxShadow: '0 0 24px rgba(0,255,136,0.25)'
+                            background: 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(20,184,166,0.08) 100%)',
+                            boxShadow: '0 0 24px rgba(16,185,129,0.2)'
                         }}
-                        whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(0,255,136,0.45)' }}
-                        animate={{ y: [0, -8, 0] }}
+                        whileHover={{ scale: 1.05 }}
+                        animate={{ y: [0, -6, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                     >
-                        <Brain size={32} className="text-[#00ff88]" />
+                        <Brain size={32} className="text-emerald-600" />
                     </motion.div>
-                    <h1 className="font-display text-slate-100 font-extrabold text-3xl tracking-tight mb-2">
+                    <h1 className="font-display text-slate-900 font-extrabold text-3xl tracking-tight mb-2">
                         Create Account
                     </h1>
-                    <p className="font-sans font-light text-slate-400 text-sm tracking-wide">
-                        Join MindHealth for personalized wellness support
+                    <p className="font-sans text-slate-600 text-sm tracking-normal">
+                        Join MindHealth for personalized clinical mental wellness support.
                     </p>
                 </div>
 
                 {/* ── Progress Indicator Tabs UI ──────────────────────── */}
                 <div className="mb-8 overflow-x-auto hide-scrollbar">
-                    <div className="flex justify-between items-end border-b border-white/10 min-w-[340px]">
+                    <div className="flex justify-between items-end border-b border-slate-200 min-w-[340px]">
                         {steps.map((s, i) => (
-                            <div key={s} className={`flex-1 flex justify-center pb-2.5 border-b-2 transition-all duration-300 ${i === step ? 'border-emerald-400' : 'border-transparent'}`}>
-                                <p className={`uppercase tracking-widest text-[9px] font-bold text-center transition-colors ${i === step ? 'text-emerald-400' : (i < step ? 'text-emerald-400/50' : 'text-slate-500')}`}>
+                            <div key={s} className={`flex-1 flex justify-center pb-2.5 border-b-2 transition-all duration-300 ${i === step ? 'border-emerald-600' : 'border-transparent'}`}>
+                                <p className={`uppercase tracking-wider text-[10px] font-bold text-center transition-colors ${i === step ? 'text-emerald-700' : (i < step ? 'text-emerald-600/70' : 'text-slate-400')}`}>
                                     {s}
                                 </p>
                             </div>
@@ -156,7 +156,7 @@ export default function Register() {
                 </div>
 
                 {/* ── Main Form Card ──────────────────────────────────── */}
-                <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] rounded-3xl p-8 md:p-10 mb-6 at-noise">
+                <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_12px_40px_-8px_rgba(15,23,42,0.08),0_4px_16px_rgba(15,23,42,0.03)] rounded-3xl p-8 md:p-10 mb-6">
                     <div className="min-h-[320px]">
                         <AnimatePresence mode="wait" initial={false}>
                             <motion.div key={step}
@@ -168,68 +168,68 @@ export default function Register() {
                             >
                                 {/* Step 0: Personal Info */}
                                 {step === 0 && <>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Full Name *</label>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Full Name *</label>
                                         <InputWrapper icon={User}>
-                                            <input className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans" placeholder="John Doe"
+                                            <input className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm shadow-sm" placeholder="John Doe"
                                                 value={form.full_name} onChange={e => update('full_name', e.target.value)} />
                                         </InputWrapper>
                                         <Err name="full_name" errors={errors} />
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        <div className="flex flex-col gap-2">
-                                            <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Age *</label>
-                                            <input type="number" className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans" placeholder="25"
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="flex flex-col gap-1.5">
+                                            <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Age *</label>
+                                            <input type="number" className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm shadow-sm" placeholder="25"
                                                 value={form.age} onChange={e => update('age', e.target.value)} min={10} max={100} />
                                             <Err name="age" errors={errors} />
                                         </div>
-                                        <div className="flex flex-col gap-2">
-                                            <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Gender *</label>
+                                        <div className="flex flex-col gap-1.5">
+                                            <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Gender *</label>
                                             <div className="relative group">
-                                                <select className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans appearance-none cursor-pointer" value={form.gender}
+                                                <select className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pr-10 text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm appearance-none cursor-pointer shadow-sm" value={form.gender}
                                                     onChange={e => update('gender', e.target.value)}>
-                                                    <option className="bg-[#05110d] text-white">Male</option>
-                                                    <option className="bg-[#05110d] text-white">Female</option>
-                                                    <option className="bg-[#05110d] text-white">Other</option>
+                                                    <option className="bg-white text-slate-800">Male</option>
+                                                    <option className="bg-white text-slate-800">Female</option>
+                                                    <option className="bg-white text-slate-800">Other</option>
                                                 </select>
-                                                <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none rotate-90" />
+                                                <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none rotate-90" />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col gap-2">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Occupation *</label>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Occupation *</label>
                                         <div className="relative group">
-                                            <select className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans appearance-none cursor-pointer" value={form.occupation}
+                                            <select className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pr-10 text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm appearance-none cursor-pointer shadow-sm" value={form.occupation}
                                                 onChange={e => update('occupation', e.target.value)}>
-                                                {OCCUPATIONS.map(o => <option key={o} className="bg-[#05110d] text-white">{o}</option>)}
+                                                {OCCUPATIONS.map(o => <option key={o} className="bg-white text-slate-800">{o}</option>)}
                                             </select>
-                                            <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none rotate-90" />
+                                            <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none rotate-90" />
                                         </div>
                                     </div>
                                 </>}
 
                                 {/* Step 1: Health Details */}
                                 {step === 1 && <>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Phone Number <span className="text-slate-500 ml-1 lowercase font-normal tracking-normal">(optional)</span></label>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Phone Number <span className="text-slate-400 lowercase font-normal tracking-normal">(optional)</span></label>
                                         <InputWrapper icon={Phone}>
-                                            <input className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans" placeholder="9876543210"
+                                            <input className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm shadow-sm" placeholder="9876543210"
                                                 value={form.phone} onChange={e => update('phone', e.target.value)} />
                                         </InputWrapper>
                                         <Err name="phone" errors={errors} />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Location <span className="text-slate-500 ml-1 lowercase font-normal tracking-normal">(optional)</span></label>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Location <span className="text-slate-400 lowercase font-normal tracking-normal">(optional)</span></label>
                                         <InputWrapper icon={MapPin}>
-                                            <input className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans" placeholder="City, Country"
+                                            <input className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm shadow-sm" placeholder="City, Country"
                                                 value={form.location} onChange={e => update('location', e.target.value)} />
                                         </InputWrapper>
                                     </div>
-                                    <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4 mt-2 backdrop-blur-sm">
-                                        <p className="font-sans font-light text-emerald-100/70 text-xs leading-relaxed flex gap-2">
-                                            <Lock size={14} className="text-emerald-400 flex-shrink-0 mt-0.5" />
+                                    <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-xl p-4 mt-2">
+                                        <p className="font-sans text-emerald-900 text-xs leading-relaxed flex gap-2">
+                                            <Lock size={15} className="text-emerald-700 flex-shrink-0 mt-0.5" />
                                             Your personal data is encrypted and used exclusively for personalized mental health analysis.
                                         </p>
                                     </div>
@@ -237,36 +237,36 @@ export default function Register() {
 
                                 {/* Step 2: Account Setup */}
                                 {step === 2 && <>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Email Address *</label>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Email Address *</label>
                                         <InputWrapper icon={Mail}>
-                                            <input type="email" className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans" placeholder="you@example.com"
+                                            <input type="email" className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans text-sm shadow-sm" placeholder="you@example.com"
                                                 value={form.email} onChange={e => update('email', e.target.value)} />
                                         </InputWrapper>
                                         <Err name="email" errors={errors} />
                                     </div>
-                                    <div className="flex flex-col gap-2 relative">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Password *</label>
+                                    <div className="flex flex-col gap-1.5 relative">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Password *</label>
                                         <InputWrapper icon={Lock}>
-                                            <input type={showPwd ? 'text' : 'password'} className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans tracking-wider"
+                                            <input type={showPwd ? 'text' : 'password'} className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 pr-12 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans tracking-wider text-sm shadow-sm"
                                                 placeholder="••••••••"
                                                 value={form.password} onChange={e => update('password', e.target.value)} />
                                         </InputWrapper>
                                         <button type="button" onClick={() => setShowPwd(!showPwd)}
-                                            className="absolute right-4 top-[35px] md:top-[38px] text-slate-500 hover:text-emerald-400 transition-colors z-20">
+                                            className="absolute right-4 top-[35px] md:top-[38px] text-slate-400 hover:text-slate-700 transition-colors z-20">
                                             {showPwd ? <EyeOff size={18} /> : <Eye size={18} />}
                                         </button>
                                         <Err name="password" errors={errors} />
                                     </div>
-                                    <div className="flex flex-col gap-2 relative">
-                                        <label className="uppercase tracking-widest text-xs font-bold text-emerald-500/80 pl-1">Confirm Password *</label>
+                                    <div className="flex flex-col gap-1.5 relative">
+                                        <label className="uppercase tracking-wider text-[11px] font-bold text-slate-700 pl-0.5">Confirm Password *</label>
                                         <InputWrapper icon={Lock}>
-                                            <input type={showConfirm ? 'text' : 'password'} className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 pl-11 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-sans tracking-wider"
+                                            <input type={showConfirm ? 'text' : 'password'} className="w-full bg-slate-50/90 border border-slate-200 rounded-xl px-4 py-3 pl-11 pr-12 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-sans tracking-wider text-sm shadow-sm"
                                                 placeholder="••••••••"
                                                 value={form.confirm_password} onChange={e => update('confirm_password', e.target.value)} />
                                         </InputWrapper>
                                         <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-                                            className="absolute right-4 top-[35px] md:top-[38px] text-slate-500 hover:text-emerald-400 transition-colors z-20">
+                                            className="absolute right-4 top-[35px] md:top-[38px] text-slate-400 hover:text-slate-700 transition-colors z-20">
                                             {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
                                         </button>
                                         <Err name="confirm_password" errors={errors} />
@@ -277,12 +277,12 @@ export default function Register() {
                     </div>
 
                     {/* Navigation Buttons */}
-                    <div className="flex gap-4 mt-8 pt-8 border-t border-white/10">
+                    <div className="flex gap-4 mt-8 pt-6 border-t border-slate-200">
                         {step > 0 && (
                             <motion.button
-                                whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.1)' }}
-                                whileTap={{ scale: 0.98 }}
-                                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white font-sans font-medium text-sm transition-all"
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-sans font-semibold text-sm transition-all"
                                 onClick={back}
                             >
                                 <ChevronLeft size={16} /> Back
@@ -290,19 +290,19 @@ export default function Register() {
                         )}
                         {step < 2 ? (
                             <motion.button
-                                whileHover={{ scale: 1.02, boxShadow: '0 0 20px rgba(16,185,129,0.4)' }}
-                                whileTap={{ scale: 0.98 }}
-                                className="flex-[2] flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-bold rounded-xl transition-all font-display tracking-wide uppercase text-sm"
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                                className="flex-[2] flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl transition-all font-display tracking-wide uppercase text-sm shadow-[0_4px_14px_rgba(5,150,105,0.3)] hover:shadow-[0_6px_20px_rgba(5,150,105,0.4)]"
                                 onClick={next}
                             >
                                 Next Step <ChevronRight size={16} />
                             </motion.button>
                         ) : (
                             <motion.button
-                                whileHover={{ scale: loading ? 1 : 1.02, boxShadow: loading ? 'none' : '0 0 20px rgba(16,185,129,0.4)' }}
-                                whileTap={{ scale: loading ? 1 : 0.98 }}
+                                whileHover={{ scale: loading ? 1 : 1.01 }}
+                                whileTap={{ scale: loading ? 1 : 0.99 }}
                                 disabled={loading}
-                                className="flex-[2] flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-bold rounded-xl transition-all font-display tracking-wide uppercase text-sm"
+                                className="flex-[2] flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl transition-all font-display tracking-wide uppercase text-sm shadow-[0_4px_14px_rgba(5,150,105,0.3)] hover:shadow-[0_6px_20px_rgba(5,150,105,0.4)]"
                                 onClick={handleSubmit}
                             >
                                 {loading ? (
@@ -316,9 +316,9 @@ export default function Register() {
                     </div>
                 </div>
 
-                <p className="text-center text-slate-400 text-sm font-sans font-light pb-8">
+                <p className="text-center text-slate-600 text-sm font-sans pb-8">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-emerald-400 font-medium hover:text-emerald-300 transition-colors">
+                    <Link to="/login" className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors">
                         Sign In
                     </Link>
                 </p>

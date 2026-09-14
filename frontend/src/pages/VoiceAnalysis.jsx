@@ -149,16 +149,16 @@ export default function VoiceAnalysis() {
 
                 if (percent > 60) {
                     setVocalStatus("High Energy / Potential Stress detected...")
-                    setStatusColor("text-red-400")
+                    setStatusColor("text-rose-600")
                 } else if (percent > 30) {
                     setVocalStatus("Normal Conversational Tone...")
-                    setStatusColor("text-cyan-400")
+                    setStatusColor("text-emerald-600")
                 } else if (percent > 5) {
                     setVocalStatus("Calm / Quiet Tone...")
-                    setStatusColor("text-green-400")
+                    setStatusColor("text-teal-600")
                 } else {
                     setVocalStatus("Listening...")
-                    setStatusColor("text-slate-400")
+                    setStatusColor("text-slate-500")
                 }
 
                 animationRef.current = requestAnimationFrame(drawWaveform)
@@ -243,10 +243,8 @@ export default function VoiceAnalysis() {
         setCountdown(RECORD_SECONDS)
         setAudioData(new Array(24).fill(6))
         setVocalStatus("Listening...")
-        setStatusColor("text-slate-400")
+        setStatusColor("text-slate-500")
     }
-
-    const bars = result ? [{ name: 'Confidence', value: parseFloat((result.confidence * 100).toFixed(1)), fill: '#00F5FF' }] : []
 
     return (
         <>
@@ -257,8 +255,7 @@ export default function VoiceAnalysis() {
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
-                        style={{ background: '#04100c' }}
+                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-slate-50"
                     >
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0 }}
@@ -267,20 +264,19 @@ export default function VoiceAnalysis() {
                             className="flex flex-col items-center gap-6"
                         >
                             <div className="flex items-center justify-center gap-4 mb-2">
-                                <motion.div animate={{ boxShadow: ['0 0 24px rgba(0,255,136,0.25)', '0 0 64px rgba(0,255,136,0.65)', '0 0 24px rgba(0,255,136,0.25)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, rgba(0,255,136,0.22) 0%, rgba(0,204,106,0.07) 100%)', border: '1.5px solid rgba(0,255,136,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <Brain size={26} style={{ color: '#00ff88' }} />
+                                <motion.div animate={{ boxShadow: ['0 0 20px rgba(5,150,105,0.2)', '0 0 45px rgba(5,150,105,0.4)', '0 0 20px rgba(5,150,105,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 border border-emerald-400 flex items-center justify-center shadow-md">
+                                    <Brain size={28} className="text-white" />
                                 </motion.div>
-                                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 800, letterSpacing: '0.09em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #ffffff 10%, #d1fae5 55%, #6ee7b7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
+                                <span className="font-display text-3xl font-extrabold tracking-wider bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-600 bg-clip-text text-transparent">
                                     MINDHEALTH
                                 </span>
                             </div>
-                            <div className="w-48 h-1 rounded-full overflow-hidden mt-2" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                            <div className="w-48 h-1.5 rounded-full overflow-hidden mt-2 bg-slate-200">
                                 <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: "100%" }}
                                     transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full"
-                                    style={{ background: '#00ff88' }}
+                                    className="h-full bg-emerald-600"
                                 />
                             </div>
                         </motion.div>
@@ -288,154 +284,114 @@ export default function VoiceAnalysis() {
                 )}
             </AnimatePresence>
 
-            {/* ── Root Wrapper with Hero Background ── */}
+            {/* ── Root Wrapper with Clean Clinical Background ── */}
             <div
-                className="min-h-screen text-slate-200 font-sans selection:bg-emerald-500/30 overflow-x-hidden relative flex flex-col pt-24 pb-12"
-                style={{ minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", background: '#04100c' }}
+                className="min-h-screen text-slate-800 font-sans selection:bg-emerald-500/20 overflow-x-hidden relative flex flex-col pt-24 pb-12 bg-slate-50"
             >
-                {/* Dark radial-gradient overlay */}
+                {/* Soft ambient lighting */}
                 <div
                     className="fixed inset-0 z-0 pointer-events-none"
                     style={{
-                        background: 'radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.08) 0%, transparent 70%), radial-gradient(circle at 80% 80%, rgba(0, 204, 106, 0.05) 0%, transparent 50%)',
+                        background: 'radial-gradient(circle at 50% 0%, rgba(5, 150, 105, 0.07) 0%, transparent 65%), radial-gradient(circle at 85% 85%, rgba(13, 148, 136, 0.05) 0%, transparent 55%)',
                     }}
                 />
 
-
-                <div className="fixed inset-0 z-[1] bg-black/40 pointer-events-none" />
-
-                {/* Noise/gradient overlay */}
-                <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(8,8,8,0.9) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 0% 50%, rgba(8,8,8,0.5) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 100% 20%, rgba(0,255,136,0.04) 0%, transparent 60%)',
-                        zIndex: 0
-                    }}
-                    aria-hidden="true"
-                />
-
-                {/* Page content — delayed entrance to play after preloader */}
+                {/* Page content */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.5 }}
-                    className="w-full max-w-4xl mx-auto z-10 relative flex flex-col items-center space-y-10 px-4"
+                    className="w-full max-w-4xl mx-auto z-10 relative flex flex-col items-center space-y-8 px-4"
                 >
                     {/* Back button + Step Progress */}
                     <div className="flex flex-col gap-6 w-full">
-                        {/* Premium Branded Header - SCALED UP */}
-                        <div className="flex items-center justify-center gap-6 mb-2 mt-4 print:hidden w-full">
-                            <motion.div animate={{ boxShadow: ['0 0 30px rgba(0,255,136,0.3)', '0 0 80px rgba(0,255,136,0.7)', '0 0 30px rgba(0,255,136,0.3)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 72, height: 72, borderRadius: 20, background: 'linear-gradient(135deg, rgba(0,255,136,0.22) 0%, rgba(0,204,106,0.07) 100%)', border: '2px solid rgba(0,255,136,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                <Brain size={38} style={{ color: '#00ff88' }} />
+                        {/* Scaled Branded Header */}
+                        <div className="flex items-center justify-center gap-4 mb-2 mt-4 print:hidden w-full">
+                            <motion.div
+                                animate={{ boxShadow: ['0 0 15px rgba(5,150,105,0.2)', '0 0 30px rgba(5,150,105,0.35)', '0 0 15px rgba(5,150,105,0.2)'] }}
+                                transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 border border-emerald-500 flex items-center justify-center shadow-md flex-shrink-0"
+                            >
+                                <Brain size={28} className="text-white" />
                             </motion.div>
-                            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '52px', fontWeight: 800, letterSpacing: '0.09em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #ffffff 10%, #d1fae5 55%, #6ee7b7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
+                            <span className="font-display text-4xl font-extrabold tracking-wider bg-gradient-to-r from-emerald-900 via-teal-800 to-emerald-700 bg-clip-text text-transparent">
                                 MINDHEALTH
                             </span>
                         </div>
                         <button
                             onClick={() => nav('/face')}
-                            className="flex items-center gap-2 text-slate-400 transition-colors text-xs font-bold uppercase tracking-widest w-fit group"
-                            style={{ transition: 'color 0.3s ease' }}
-                            onMouseEnter={e => e.currentTarget.style.color = '#00ff88'}
-                            onMouseLeave={e => e.currentTarget.style.color = 'rgb(148, 163, 184)'}
+                            className="flex items-center gap-2 text-slate-500 hover:text-emerald-700 transition-colors text-xs font-bold uppercase tracking-widest w-fit group"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Step 3 – Facial Analysis
                         </button>
-                        <div className="w-full max-w-4xl mx-auto mb-8 px-4">
+                        <div className="w-full max-w-4xl mx-auto mb-4 px-4">
                             <StepProgress current={3} />
                         </div>
                     </div>
 
                     {/* Heading */}
-                    <div className="text-center space-y-3 w-full">
-                        <h1
-                            className="text-4xl md:text-5xl tracking-tight mb-3"
-                            style={{
-                                fontFamily: "'Space Grotesk', sans-serif",
-                                fontWeight: 900,
-                                lineHeight: 0.95,
-                                letterSpacing: '-0.03em',
-                                background: 'linear-gradient(120deg, #00ff88 0%, #00cc6a 40%, #ffffff 70%, #00ff88 100%)',
-                                backgroundSize: '250% auto',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text'
-                            }}
-                        >
+                    <div className="text-center space-y-2 w-full">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 font-display">
                             Voice Stress Analysis
                         </h1>
-                        <p className="text-lg font-medium opacity-80" style={{ color: 'rgba(148,163,184,0.72)' }}>
-                            Step 4/4 — 15-second voice recording for stress detection
+                        <p className="text-base sm:text-lg font-medium text-slate-500">
+                            Step 4/4 — 15-second vocal acoustic evaluation for stress detection
                         </p>
-                        <div className="h-px w-24 mx-auto mt-4" style={{ background: 'rgba(255,255,255,0.05)' }} />
                     </div>
 
                     {/* ── Signature Glass Card ── */}
                     <div
-                        className="w-full h-auto mx-auto flex flex-col overflow-hidden p-6 lg:p-8"
-                        style={{
-                            position: 'relative', zIndex: 10,
-                            background: 'rgba(255,255,255,0.025)',
-                            border: '1px solid rgba(255,255,255,0.06)',
-                            backdropFilter: 'blur(24px)',
-                            WebkitBackdropFilter: 'blur(24px)',
-                            borderRadius: '24px',
-                            boxShadow: '0 40px 80px rgba(0,0,0,0.5)'
-                        }}
+                        className="w-full h-auto mx-auto flex flex-col overflow-hidden p-6 lg:p-8 bg-white/95 rounded-3xl border border-slate-200/90 shadow-xl"
                     >
                         {!result ? (
                             <div className="space-y-6">
-                                {/* Premium Microphone Module */}
+                                {/* Microphone Module */}
                                 <div
-                                    className="rounded-2xl p-8 text-center"
-                                    style={{
-                                        background: recording ? 'rgba(239,68,68,0.06)' : 'rgba(0,0,0,0.4)',
-                                        border: recording ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.07)',
-                                        transition: 'all 0.4s ease'
-                                    }}
+                                    className={`rounded-2xl p-8 text-center transition-all duration-300 border ${
+                                        recording
+                                            ? 'bg-rose-50/60 border-rose-300'
+                                            : 'bg-slate-50 border-slate-200'
+                                    }`}
                                 >
                                     {activeTab === 'live' && (
                                         <>
-                                            {/* Mic icon with glow when recording */}
+                                            {/* Mic icon with pulse when recording */}
                                             <div className="flex justify-center mb-6">
                                                 <div className="relative">
                                                     <motion.div
-                                                        className="w-24 h-24 rounded-full flex items-center justify-center"
-                                                        style={{
-                                                            background: recording ? 'rgba(239,68,68,0.15)' : 'rgba(0,255,136,0.08)',
-                                                            border: recording ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(0,255,136,0.2)',
-                                                        }}
+                                                        className={`w-24 h-24 rounded-full flex items-center justify-center border ${
+                                                            recording
+                                                                ? 'bg-rose-100 border-rose-400 text-rose-600'
+                                                                : 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                                                        }`}
                                                         animate={recording ? {
-                                                            scale: [1, 1.12, 1],
+                                                            scale: [1, 1.08, 1],
                                                             boxShadow: [
-                                                                '0 0 0 0 rgba(239,68,68,0.4)',
-                                                                '0 0 0 20px rgba(239,68,68,0)',
+                                                                '0 0 0 0 rgba(239,68,68,0.3)',
+                                                                '0 0 0 16px rgba(239,68,68,0)',
                                                                 '0 0 0 0 rgba(239,68,68,0)'
                                                             ]
                                                         } : {
-                                                            boxShadow: '0 0 30px rgba(0,255,136,0.15)'
+                                                            boxShadow: '0 4px 16px rgba(5,150,105,0.12)'
                                                         }}
                                                         transition={{ duration: 1, repeat: Infinity }}
                                                     >
-                                                        <Mic
-                                                            size={44}
-                                                            style={{ color: recording ? '#f87171' : '#00ff88' }}
-                                                        />
+                                                        <Mic size={42} />
                                                     </motion.div>
                                                     {recording && (
-                                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full record-pulse block" />
+                                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-600 rounded-full animate-ping block" />
                                                     )}
                                                 </div>
                                             </div>
 
                                             {/* Waveform visualizer */}
-                                            <div className="flex justify-center gap-1 mb-6 h-16 items-end">
+                                            <div className="flex justify-center gap-1.5 mb-6 h-16 items-end">
                                                 {audioData.map((heightVal, i) => (
                                                     <motion.div
                                                         key={i}
                                                         className="w-1.5 rounded-full"
-                                                        style={{ background: recording ? '#00ff88' : 'rgba(255,255,255,0.12)' }}
+                                                        style={{ background: recording ? '#059669' : '#cbd5e1' }}
                                                         animate={{ height: heightVal }}
                                                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                                                     />
@@ -445,35 +401,27 @@ export default function VoiceAnalysis() {
                                             {/* Countdown & Energy Status */}
                                             {recording && (
                                                 <>
-                                                    <div className="text-5xl font-bold text-red-400 mb-2 tabular-nums">{countdown}s</div>
-                                                    <div className={`text-sm font-bold tracking-widest uppercase mb-4 ${statusColor} drop-shadow-md transition-colors duration-300`}>
+                                                    <div className="text-5xl font-extrabold text-rose-600 mb-2 tabular-nums font-mono">{countdown}s</div>
+                                                    <div className={`text-xs font-bold tracking-widest uppercase mb-4 ${statusColor} transition-colors duration-300`}>
                                                         {vocalStatus}
                                                     </div>
                                                 </>
                                             )}
                                             {!recording && audioBlob && (
-                                                <div className="text-emerald-400 font-bold mb-4 flex items-center justify-center gap-2">
-                                                    <span className="text-xl">✅</span> Recording saved! Ready to analyze.
+                                                <div className="text-emerald-700 font-bold mb-4 flex items-center justify-center gap-2 bg-emerald-50 border border-emerald-200 py-2.5 px-4 rounded-xl w-fit mx-auto">
+                                                    <span className="text-lg">✅</span> Recording captured! Ready to analyze.
                                                 </div>
                                             )}
 
-                                            {/* Premium Instruction Text */}
-                                            <p
-                                                className="mb-6"
-                                                style={{
-                                                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                                    fontSize: '15px',
-                                                    fontWeight: 600,
-                                                    color: 'rgba(240,240,240,0.95)'
-                                                }}
-                                            >
+                                            {/* Instruction Text */}
+                                            <p className="mb-6 text-slate-600 font-medium text-sm sm:text-base">
                                                 {recording
                                                     ? '🎙️ Keep speaking clearly. AI is mapping your acoustic energy...'
                                                     : audioBlob
-                                                        ? 'Click Analyze to detect voice stress patterns'
+                                                        ? 'Click Analyze to evaluate vocal stress biomarkers'
                                                         : <>
-                                                            <span className="text-emerald-400 font-bold">💡 Instruction:</span>{' '}
-                                                            Click Start and speak for 15 seconds about your current mood.
+                                                            <span className="text-emerald-700 font-bold">💡 Instruction:</span>{' '}
+                                                            Click Start and speak for 15 seconds about your feelings or day.
                                                         </>
                                                 }
                                             </p>
@@ -483,58 +431,40 @@ export default function VoiceAnalysis() {
                                                 {!recording && !audioBlob && (
                                                     <motion.button
                                                         onClick={startRecording}
-                                                        className="px-10 py-4 text-lg rounded-xl flex items-center gap-2"
-                                                        style={{
-                                                            background: 'linear-gradient(135deg, #00ff88, #00cc6a)',
-                                                            color: '#000000',
-                                                            fontWeight: 800,
-                                                            boxShadow: '0 8px 25px rgba(0,255,136,0.3)'
-                                                        }}
-                                                        whileHover={{ scale: 1.05, boxShadow: '0 12px 35px rgba(0,255,136,0.4)' }}
+                                                        className="btn-primary px-8 py-3.5 text-base rounded-xl flex items-center gap-2 shadow-md shadow-emerald-600/20"
+                                                        whileHover={{ scale: 1.02 }}
+                                                        whileTap={{ scale: 0.98 }}
                                                     >
-                                                        <Mic size={22} /> Start Recording
+                                                        <Mic size={20} /> Start Recording
                                                     </motion.button>
                                                 )}
                                                 {recording && (
                                                     <motion.button
                                                         onClick={stopRecording}
-                                                        className="px-8 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold flex items-center gap-2 transition-colors"
-                                                        whileHover={{ scale: 1.05 }}
+                                                        className="px-8 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold flex items-center gap-2 transition-colors shadow-md shadow-rose-600/20"
+                                                        whileHover={{ scale: 1.02 }}
+                                                        whileTap={{ scale: 0.98 }}
                                                     >
-                                                        <StopCircle size={20} /> Stop
+                                                        <StopCircle size={20} /> Stop Recording
                                                     </motion.button>
                                                 )}
                                                 {audioBlob && !recording && (
                                                     <div className="flex gap-3 justify-center">
-                                                        {/* Dark glass Retry button */}
                                                         <button
                                                             onClick={() => setAudioBlob(null)}
-                                                            className="px-5 py-2.5 rounded-xl flex items-center gap-2 font-bold transition-all"
-                                                            style={{
-                                                                background: 'rgba(255,255,255,0.05)',
-                                                                color: '#fff',
-                                                                border: '1px solid rgba(255,255,255,0.1)'
-                                                            }}
-                                                            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                                                            onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                                            className="px-5 py-3 rounded-xl flex items-center gap-2 font-semibold transition-all bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shadow-sm"
                                                         >
-                                                            <RefreshCw size={15} /> Retry
+                                                            <RefreshCw size={16} /> Re-record
                                                         </button>
-                                                        {/* Signature gradient Analyze button */}
                                                         <motion.button
                                                             onClick={upload}
                                                             disabled={loading}
-                                                            className="px-8 py-3 rounded-xl flex items-center gap-2"
-                                                            style={{
-                                                                background: 'linear-gradient(135deg, #00ff88, #00cc6a)',
-                                                                color: '#000000',
-                                                                fontWeight: 800,
-                                                                boxShadow: '0 8px 25px rgba(0,255,136,0.3)'
-                                                            }}
-                                                            whileHover={{ scale: 1.05, boxShadow: '0 12px 35px rgba(0,255,136,0.4)' }}
+                                                            className="btn-primary px-8 py-3 rounded-xl flex items-center gap-2 shadow-md shadow-emerald-600/20 font-bold"
+                                                            whileHover={{ scale: 1.02 }}
+                                                            whileTap={{ scale: 0.98 }}
                                                         >
                                                             {loading
-                                                                ? <><div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />Analyzing...</>
+                                                                ? <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyzing Acoustic Patterns...</>
                                                                 : '🔍 Analyze Voice'}
                                                         </motion.button>
                                                     </div>
@@ -546,43 +476,46 @@ export default function VoiceAnalysis() {
                             </div>
                         ) : (
                             <motion.div
-                                className="space-y-4"
+                                className="space-y-6"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                             >
                                 {/* Results card */}
-                                <div className="glass-card p-6">
+                                <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-5">
-                                        <h2 className="text-2xl font-bold text-white">Voice Analysis Result</h2>
-                                        <span className="text-4xl">🎙️</span>
+                                        <div>
+                                            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">Vocal Biomarker Analysis</h2>
+                                            <p className="text-xs text-slate-500 mt-0.5">Acoustic prosody and frequency distribution</p>
+                                        </div>
+                                        <span className="text-3xl">🎙️</span>
                                     </div>
-                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
                                         {[
-                                            ['Emotion', result.voice_emotion, '#00F5FF'],
-                                            ['Mood', result.voice_mood, '#8B5CF6'],
-                                            ['Stress', result.voice_stress, STRESS_COLOR[result.voice_stress]],
-                                            ['Severity', `${result.severity_score}/10`, result.severity_score >= 7 ? '#EF4444' : '#F59E0B'],
+                                            ['Emotion', result.voice_emotion, '#0d9488'],
+                                            ['Mood', result.voice_mood, '#6366f1'],
+                                            ['Stress', result.voice_stress, STRESS_COLOR[result.voice_stress] || '#059669'],
+                                            ['Severity', `${result.severity_score}/10`, result.severity_score >= 7 ? '#dc2626' : '#d97706'],
                                         ].map(([k, v, c]) => (
-                                            <div key={k} className="glass-card p-3 text-center">
+                                            <div key={k} className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center">
                                                 <div className="text-xl font-bold" style={{ color: c }}>{v}</div>
-                                                <div className="text-slate-400 text-xs mt-1">{k}</div>
+                                                <div className="text-slate-500 text-[11px] font-semibold uppercase tracking-wider mt-1">{k}</div>
                                             </div>
                                         ))}
                                     </div>
 
-                                    {/* Render Detailed Sliding Window Counts if provided */}
+                                    {/* Detailed Sliding Window Counts */}
                                     {result.emotion_counts && Object.keys(result.emotion_counts).length > 0 && (
-                                        <div className="mb-5 bg-white/5 rounded-xl p-4 border border-white/10">
-                                            <div className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-3">
-                                                15s Sliding Window Detection
+                                        <div className="mb-6 bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                            <div className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">
+                                                15s Windowed Acoustic Classification
                                             </div>
                                             <div className="flex flex-wrap gap-2">
                                                 {Object.entries(result.emotion_counts)
                                                     .sort(([, a], [, b]) => b - a)
                                                     .map(([emotionLabel, count]) => (
-                                                        <div key={emotionLabel} className="bg-white/10 px-3 py-1.5 rounded-lg text-sm flex items-center gap-2">
-                                                            <span className="text-white font-medium">{emotionLabel}</span>
-                                                            <span className="bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded text-xs font-bold">
+                                                        <div key={emotionLabel} className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-sm flex items-center gap-2 shadow-xs">
+                                                            <span className="text-slate-800 font-medium">{emotionLabel}</span>
+                                                            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-xs font-bold">
                                                                 {count} {count === 1 ? 'frame' : 'frames'}
                                                             </span>
                                                         </div>
@@ -591,13 +524,13 @@ export default function VoiceAnalysis() {
                                         </div>
                                     )}
 
-                                    <div className="flex justify-between text-sm text-slate-400 mb-2">
-                                        <span>AI Confidence</span>
-                                        <span className="font-medium text-white">{(result.confidence * 100).toFixed(1)}%</span>
+                                    <div className="flex justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                                        <span>Confidence Level</span>
+                                        <span className="font-bold text-slate-800">{(result.confidence * 100).toFixed(1)}%</span>
                                     </div>
-                                    <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
                                         <motion.div
-                                            className="h-full bg-gradient-to-r from-purple-600 to-cyan-400 rounded-full"
+                                            className="h-full bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full"
                                             initial={{ width: 0 }}
                                             animate={{ width: `${result.confidence * 100}%` }}
                                             transition={{ duration: 1.2 }}
@@ -607,38 +540,32 @@ export default function VoiceAnalysis() {
 
                                 {/* Stress badge */}
                                 <div
-                                    className={`glass-card p-4 text-center font-bold text-sm ${'badge-' + result.voice_stress.toLowerCase()}`}
-                                    style={{ borderRadius: '12px' }}
+                                    className={`p-4 text-center font-bold text-sm rounded-xl border ${
+                                        result.voice_stress === 'High'
+                                            ? 'bg-rose-50 border-rose-200 text-rose-800'
+                                            : result.voice_stress === 'Medium'
+                                                ? 'bg-amber-50 border-amber-200 text-amber-800'
+                                                : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                                    }`}
                                 >
-                                    🎯 Stress Level: {result.voice_stress}
+                                    🎯 Acoustic Stress Level: {result.voice_stress}
                                 </div>
 
-                                <div className="flex gap-4 mt-6">
-                                    {/* Dark glass Retry button */}
+                                <div className="flex gap-4 mt-6 flex-col sm:flex-row">
                                     <motion.button
                                         onClick={handleRetry}
-                                        className="w-full py-4 text-lg flex items-center justify-center gap-2 rounded-xl font-bold transition-all"
-                                        style={{
-                                            background: 'rgba(255,255,255,0.05)',
-                                            color: '#fff',
-                                            border: '1px solid rgba(255,255,255,0.1)'
-                                        }}
-                                        whileHover={{ scale: 1.02, background: 'rgba(255,255,255,0.1)' }}
+                                        className="w-full py-3.5 text-base flex items-center justify-center gap-2 rounded-xl font-semibold transition-all bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shadow-sm"
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
                                     >
-                                        <RefreshCw size={20} /> Retry / Record Again
+                                        <RefreshCw size={18} /> Re-record Audio
                                     </motion.button>
 
-                                    {/* Signature gradient Continue button */}
                                     <motion.button
                                         onClick={() => nav('/severity')}
-                                        className="w-full py-4 text-lg font-bold rounded-xl flex items-center justify-center gap-2"
-                                        style={{
-                                            background: 'linear-gradient(135deg, #00ff88, #00cc6a)',
-                                            color: '#000000',
-                                            fontWeight: 800,
-                                            boxShadow: '0 8px 25px rgba(0,255,136,0.3)'
-                                        }}
-                                        whileHover={{ scale: 1.02, boxShadow: '0 12px 35px rgba(0,255,136,0.4)' }}
+                                        className="btn-primary w-full py-3.5 text-base font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20"
+                                        whileHover={{ scale: 1.01 }}
+                                        whileTap={{ scale: 0.99 }}
                                     >
                                         Continue to Final Severity →
                                     </motion.button>

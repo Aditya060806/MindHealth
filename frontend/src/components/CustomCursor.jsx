@@ -143,18 +143,18 @@ export default function CustomCursor() {
                     height: isView ? 72 : isDrag ? 40 : isText ? 28 : isHover ? 52 : clicked ? 26 : 36,
                     borderRadius: isText ? '2px' : '50%',
                     backgroundColor:
-                        isView ? 'rgba(0,255,136,0.14)' :
-                            isDrag ? 'rgba(0,255,136,0.08)' :
-                                isHover ? 'rgba(0,255,136,0.09)' : 'transparent',
+                        isView ? 'rgba(5,150,105,0.12)' :
+                            isDrag ? 'rgba(5,150,105,0.08)' :
+                                isHover ? 'rgba(5,150,105,0.08)' : 'transparent',
                     borderColor:
-                        isView ? 'rgba(0,255,136,1)' :
-                            isDrag ? 'rgba(0,255,136,0.9)' :
-                                isText ? 'rgba(0,255,136,0.85)' :
-                                    isHover ? 'rgba(0,255,136,0.85)' : 'rgba(0,255,136,0.5)',
+                        isView ? 'rgba(5,150,105,1)' :
+                            isDrag ? 'rgba(5,150,105,0.9)' :
+                                isText ? 'rgba(5,150,105,0.85)' :
+                                    isHover ? 'rgba(5,150,105,0.85)' : 'rgba(5,150,105,0.45)',
                     borderWidth: isView ? 2 : 1.5,
                     boxShadow:
                         isView || isHover
-                            ? '0 0 18px rgba(0,255,136,0.3)'
+                            ? '0 0 16px rgba(16,185,129,0.25)'
                             : 'none',
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 28 }}
@@ -170,7 +170,7 @@ export default function CustomCursor() {
                             position: 'absolute', inset: 0,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: 8, fontWeight: 700, letterSpacing: '0.1em',
-                            color: '#00ff88', textTransform: 'uppercase', userSelect: 'none',
+                            color: '#059669', textTransform: 'uppercase', userSelect: 'none',
                             fontFamily: 'Inter, system-ui, sans-serif',
                         }}
                     >
@@ -181,8 +181,8 @@ export default function CustomCursor() {
                 {/* Crosshair for drag */}
                 {isDrag && (
                     <>
-                        <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 1, background: 'rgba(0,255,136,0.7)', transform: 'translateY(-50%)' }} />
-                        <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 1, background: 'rgba(0,255,136,0.7)', transform: 'translateX(-50%)' }} />
+                        <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 1, background: 'rgba(5,150,105,0.7)', transform: 'translateY(-50%)' }} />
+                        <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 1, background: 'rgba(5,150,105,0.7)', transform: 'translateX(-50%)' }} />
                     </>
                 )}
             </motion.div>
@@ -196,14 +196,14 @@ export default function CustomCursor() {
                     position: 'fixed', top: 0, left: 0,
                     borderRadius: '50%',
                     pointerEvents: 'none', zIndex: 9999,
-                    background: '#00ff88',
+                    background: '#059669',
                 }}
                 animate={{
                     width: isView ? 0 : clicked ? 8 : isHover ? 5 : 4,
                     height: isView ? 0 : clicked ? 8 : isHover ? 5 : 4,
                     boxShadow: isHover
-                        ? '0 0 10px rgba(0,255,136,0.9), 0 0 22px rgba(0,255,136,0.4)'
-                        : '0 0 5px rgba(0,255,136,0.7)',
+                        ? '0 0 10px rgba(5,150,105,0.8), 0 0 20px rgba(16,185,129,0.3)'
+                        : '0 0 4px rgba(5,150,105,0.6)',
                 }}
                 transition={{ type: 'spring', stiffness: 600, damping: 32 }}
             />

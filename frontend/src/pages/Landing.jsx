@@ -448,8 +448,8 @@ export default function Landing() {
                             >
                                 <Brain size={15} className="text-black" />
                             </motion.div>
-                            <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.05em', color: '#f0f0f0' }}>
-                                Mind<span style={{ color: '#00ff88' }}>Care</span> AI
+                            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: '0.05em', color: '#f0f0f0' }}>
+                                Mind<span style={{ color: '#00ff88' }}>Health</span>
                             </span>
                         </div>
 

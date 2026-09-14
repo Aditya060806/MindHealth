@@ -7,8 +7,8 @@
 /* ── Theme tokens ────────────────────────────────────────────────────── */
 @theme {
   --color-primary: #0F172A;
-  --color-accent: #00F5FF;
-  --color-secondary: #1E3A8A;
+  --color-accent: #059669;
+  --color-secondary: #0D9488;
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
@@ -21,16 +21,15 @@
   /* Legacy alias so any font-family-sans refs still work */
   --font-family-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
 
-  /* ── Active Theory dark palette ─── */
-  --at-bg: #05110d;
-  --at-surface: rgba(255, 255, 255, 0.04);
-  --at-border: rgba(0, 255, 136, 0.14);
-  --at-green: #00ff88;
-  --at-green-dim: rgba(0, 255, 136, 0.55);
-  --at-glow: rgba(0, 255, 136, 0.12);
-  --at-text: #f0f0f0;
-  --at-muted: rgba(203, 213, 225, 0.45);
-  /* slate-300 at 45% — warmer than pure white */
+  /* ── Clean light clinical palette ─── */
+  --at-bg: #f8fafc;
+  --at-surface: #ffffff;
+  --at-border: #e2e8f0;
+  --at-green: #059669;
+  --at-green-dim: rgba(5, 150, 105, 0.6);
+  --at-glow: rgba(16, 185, 129, 0.12);
+  --at-text: #0f172a;
+  --at-muted: #64748b;
 }
 
 /* ── Global reset (Tailwind preflight already handles most of this) ───── */
@@ -43,15 +42,16 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
+  background-color: #f8fafc;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   overflow-x: hidden;
-  color: #e2e8f0;
+  color: #0f172a;
+  background-color: #f8fafc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* NO background here — each page sets its own */
 }
 
 /* ── Typography utility classes ─────────────────────────────────────── */
@@ -80,22 +80,19 @@ body {
 .at-body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: 0.9375rem;
-  /* 15px */
   line-height: 1.75;
-  font-weight: 300;
-  color: rgba(203, 213, 225, 0.65);
-  /* slate-300 at 65% */
+  font-weight: 400;
+  color: #475569;
 }
 
 /* Subheading level — slightly stronger */
 .at-subheading {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: clamp(0.875rem, 1.2vw, 1rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.01em;
-  color: rgba(226, 232, 240, 0.70);
-  /* slate-200 at 70% */
+  color: #334155;
 }
 
 /* Hide OS cursor globally so custom cursor can take over on desktop */
@@ -105,64 +102,67 @@ body {
   }
 }
 
-/* ── Landing page dark scope ────────────────────────────────────────── */
+/* ── Landing page light scope ────────────────────────────────────────── */
 .at-dark {
   background-color: var(--at-bg);
   color: var(--at-text);
 }
 
 .at-glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 255, 136, 0.14);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 .at-glow-text {
   color: var(--at-green);
-  text-shadow: 0 0 30px rgba(0, 255, 136, 0.5), 0 0 60px rgba(0, 255, 136, 0.2);
+  text-shadow: 0 0 24px rgba(16, 185, 129, 0.25);
 }
 
 .at-btn-primary {
-  background: transparent;
-  border: 1.5px solid var(--at-green);
-  color: var(--at-green);
-  padding: 14px 32px;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  border: none;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 8px;
   font-family: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
   position: relative;
   overflow: hidden;
 }
 
 .at-btn-primary:hover {
-  background: rgba(0, 255, 136, 0.08);
-  box-shadow: 0 0 28px rgba(0, 255, 136, 0.35), inset 0 0 28px rgba(0, 255, 136, 0.05);
+  background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
   transform: translateY(-1px);
 }
 
 .at-btn-secondary {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 14px 32px;
-  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 12px 28px;
+  border-radius: 8px;
   font-family: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .at-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.30);
-  color: #fff;
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
   transform: translateY(-1px);
 }
 
@@ -194,7 +194,7 @@ body {
 }
 
 .at-gradient-text {
-  background: linear-gradient(120deg, #00ff88 0%, #00cc6a 40%, #ffffff 60%, #00ff88 100%);
+  background: linear-gradient(120deg, #059669 0%, #0d9488 40%, #0f172a 70%, #059669 100%);
   background-size: 250% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -273,33 +273,35 @@ body {
 
 /* ── Scrollbar ───────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00F5FF;
-  border-radius: 3px;
+  background: #10b981;
+  border-radius: 4px;
 }
 
 /* ── Glassmorphism cards (used across pages) ─────────────────────────── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.90);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 .glass-card-dark {
-  background: rgba(15, 23, 42, 0.70);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 245, 255, 0.15);
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* ── Neon glows ──────────────────────────────────────────────────────── */
@@ -321,7 +323,7 @@ body {
 
 /* ── Gradient text (shimmer) ─────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #00F5FF, #1E3A8A, #00F5FF);
+  background: linear-gradient(135deg, #059669, #0d9488, #059669);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -397,7 +399,7 @@ body {
 
 /* ── Buttons (used by non-Landing pages) ─────────────────────────────── */
 .btn-primary {
-  background: linear-gradient(135deg, #00F5FF, #1E3A8A);
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   color: white;
   padding: 12px 28px;
   border-radius: 12px;
@@ -405,17 +407,18 @@ body {
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   font-family: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 245, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
 }
 
 .btn-primary:active {
@@ -429,53 +432,56 @@ body {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: #00F5FF;
-  border: 1px solid rgba(0, 245, 255, 0.4);
+  background: #ffffff;
+  color: #059669;
+  border: 1.5px solid #a7f3d0;
   padding: 10px 24px;
   border-radius: 12px;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  transition: all 0.25s ease;
   font-family: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .btn-secondary:hover {
-  background: rgba(0, 245, 255, 0.10);
+  background: #f0fdf4;
+  border-color: #34d399;
   transform: translateY(-1px);
 }
 
 /* ── Form inputs ─────────────────────────────────────────────────────── */
 .form-input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
   padding: 14px 16px;
-  color: #e2e8f0;
+  color: #0f172a;
   font-size: 14px;
   width: 100%;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   outline: none;
   font-family: inherit;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .form-input:focus {
-  border-color: #00F5FF;
-  box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.10);
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .form-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: #94a3b8;
 }
 
 select.form-input {
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 36px;
@@ -483,15 +489,15 @@ select.form-input {
 }
 
 select.form-input option {
-  background: #0F172A;
-  color: #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
 }
 
 .form-label {
   display: block;
   font-size: 0.8125rem;
-  font-weight: 500;
-  color: #cbd5e1;
+  font-weight: 600;
+  color: #334155;
   margin-bottom: 0.4rem;
 }
 
@@ -504,7 +510,7 @@ select.form-input option {
 /* ── Layout containers ───────────────────────────────────────────────── */
 .page-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0F172A 0%, #0d2b4e 50%, #0F172A 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
@@ -517,7 +523,7 @@ select.form-input option {
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #0F172A 0%, #0d2b4e 50%, #0F172A 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
 }
 
 .content-container {
@@ -552,25 +558,25 @@ select.form-input option {
 }
 
 .badge-low {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10B981;
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
   border-radius: 9999px;
   padding: 2px 12px;
 }
 
 .badge-moderate {
-  background: rgba(245, 158, 11, 0.15);
-  color: #F59E0B;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
   border-radius: 9999px;
   padding: 2px 12px;
 }
 
 .badge-high {
-  background: rgba(239, 68, 68, 0.15);
-  color: #EF4444;
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
   border-radius: 9999px;
   padding: 2px 12px;
 }
@@ -598,16 +604,18 @@ select.form-input option {
 
 /* ── Stat cards ──────────────────────────────────────────────────────── */
 .stat-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 1rem;
   text-align: center;
-  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.07);
 }
 
 /* ── Particles (fixed full-screen backdrop) ──────────────────────────── */
@@ -625,7 +633,7 @@ select.form-input option {
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(0, 245, 255, 0.15);
+  background: rgba(16, 185, 129, 0.12);
   animation: particle-float linear infinite;
 }
 
