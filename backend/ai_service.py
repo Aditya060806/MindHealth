@@ -13,20 +13,23 @@ env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '.env'))
 load_dotenv(dotenv_path=env_path, override=False)
 logger = logging.getLogger(__name__)
 
-# Load API Key — os.environ.get() reads the live process environment directly
+# Load API Keys — os.environ.get() reads the live process environment directly
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 
 # --- DEBUGGING BLOCK ---
 print("\n" + "="*60)
-print(f"🚨 DEBUG: Attempting to load .env from: {env_path}")
-print(f"🚨 DEBUG: Does that .env file actually exist? {os.path.exists(env_path)}")
-print(f"🚨 DEBUG: API Key successfully loaded into Python memory? {bool(OPENROUTER_API_KEY)}")
-if OPENROUTER_API_KEY:
-    masked_key = OPENROUTER_API_KEY[:6] + "..." + OPENROUTER_API_KEY[-4:]
-    print(f"🚨 DEBUG: Masked key starts with: {masked_key}")
+print(f"[DEBUG] Attempting to load .env from: {env_path}")
+print(f"[DEBUG] Does that .env file actually exist? {os.path.exists(env_path)}")
+print(f"[DEBUG] Gemini API Key loaded into Python memory? {bool(GEMINI_API_KEY)}")
+if GEMINI_API_KEY:
+    masked_key = GEMINI_API_KEY[:6] + "..." + GEMINI_API_KEY[-4:]
+    print(f"[DEBUG] Gemini masked key: {masked_key} (Model: {GEMINI_MODEL})")
+print(f"[DEBUG] OpenRouter API Key loaded? {bool(OPENROUTER_API_KEY)}")
 print("="*60 + "\n")
 
-# Using the most reliable auto-router for free tier
+# Using OpenRouter as fallback
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "openrouter/free")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -67,10 +70,141 @@ Rules:
 - Always acknowledge the user's feelings first
 """
 
+async def call_gemini(messages: list, system_prompt: str = None, context: dict = None) -> str:
+    """Call Google Gemini generateContent REST API."""
+    if not GEMINI_API_KEY:
+        return "⚠️ **Configuration Error**: The `GEMINI_API_KEY` environment variable is missing or invalid."
+    
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+    
+    contents = []
+    for m in messages:
+        role = "user" if m.get("role") in ["user", "system"] else "model"
+        text = m.get("content", "")
+        if text:
+            contents.append({
+                "role": role,
+                "parts": [{"text": text}]
+            })
+    
+    payload = {
+        "contents": contents,
+        "generationConfig": {
+            "temperature": 0.7,
+            "maxOutputTokens": 1500
+        }
+    }
+    if system_prompt:
+        payload["system_instruction"] = {
+            "parts": [{"text": system_prompt}]
+        }
+        
+    max_retries = 3
+    timeout_seconds = 45.0
+    for attempt in range(max_retries):
+        try:
+            async with httpx.AsyncClient(timeout=timeout_seconds) as client:
+                response = await client.post(url, json=payload)
+                if response.status_code == 200:
+                    data = response.json()
+                    candidates = data.get("candidates", [])
+                    if candidates and "content" in candidates[0]:
+                        parts = candidates[0]["content"].get("parts", [])
+                        if parts and "text" in parts[0]:
+                            return parts[0]["text"]
+                    return "I am here with you. Please tell me more about how you are feeling."
+                elif response.status_code == 429:
+                    logger.warning(f"Attempt {attempt + 1}: Gemini rate limited (429). Retrying...")
+                    if attempt < max_retries - 1:
+                        await asyncio.sleep(2 * (2 ** attempt))
+                        continue
+                else:
+                    logger.error(f"Gemini API error {response.status_code}: {response.text}")
+                    if attempt < max_retries - 1:
+                        await asyncio.sleep(1)
+                        continue
+        except Exception as e:
+            logger.error(f"Gemini connection error: {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(1)
+                continue
+                
+    return "I am here with you. Please share what you are experiencing."
+
+async def call_gemini_stream(messages: list, system_prompt: str = None, context: dict = None):
+    """Stream response from Google Gemini REST API via SSE."""
+    if not GEMINI_API_KEY:
+        yield "⚠️ **Configuration Error**: The `GEMINI_API_KEY` environment variable is missing or invalid."
+        return
+        
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:streamGenerateContent?key={GEMINI_API_KEY}&alt=sse"
+    
+    contents = []
+    for m in messages:
+        role = "user" if m.get("role") in ["user", "system"] else "model"
+        text = m.get("content", "")
+        if text:
+            contents.append({
+                "role": role,
+                "parts": [{"text": text}]
+            })
+            
+    payload = {
+        "contents": contents,
+        "generationConfig": {
+            "temperature": 0.7,
+            "maxOutputTokens": 1500
+        }
+    }
+    if system_prompt:
+        payload["system_instruction"] = {
+            "parts": [{"text": system_prompt}]
+        }
+        
+    max_retries = 3
+    timeout_seconds = 45.0
+    for attempt in range(max_retries):
+        try:
+            async with httpx.AsyncClient(timeout=timeout_seconds) as client:
+                async with client.stream("POST", url, json=payload) as response:
+                    if response.status_code == 200:
+                        async for line in response.aiter_lines():
+                            if line.startswith("data: "):
+                                try:
+                                    data = json.loads(line[6:])
+                                    candidates = data.get("candidates", [])
+                                    if candidates and "content" in candidates[0]:
+                                        parts = candidates[0]["content"].get("parts", [])
+                                        for p in parts:
+                                            if "text" in p and p["text"]:
+                                                yield p["text"]
+                                except Exception:
+                                    continue
+                        return
+                    elif response.status_code == 429:
+                        if attempt < max_retries - 1:
+                            await asyncio.sleep(2 * (2 ** attempt))
+                            continue
+                    else:
+                        logger.error(f"Gemini stream error {response.status_code}")
+                        if attempt < max_retries - 1:
+                            await asyncio.sleep(1)
+                            continue
+        except Exception as e:
+            logger.error(f"Gemini stream exception: {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(1)
+                continue
+                
+    yield "I am here with you. Please share what you are experiencing."
+
 async def call_openrouter(messages: list, system_prompt: str = None, context: dict = None) -> str:
-    """Call OpenRouter API with robust retry logic and extended timeouts."""
+    """Call AI service (prioritizes Google Gemini, falls back to OpenRouter)."""
+    if GEMINI_API_KEY:
+        return await call_gemini(messages, system_prompt, context)
+        
     if not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your_openrouter_api_key_here":
-        return "⚠️ **Configuration Error**: The `OPENROUTER_API_KEY` environment variable is missing or invalid. Please set it as a Space secret on Hugging Face and restart the Space."
+        return "⚠️ **Configuration Error**: No AI API key found. Please configure `GEMINI_API_KEY` in backend/.env"
     
     all_messages = []
     if system_prompt:
@@ -132,9 +266,14 @@ async def call_openrouter(messages: list, system_prompt: str = None, context: di
     return "I am receiving too many messages at once right now. Please wait about 10 seconds and try sending that again."
 
 async def call_openrouter_stream(messages: list, system_prompt: str = None, context: dict = None):
-    """Stream response from OpenRouter API to prevent timeouts and improve UX."""
+    """Stream response from AI service (prioritizes Google Gemini, falls back to OpenRouter)."""
+    if GEMINI_API_KEY:
+        async for chunk in call_gemini_stream(messages, system_prompt, context):
+            yield chunk
+        return
+
     if not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your_openrouter_api_key_here":
-        yield "⚠️ **Configuration Error**: The `OPENROUTER_API_KEY` environment variable is missing or invalid. Please set it as a Space secret on Hugging Face and restart the Space."
+        yield "⚠️ **Configuration Error**: No AI API key found. Please configure `GEMINI_API_KEY` in backend/.env"
         return
     
     all_messages = []
@@ -276,7 +415,7 @@ async def generate_suggestions(severity: int, risk_level: str, problem: str, moo
     """Generate personalized mental health suggestions."""
     triggers_str = ", ".join(triggers) if triggers else "general stress"
     
-    if not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your-openrouter-api-key-here":
+    if not GEMINI_API_KEY and (not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your-openrouter-api-key-here"):
         return get_static_suggestions(severity, risk_level)
     
     prompt = f"""Generate mental health wellness suggestions for a user with:
@@ -334,7 +473,7 @@ def get_static_suggestions(severity: int, risk_level: str) -> dict:
 
 async def extract_assessment_data(chat_history: list) -> dict:
     """Extract clinical assessment data from full chat history into JSON"""
-    if not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your_openrouter_api_key_here":
+    if not GEMINI_API_KEY and (not OPENROUTER_API_KEY or OPENROUTER_API_KEY == "your_openrouter_api_key_here"):
         return {}
         
     history_text = "\n".join([f"{msg['sender'].capitalize()}: {msg['message']}" for msg in chat_history])

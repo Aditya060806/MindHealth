@@ -25,9 +25,28 @@ async def lifespan(app: FastAPI):
     try:
         Base.metadata.create_all(bind=engine)
         logger.info("✅ Database tables created")
+        
+        # Ensure default guest user exists for open unauthenticated access
+        from database import SessionLocal
+        from models import User
+        with SessionLocal() as db:
+            guest = db.query(User).filter(User.id == 1).first()
+            if not guest:
+                guest = User(
+                    id=1,
+                    full_name="MindHealth Guest",
+                    age=25,
+                    gender="Other",
+                    occupation="Guest User",
+                    email="guest@mindhealth.local",
+                    phone="0000000000",
+                    location="Global"
+                )
+                db.add(guest)
+                db.commit()
+                logger.info("✅ Default guest user initialized for open access")
     except Exception as e:
         logger.error(f"❌ Database initialization failed: {e}")
-        # We might still want to try loading models even if DB fails for diagnostics
     
     # Load ML models
     try:

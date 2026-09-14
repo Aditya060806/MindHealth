@@ -11,7 +11,7 @@ A multimodal AI-powered mental health assessment and counselling platform integr
 4. [Environment Configuration (.env)](#-environment-configuration-env)
 5. [Local Development Setup](#-local-development-setup)
 6. [Production Deployment Guide](#-production-deployment-guide)
-   - [Database: MongoDB Atlas](#1-database-mongodb-atlas-free-tier)
+   - [Database: Zero-Config SQLite / PostgreSQL](#1-database-zero-config-sqlite-or-cloud-postgresql)
    - [Backend: Render / Railway / Docker](#2-backend-deployment-render--railway--docker)
    - [Frontend: Vercel / Netlify](#3-frontend-deployment-vercel--netlify)
 7. [Troubleshooting & Common Issues](#-troubleshooting--common-issues)
@@ -43,8 +43,8 @@ A multimodal AI-powered mental health assessment and counselling platform integr
                                 │
                                 ▼
                         ┌───────────────────────────────┐
-                        │       MongoDB Atlas / Local   │
-                        │    User Records & Telemetry   │
+                        │   SQLite (Local Zero-Config)  │
+                        │     or Managed PostgreSQL     │
                         └───────────────────────────────┘
 ```
 
@@ -103,15 +103,16 @@ backend/
 Create a file named `.env` inside the `backend/` directory:
 
 ```env
-# MongoDB Connection String (Atlas or Local)
-MONGODB_URL=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/mindhealth?retryWrites=true&w=majority
+# Database (Zero-config local SQLite - no external database needed)
+DATABASE_URL=sqlite:///./mindcare.db
 
-# JWT Authentication Secret (Generate a strong random string)
+# JWT Authentication Secret (Random 32+ character key)
 JWT_SECRET=your_super_secret_jwt_random_key_min_32_characters
 
-# Google Gemini API Key for Counselling Chat (Step 2)
-# Obtain a free key from: https://aistudio.google.com/
-GEMINI_API_KEY=AIzaSyYourGeminiApiKeyHere
+# Google Gemini API Key for Counselling Chat & AI Insights (Step 2)
+# Obtain from: https://aistudio.google.com/
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-flash-latest
 
 # Allowed CORS Origins (Comma-separated or * for development)
 CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
@@ -190,12 +191,13 @@ Verify frontend is running:
 
 ## 🚀 Production Deployment Guide
 
-### 1. Database: MongoDB Atlas (Free Tier)
-1. Navigate to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and create an account.
-2. Build a free **M0 Shared Cluster** in your preferred region.
-3. Under **Database Access**, create a user with read and write permissions (e.g. `mindhealth_admin`).
-4. Under **Network Access**, add IP `0.0.0.0/0` (Allow access from anywhere) so cloud serverless instances can connect.
-5. Click **Connect** → **Drivers** (Python), and copy the URI into your backend `MONGODB_URL`.
+### 1. Database: Zero-Config SQLite or Cloud PostgreSQL
+MindHealth uses SQLAlchemy and is designed to run with **zero external database dependencies**:
+- **Default (SQLite)**: By default, MindHealth creates and manages a local `mindcare.db` database automatically on startup. No installation, accounts, or Docker containers needed!
+- **Optional (Cloud PostgreSQL)**: If deploying to a multi-instance cloud environment (e.g. Supabase, Render PostgreSQL, AWS RDS), simply set `DATABASE_URL` in your environment:
+  ```env
+  DATABASE_URL=postgresql://user:password@ep-host.region.aws.neon.tech/mindhealth?sslmode=require
+  ```
 
 ---
 
@@ -204,7 +206,7 @@ Verify frontend is running:
 #### Option A: Dockerfile (Universal & Recommended)
 Because Librosa and OpenCV require system C libraries (`ffmpeg`, `libsndfile1`, `libgl1`), a Docker container is the cleanest way to avoid missing OS dependencies.
 
-Create `backend/Dockerfile`:
+`backend/Dockerfile`:
 ```dockerfile
 FROM python:3.10-slim
 
@@ -228,7 +230,7 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 #### Option B: Deploying on Render.com
@@ -237,10 +239,11 @@ CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
 3. Set **Root Directory**: `backend`
 4. Set **Environment**: `Docker` (or `Python 3` with Build Command `pip install -r requirements.txt`).
 5. Add Environment Variables:
-   - `MONGODB_URL`: *(Your Atlas URL)*
-   - `JWT_SECRET`: *(Your JWT Secret)*
-   - `GEMINI_API_KEY`: *(Your Google AI Studio API Key)*
+   - `JWT_SECRET`: `your_super_secret_jwt_random_key_min_32_characters`
+   - `GEMINI_API_KEY`: `your_gemini_api_key_here`
+   - `GEMINI_MODEL`: `gemini-flash-latest`
    - `CORS_ORIGINS`: `https://your-frontend.vercel.app`
+   - `DATABASE_URL`: *(Optional — defaults to internal SQLite `sqlite:///./mindcare.db`)*
 6. Select **Instance Type**: 1 GB+ RAM instance (TensorFlow needs adequate memory for model initialization).
 
 ---
