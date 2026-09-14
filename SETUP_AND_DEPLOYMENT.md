@@ -230,45 +230,44 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
 ```
 
-#### Option B: Deploying on Render.com
-1. Create a new **Web Service** on [Render](https://render.com).
+#### Option B: Deploying on Render.com (Step-by-Step)
+1. Log in to [Render Dashboard](https://dashboard.render.com/) and click **New +** → **Web Service**.
 2. Connect your GitHub repository: `https://github.com/Aditya060806/MindHealth`.
-3. Set **Root Directory**: `backend`
-4. Set **Environment**: `Docker` (or `Python 3` with Build Command `pip install -r requirements.txt`).
-5. Add Environment Variables:
-   - `JWT_SECRET`: `your_super_secret_jwt_random_key_min_32_characters`
-   - `GEMINI_API_KEY`: `your_gemini_api_key_here`
-   - `GEMINI_MODEL`: `gemini-flash-latest`
-   - `CORS_ORIGINS`: `https://your-frontend.vercel.app`
-   - `DATABASE_URL`: *(Optional — defaults to internal SQLite `sqlite:///./mindcare.db`)*
-6. Select **Instance Type**: 1 GB+ RAM instance (TensorFlow needs adequate memory for model initialization).
+3. Configure settings:
+   - **Name**: `mindhealth-backend`
+   - **Region**: *Choose closest to your users (e.g., Oregon or Frankfurt)*
+   - **Root Directory**: `backend`
+   - **Runtime**: `Docker`
+   - **Instance Type**: **Free** (or Starter with 1GB RAM)
+4. Add **Environment Variables**:
+   | Variable | Value | Description |
+   | :--- | :--- | :--- |
+   | `GEMINI_API_KEY` | `your_gemini_api_key_here` | Google Gemini API key (from Google AI Studio) |
+   | `GEMINI_MODEL` | `gemini-flash-latest` | Model version |
+   | `JWT_SECRET` | `your_super_secret_jwt_random_key_min_32_characters` | Random 32+ character key |
+   | `CORS_ORIGINS` | `https://mindhealth-three.vercel.app,http://localhost:5173` | Allowed frontend origins |
+   | `DATABASE_URL` | `sqlite:///./mindcare.db` | Local SQLite (zero setup required) |
+5. Click **Create Web Service**.
+6. Once deployed, copy your Render backend URL (e.g. `https://mindhealth-backend.onrender.com`).
 
 ---
 
-### 3. Frontend Deployment (Vercel / Netlify)
+### 3. Frontend Deployment (Vercel)
 
-#### Deploying on Vercel
-1. Log in to [Vercel](https://vercel.com) and click **Add New Project**.
-2. Import `Aditya060806/MindHealth`.
-3. In Project Settings:
-   - **Framework Preset**: `Vite`
-   - **Root Directory**: Click Edit and select `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. Add Environment Variable:
-   - `VITE_API_URL`: `https://your-backend.onrender.com` (Your live FastAPI backend URL)
-5. To support Single-Page Application (SPA) client-side routing on Vercel, ensure `frontend/vercel.json` exists:
-   ```json
-   {
-     "rewrites": [
-       { "source": "/(.*)", "destination": "/index.html" }
-     ]
-   }
-   ```
-6. Click **Deploy**. Your app will be live on a secure HTTPS domain with instant global CDN caching!
+Your frontend is already deployed at:
+**🌐 https://mindhealth-three.vercel.app/**
+
+#### Connecting Vercel Frontend to Render Backend:
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard) → Click on **`mindhealth-three`**.
+2. Go to **Settings** → **Environment Variables**.
+3. Add or update:
+   - **Key**: `VITE_API_URL`
+   - **Value**: `https://<your-render-service-name>.onrender.com` *(your live Render backend URL)*
+4. Go to the **Deployments** tab → Click the three dots `...` on the latest deployment → Select **Redeploy** (without cache) so Vite bakes in the new backend URL.
+5. All assessment stages (Behaviour, AI Counselling, Face Expression, Voice Stress, Severity Scoring, and Dashboard) will now communicate directly with your live Render backend!
 
 ---
 

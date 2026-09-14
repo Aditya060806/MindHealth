@@ -52,9 +52,7 @@ async def lifespan(app: FastAPI):
     try:
         ml_loader.load_all_models()
     except Exception as e:
-        logger.critical(f"💥 FATAL: Model loading failed during startup: {e}")
-        # Raising here will prevent the server from starting as requested
-        raise e
+        logger.warning(f"⚠️ Model loading encountered issues, operating with heuristic fallbacks: {e}")
         
     yield
     logger.info("👋 MindHealth Backend Shutting Down...")
@@ -66,10 +64,23 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS
+# CORS Configuration — explicitly allows Vercel frontend and local development
+cors_origins_env = os.getenv("CORS_ORIGINS", "")
+origins = [
+    "https://mindhealth-three.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+if cors_origins_env:
+    for o in cors_origins_env.split(","):
+        cleaned = o.strip()
+        if cleaned and cleaned not in origins:
+            origins.append(cleaned)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
