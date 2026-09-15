@@ -368,7 +368,7 @@ export default function Dashboard() {
                                     </div>
 
                                     <div className="relative mt-8 w-56 h-56 flex items-center justify-center">
-                                        <ResponsiveContainer width="100%" height="100%">
+                                        <ResponsiveContainer width={224} height={224} minWidth={0} minHeight={0}>
                                             <RadialBarChart
                                                 cx="50%" cy="50%"
                                                 innerRadius="70%" outerRadius="100%"
@@ -454,8 +454,8 @@ export default function Dashboard() {
                                         </div>
                                     )}
 
-                                    <div className="h-64 w-full">
-                                        <ResponsiveContainer width="100%" height="100%">
+                                    <div className="h-64 w-full min-w-0">
+                                        <ResponsiveContainer width="100%" height={240} minWidth={0} minHeight={0}>
                                             <AreaChart data={data.historical_trends} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                                 <defs>
                                                     <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
@@ -802,14 +802,14 @@ export default function Dashboard() {
 
                                 {/* Video 3 */}
                                 <a
-                                    href="https://www.youtube.com/watch?v=8TuRYHQTrZA"
+                                    href="https://www.youtube.com/watch?v=b1H3xO3x_Js"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="bg-white border border-slate-200 rounded-2xl p-2.5 flex gap-3.5 items-center hover:bg-slate-50 hover:border-emerald-300 transition-all cursor-pointer shadow-xs group"
                                 >
                                     <div className="w-24 h-14 rounded-xl relative flex items-center justify-center overflow-hidden border border-slate-200 flex-shrink-0">
                                         <img
-                                            src="https://img.youtube.com/vi/8TuRYHQTrZA/hqdefault.jpg"
+                                            src="https://img.youtube.com/vi/b1H3xO3x_Js/hqdefault.jpg"
                                             alt="Yoga for Stress Thumbnail"
                                             className="absolute inset-0 w-full h-full object-cover"
                                         />

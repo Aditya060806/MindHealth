@@ -121,10 +121,10 @@ def analyse_behaviour(
             daily_steps=data.daily_steps,
             systolic_bp=data.systolic_bp,
             diastolic_bp=data.diastolic_bp,
-            behaviour_risk=result["behaviour_risk"],
-            confidence=result["confidence"],
-            severity_score=result["severity_score"],
-            recommendations=result["recommendations"]
+            behaviour_risk=result.get("behaviour_risk") or result.get("risk", "Medium"),
+            confidence=result.get("confidence", 0.85),
+            severity_score=result.get("severity_score") or result.get("severity", 5),
+            recommendations=result.get("recommendations", [])
         )
         db.add(behaviour)
         db.commit()
@@ -202,10 +202,10 @@ def analyse_behaviour_manual(
             daily_steps=data.daily_steps,
             systolic_bp=data.systolic_bp,
             diastolic_bp=data.diastolic_bp,
-            behaviour_risk=result["behaviour_risk"],
-            confidence=result["confidence"],
-            severity_score=result["severity_score"],
-            recommendations=result["recommendations"]
+            behaviour_risk=result.get("behaviour_risk") or result.get("risk", "Medium"),
+            confidence=result.get("confidence", 0.85),
+            severity_score=result.get("severity_score") or result.get("severity", 5),
+            recommendations=result.get("recommendations", [])
         )
         db.add(behaviour)
         db.commit()

@@ -113,10 +113,10 @@ async def call_gemini(messages: list, system_prompt: str = None, context: dict =
                         if parts and "text" in parts[0]:
                             return parts[0]["text"]
                     return "I am here with you. Please tell me more about how you are feeling."
-                elif response.status_code == 429:
-                    logger.warning(f"Attempt {attempt + 1}: Gemini rate limited (429). Retrying...")
+                elif response.status_code in [429, 503]:
+                    logger.warning(f"Attempt {attempt + 1}: Gemini busy/rate limited ({response.status_code}). Retrying with backoff...")
                     if attempt < max_retries - 1:
-                        await asyncio.sleep(2 * (2 ** attempt))
+                        await asyncio.sleep(1.5 * (2 ** attempt))
                         continue
                 else:
                     logger.error(f"Gemini API error {response.status_code}: {response.text}")
@@ -181,9 +181,10 @@ async def call_gemini_stream(messages: list, system_prompt: str = None, context:
                                 except Exception:
                                     continue
                         return
-                    elif response.status_code == 429:
+                    elif response.status_code in [429, 503]:
+                        logger.warning(f"Attempt {attempt + 1}: Gemini stream busy ({response.status_code}). Retrying with backoff...")
                         if attempt < max_retries - 1:
-                            await asyncio.sleep(2 * (2 ** attempt))
+                            await asyncio.sleep(1.5 * (2 ** attempt))
                             continue
                     else:
                         logger.error(f"Gemini stream error {response.status_code}")

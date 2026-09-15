@@ -203,8 +203,10 @@ def predict_behaviour(input_data: dict):
             confidence = round(0.89 + (score - 68) / 200, 2)
 
         return {
+            "behaviour_risk": risk,
             "risk": risk,
             "confidence": min(confidence, 0.96),
+            "severity_score": severity,
             "severity": severity,
             "recommendations": BEHAVIOUR_RECOMMENDATIONS.get(risk, BEHAVIOUR_RECOMMENDATIONS["Low"])
         }

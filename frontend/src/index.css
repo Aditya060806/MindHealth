@@ -95,11 +95,9 @@ body {
   color: #334155;
 }
 
-/* Hide OS cursor globally so custom cursor can take over on desktop */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
+/* Normal native cursor everywhere */
+a, button, [role="button"], input[type="submit"], input[type="button"], select {
+  cursor: pointer;
 }
 
 /* ── Landing page light scope ────────────────────────────────────────── */

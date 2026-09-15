@@ -445,8 +445,8 @@ export default function BehaviourTest() {
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                     <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-slate-200/90 shadow-sm print:border print:border-gray-300 print:bg-transparent print:shadow-none print:break-inside-avoid">
                                         <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2 text-xs uppercase tracking-wider print:text-black"><BarChart2 className="text-emerald-600" size={16} /> Metric Visualization</h3>
-                                        <div className="h-[240px] w-full">
-                                            <ResponsiveContainer width="100%" height="100%">
+                                        <div className="h-[240px] w-full min-w-0">
+                                            <ResponsiveContainer width="100%" height={240} minWidth={0} minHeight={0}>
                                                 <BarChart data={[
                                                     { name: 'Sleep Q', val: form.sleep_quality, max: 10, color: '#059669' },
                                                     { name: 'Stress', val: form.stress_level, max: 10, color: '#D97706' },

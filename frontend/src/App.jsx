@@ -11,7 +11,6 @@ import VoiceAnalysis from './pages/VoiceAnalysis'
 import FinalSeverity from './pages/FinalSeverity'
 import Dashboard from './pages/Dashboard'
 import Particles from './components/Particles'
-import CustomCursor from './components/CustomCursor'
 import CinematicTransition from './components/CinematicTransition'
 
 /* Separate component so useLocation hook works inside BrowserRouter */
@@ -61,9 +60,6 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        {/* Custom cursor — rendered above everything */}
-        <CustomCursor />
-
         <AppRoutes />
 
         <Toaster position="top-right"
