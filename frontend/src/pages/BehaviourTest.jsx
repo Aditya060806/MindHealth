@@ -8,7 +8,7 @@ import StepProgress from '../components/StepProgress'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { AlertTriangle, CheckCircle, Info, Zap, User, ArrowLeft, BarChart2, RefreshCw, Brain } from 'lucide-react'
 
-const BMI_OPTIONS = ['Healthy Weight', 'Overweight', 'Obese']
+const BMI_OPTIONS = ['Underweight', 'Healthy Weight', 'Overweight', 'Obese']
 const GENDER_OPTIONS = ['Male', 'Female']
 const OCCUPATION_OPTIONS = ['Accountant', 'Doctor', 'Engineer', 'Lawyer', 'Manager', 'Nurse', 'Sales_person', 'Scientist', 'Software Engineer', 'Student', 'Teacher']
 
@@ -60,21 +60,23 @@ export default function BehaviourTest() {
     })
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [manualMode, setManualMode] = useState(false)
+    const [manualMode, setManualMode] = useState(true) // Always true — open access, no login required
     const [manualInfo, setManualInfo] = useState({
-        full_name: '', age: 25, gender: 'Male', occupation: 'Engineer'
+        full_name: 'Guest User', age: 25, gender: 'Male', occupation: 'Engineer'
     })
 
     useEffect(() => {
         API.get('/auth/me').then(r => {
             setUserInfo(r.data)
             setManualInfo({
-                full_name: r.data.full_name,
-                age: r.data.age,
-                gender: r.data.gender,
-                occupation: r.data.occupation
+                full_name: r.data.full_name || 'Guest User',
+                age: r.data.age || 25,
+                gender: r.data.gender || 'Male',
+                occupation: r.data.occupation || 'Engineer'
             })
-        }).catch(() => { })
+        }).catch(() => {
+            // Guest mode — keep defaults, don't show error
+        })
     }, [])
 
     const updateLabel = (k, v) => setManualInfo(p => ({ ...p, [k]: v }))
@@ -213,43 +215,34 @@ export default function BehaviourTest() {
                                 </div>
 
                                 <div className="space-y-8">
-                                    {/* Identity Section */}
-                                    <div className={`grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-2xl border transition-all ${manualMode ? 'bg-slate-50 border-emerald-500/30 shadow-sm' : 'bg-slate-50/80 border-slate-200'}`}>
+                                    {/* Identity Section — always editable (open access, no login) */}
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-2xl border bg-slate-50 border-emerald-500/30 shadow-sm transition-all">
                                         <div className="field-group">
                                             <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Full Name</label>
                                             <input type="text" className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 text-lg tracking-normal"
-                                                value={manualMode ? manualInfo.full_name : (userInfo?.full_name || 'Loading...')}
+                                                value={manualInfo.full_name}
                                                 onChange={e => updateLabel('full_name', e.target.value)}
-                                                readOnly={!manualMode} />
+                                                placeholder="Your name" />
                                         </div>
                                         <div className="field-group">
                                             <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Age</label>
                                             <input type="number" className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 text-lg tracking-normal"
-                                                value={manualMode ? manualInfo.age : (userInfo?.age || 0)}
-                                                onChange={e => updateLabel('age', parseInt(e.target.value) || '')}
-                                                readOnly={!manualMode} />
+                                                value={manualInfo.age}
+                                                onChange={e => updateLabel('age', parseInt(e.target.value) || '')} />
                                         </div>
                                         <div className="field-group">
                                             <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Gender</label>
-                                            {manualMode ? (
-                                                <select className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 appearance-none text-lg tracking-normal cursor-pointer"
-                                                    value={manualInfo.gender} onChange={e => updateLabel('gender', e.target.value)}>
-                                                    {GENDER_OPTIONS.map(o => <option key={o} value={o} className="bg-white text-slate-800">{o}</option>)}
-                                                </select>
-                                            ) : (
-                                                <input type="text" className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 text-lg tracking-normal" value={userInfo?.gender || '...'} readOnly />
-                                            )}
+                                            <select className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 appearance-none text-lg tracking-normal cursor-pointer"
+                                                value={manualInfo.gender} onChange={e => updateLabel('gender', e.target.value)}>
+                                                {GENDER_OPTIONS.map(o => <option key={o} value={o} className="bg-white text-slate-800">{o}</option>)}
+                                            </select>
                                         </div>
                                         <div className="field-group">
                                             <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Occupation</label>
-                                            {manualMode ? (
-                                                <select className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 appearance-none text-lg tracking-normal cursor-pointer"
-                                                    value={manualInfo.occupation} onChange={e => updateLabel('occupation', e.target.value)}>
-                                                    {OCCUPATION_OPTIONS.map(o => <option key={o} value={o} className="bg-white text-slate-800">{o}</option>)}
-                                                </select>
-                                            ) : (
-                                                <input type="text" className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 text-lg tracking-normal" value={userInfo?.occupation || '...'} readOnly />
-                                            )}
+                                            <select className="bg-transparent border-none text-slate-900 font-bold w-full focus:ring-0 p-0 appearance-none text-lg tracking-normal cursor-pointer"
+                                                value={manualInfo.occupation} onChange={e => updateLabel('occupation', e.target.value)}>
+                                                {OCCUPATION_OPTIONS.map(o => <option key={o} value={o} className="bg-white text-slate-800">{o}</option>)}
+                                            </select>
                                         </div>
                                     </div>
 

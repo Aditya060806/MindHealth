@@ -16,7 +16,7 @@ export default defineConfig({
     }
   },
   build: {
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 1500, // face-api.js is a large ML library, suppress known warning
     rollupOptions: {
       output: {
         manualChunks: {

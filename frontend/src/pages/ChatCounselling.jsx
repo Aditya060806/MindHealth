@@ -123,11 +123,8 @@ export default function ChatCounselling() {
             });
 
             if (!response.ok) {
-                const is401 = response.status === 401;
-                if (is401) {
-                    localStorage.removeItem("mindcare_token");
-                    localStorage.removeItem("mindcare_user");
-                    window.location.href = "/login";
+                if (response.status === 401) {
+                    console.warn('Chat API 401 — operating in guest/open-access mode.');
                 }
                 throw new Error("HTTP Error " + response.status);
             }
@@ -332,9 +329,9 @@ export default function ChatCounselling() {
 
                 {/* Framer Motion Page Entrance */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.5 }}
+                    transition={{ duration: 0.4 }}
                     className="w-full max-w-5xl mx-auto z-10 relative flex flex-col items-center space-y-8"
                 >
                     <div className="flex flex-col gap-6 w-full">

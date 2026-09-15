@@ -96,7 +96,7 @@ export default function Dashboard() {
     const handleLogout = () => {
         localStorage.removeItem('mindcare_token')
         localStorage.removeItem('mindcare_user')
-        window.location.href = '/login'
+        window.location.href = '/' // Redirect to landing, not login
     }
 
     const handleEditSave = async (e) => {

@@ -1,42 +1,32 @@
 import axios from "axios";
 
-const API_URL = "https://hashmil-muahmmed08-mindcare-backend.hf.space";
+// Use VITE_API_URL env var (set in Vercel/local .env), fallback to localhost for dev
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 120000, // 120 seconds to prevent premature drops of long ML/OpenRouter requests
+  timeout: 120000, // 120 seconds for long ML / streaming requests
 });
 
-// Request interceptor to attach JWT token
+// Request interceptor to attach JWT token (harmless when absent)
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("mindcare_token") || localStorage.getItem("access_token");
     if (token) {
-      if (!config.headers) {
-        config.headers = {};
-      }
-      // Use both .set() if available, or direct assignment to ensure it applies in all Axios versions
-      if (typeof config.headers.set === 'function') {
-        config.headers.set('Authorization', `Bearer ${token}`);
-      } else {
-        config.headers['Authorization'] = `Bearer ${token}`;
-      }
+      config.headers = config.headers || {};
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response interceptor to handle 401 errors globally for the chat service as well
+// Response interceptor — silently warn on 401, never redirect to /login (open access)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("mindcare_token");
-      localStorage.removeItem("mindcare_user");
-      window.location.href = "/login";
+      console.warn("API returned 401 — operating in guest/open-access mode.");
     }
     return Promise.reject(error);
   }
