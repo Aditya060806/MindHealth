@@ -12,15 +12,8 @@ export default function ChatCounselling() {
     const nav = useNavigate()
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState('')
-    const [isLoading, setIsLoading] = useState(true)
-
     // Focus state for input inline styling
     const [isFocused, setIsFocused] = useState(false)
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1500)
-        return () => clearTimeout(timer)
-    }, [])
 
     const [loading, setLoading] = useState(false)
     const [emergency, setEmergency] = useState(false)
@@ -321,43 +314,7 @@ export default function ChatCounselling() {
     )
 
     return (
-        <>
-            <AnimatePresence>
-                {isLoading && (
-                    <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-slate-50"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex flex-col items-center gap-6"
-                        >
-                            <div className="flex items-center justify-center gap-3.5 mb-2">
-                                <motion.div animate={{ boxShadow: ['0 0 16px rgba(16,185,129,0.2)', '0 0 32px rgba(16,185,129,0.35)', '0 0 16px rgba(16,185,129,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(20,184,166,0.08) 100%)', border: '1.5px solid rgba(16,185,129,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <Brain size={26} className="text-emerald-600" />
-                                </motion.div>
-                                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '30px', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #0f172a 20%, #065f46 70%, #059669 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
-                                    MINDHEALTH
-                                </span>
-                            </div>
-                            <div className="w-48 h-1.5 rounded-full overflow-hidden mt-2 bg-slate-200">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full bg-emerald-600"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <div className="relative flex flex-col items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 min-h-screen font-sans">
+        <div className="relative flex flex-col items-center justify-center py-16 px-4 overflow-hidden bg-slate-50 min-h-screen font-sans">
                 {/* Clean Light Background Gradients */}
                 <div className="absolute inset-0 z-0 pointer-events-none print:hidden">
                     <div
@@ -651,6 +608,5 @@ export default function ChatCounselling() {
 
                 </motion.div>
             </div>
-        </>
     )
 }

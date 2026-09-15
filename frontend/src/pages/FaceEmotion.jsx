@@ -33,12 +33,6 @@ export default function FaceEmotion() {
     const isRecordingRef = useRef(false)
     const emotionCountsRef = useRef({ Happy: 0, Neutral: 0, Sad: 0, Angry: 0, Surprise: 0, Fear: 0, Disgust: 0 })
 
-    const [isLoading, setIsLoading] = useState(true)
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1500)
-        return () => clearTimeout(timer)
-    }, [])
-
     const [recording, setRecording] = useState(false)
     const [liveCounts, setLiveCounts] = useState({ Happy: 0, Neutral: 0, Sad: 0, Angry: 0, Surprise: 0, Fear: 0, Disgust: 0 })
     const [dominantEmotion, setDominantEmotion] = useState(null)
@@ -248,46 +242,8 @@ export default function FaceEmotion() {
         return "Stable (Consistent emotional state)";
     };
 
-    const isAppActive = !!stream || recording || !!videoBlob || !!result;
-
     return (
-        <>
-            <AnimatePresence>
-                {isLoading && (
-                    <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-slate-50"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex flex-col items-center gap-6"
-                        >
-                            <div className="flex items-center justify-center gap-3.5 mb-2">
-                                <motion.div animate={{ boxShadow: ['0 0 16px rgba(16,185,129,0.2)', '0 0 32px rgba(16,185,129,0.35)', '0 0 16px rgba(16,185,129,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(20,184,166,0.08) 100%)', border: '1.5px solid rgba(16,185,129,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <Brain size={26} className="text-emerald-600" />
-                                </motion.div>
-                                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '30px', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(170deg, #0f172a 20%, #065f46 70%, #059669 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>
-                                    MINDHEALTH
-                                </span>
-                            </div>
-                            <div className="w-48 h-1.5 rounded-full overflow-hidden mt-2 bg-slate-200">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full bg-emerald-600"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <div className="min-h-screen text-slate-800 font-sans selection:bg-emerald-500/20 overflow-x-hidden relative flex flex-col pt-24 pb-12 bg-slate-50">
+        <div className="min-h-screen text-slate-800 font-sans selection:bg-emerald-500/20 overflow-x-hidden relative flex flex-col pt-24 pb-12 bg-slate-50">
                 <div className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-700"
                     style={{
                         background: `
@@ -298,11 +254,11 @@ export default function FaceEmotion() {
                         opacity: stream ? 0.3 : 1
                     }} />
 
-                {/* Framer Motion Page Entrance */}
+                {/* Page Entrance */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.5 }}
+                    transition={{ duration: 0.3 }}
                     className="w-full max-w-5xl mx-auto z-10 relative flex flex-col items-center space-y-8"
                 >
                     <div className="flex flex-col gap-6 w-full">
@@ -790,6 +746,5 @@ export default function FaceEmotion() {
                     </div>
                 </motion.div>
             </div>
-        </>
     )
 }

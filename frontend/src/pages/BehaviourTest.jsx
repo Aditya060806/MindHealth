@@ -61,15 +61,11 @@ export default function BehaviourTest() {
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(false)
     const [manualMode, setManualMode] = useState(false)
-    const [showPreloader, setShowPreloader] = useState(true)
     const [manualInfo, setManualInfo] = useState({
         full_name: '', age: 25, gender: 'Male', occupation: 'Engineer'
     })
 
     useEffect(() => {
-        // Handle preloader
-        const timer = setTimeout(() => setShowPreloader(false), 1500)
-
         API.get('/auth/me').then(r => {
             setUserInfo(r.data)
             setManualInfo({
@@ -79,8 +75,6 @@ export default function BehaviourTest() {
                 occupation: r.data.occupation
             })
         }).catch(() => { })
-
-        return () => clearTimeout(timer)
     }, [])
 
     const updateLabel = (k, v) => setManualInfo(p => ({ ...p, [k]: v }))
@@ -139,46 +133,7 @@ export default function BehaviourTest() {
     }
 
     return (
-        <>
-            <AnimatePresence>
-                {showPreloader && (
-                    <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] bg-slate-50 flex items-center justify-center pointer-events-none"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex flex-col items-center gap-6"
-                        >
-                            <div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-emerald-50 border border-emerald-300 overflow-hidden shadow-[0_4px_24px_rgba(16,185,129,0.2)]">
-                                <motion.div
-                                    animate={{ top: ['100%', '-10%'] }}
-                                    transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-                                    className="absolute left-0 right-0 h-1 bg-emerald-500 shadow-[0_0_12px_#059669]"
-                                />
-                                <Brain size={34} className="text-emerald-600 z-10" />
-                            </div>
-                            <h2 className="text-slate-900 font-display text-2xl md:text-3xl font-bold tracking-[0.2em] relative">
-                                STEP <span className="text-emerald-600">1</span> : BEHAVIOUR TEST
-                            </h2>
-                            <div className="w-48 h-1.5 bg-slate-200 rounded-full overflow-hidden mt-2">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full bg-emerald-600"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <div className="relative flex flex-col items-center justify-center min-h-screen py-16 px-4 bg-slate-50 overflow-hidden font-sans">
+        <div className="relative flex flex-col items-center justify-center min-h-screen py-16 px-4 bg-slate-50 overflow-hidden font-sans">
                 {/* Clean Light Background Gradients */}
                 <div className="absolute inset-0 z-0 pointer-events-none print:hidden">
                     <div
@@ -521,6 +476,5 @@ export default function BehaviourTest() {
                     </motion.div>
                 </div>
             </div>
-        </>
     )
 }

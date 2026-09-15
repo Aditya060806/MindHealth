@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
 import Landing from './pages/Landing'
@@ -10,48 +9,24 @@ import FaceEmotion from './pages/FaceEmotion'
 import VoiceAnalysis from './pages/VoiceAnalysis'
 import FinalSeverity from './pages/FinalSeverity'
 import Dashboard from './pages/Dashboard'
-import Particles from './components/Particles'
-import CinematicTransition from './components/CinematicTransition'
 
-/* Separate component so useLocation hook works inside BrowserRouter */
+/* Clean, instant route navigation without laggy transitions */
 function AppRoutes() {
   const location = useLocation()
-  const isLanding = location.pathname === '/'
 
   return (
-    <div className="relative min-h-screen">
-      {/* Particle backdrop only on inner pages (Landing has its own background) */}
-      {!isLanding && <Particles />}
-
-      <div className="relative z-10">
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={
-              <CinematicTransition><Landing /></CinematicTransition>
-            } />
-            <Route path="/behaviour" element={
-              <CinematicTransition><BehaviourTest /></CinematicTransition>
-            } />
-            <Route path="/chat" element={
-              <CinematicTransition><ChatCounselling /></CinematicTransition>
-            } />
-            <Route path="/face" element={
-              <CinematicTransition><FaceEmotion /></CinematicTransition>
-            } />
-            <Route path="/voice" element={
-              <CinematicTransition><VoiceAnalysis /></CinematicTransition>
-            } />
-            <Route path="/severity" element={
-              <CinematicTransition><FinalSeverity /></CinematicTransition>
-            } />
-            <Route path="/dashboard" element={
-              <CinematicTransition><Dashboard /></CinematicTransition>
-            } />
-            {/* Catch-all: redirect stale auth routes to landing */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </AnimatePresence>
-      </div>
+    <div className="relative min-h-screen bg-slate-50 text-slate-900 font-sans">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Landing />} />
+        <Route path="/behaviour" element={<BehaviourTest />} />
+        <Route path="/chat" element={<ChatCounselling />} />
+        <Route path="/face" element={<FaceEmotion />} />
+        <Route path="/voice" element={<VoiceAnalysis />} />
+        <Route path="/severity" element={<FinalSeverity />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Catch-all: redirect any unknown route to landing */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
   )
 }

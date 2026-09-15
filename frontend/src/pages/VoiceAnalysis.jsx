@@ -85,13 +85,6 @@ export default function VoiceAnalysis() {
     const [vocalStatus, setVocalStatus] = useState("Listening...")
     const [statusColor, setStatusColor] = useState("text-slate-400")
 
-    // Inline preloader — same 1.5s pattern as Face Emotion page
-    const [isLoading, setIsLoading] = useState(true)
-    React.useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1500)
-        return () => clearTimeout(timer)
-    }, [])
-
     const mediaRecRef = useRef(null)
     const chunksRef = useRef([])
     const authContextRef = useRef(null)
@@ -247,62 +240,24 @@ export default function VoiceAnalysis() {
     }
 
     return (
-        <>
-            {/* ── 1.5s Inline Preloader ── */}
-            <AnimatePresence>
-                {isLoading && (
-                    <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-slate-50"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex flex-col items-center gap-6"
-                        >
-                            <div className="flex items-center justify-center gap-4 mb-2">
-                                <motion.div animate={{ boxShadow: ['0 0 20px rgba(5,150,105,0.2)', '0 0 45px rgba(5,150,105,0.4)', '0 0 20px rgba(5,150,105,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 border border-emerald-400 flex items-center justify-center shadow-md">
-                                    <Brain size={28} className="text-white" />
-                                </motion.div>
-                                <span className="font-display text-3xl font-extrabold tracking-wider bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-600 bg-clip-text text-transparent">
-                                    MINDHEALTH
-                                </span>
-                            </div>
-                            <div className="w-48 h-1.5 rounded-full overflow-hidden mt-2 bg-slate-200">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "100%" }}
-                                    transition={{ duration: 1.4, ease: "easeInOut" }}
-                                    className="h-full bg-emerald-600"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* ── Root Wrapper with Clean Clinical Background ── */}
+        <div
+            className="min-h-screen text-slate-800 font-sans selection:bg-emerald-500/20 overflow-x-hidden relative flex flex-col pt-24 pb-12 bg-slate-50"
+        >
+            {/* Soft ambient lighting */}
             <div
-                className="min-h-screen text-slate-800 font-sans selection:bg-emerald-500/20 overflow-x-hidden relative flex flex-col pt-24 pb-12 bg-slate-50"
-            >
-                {/* Soft ambient lighting */}
-                <div
-                    className="fixed inset-0 z-0 pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(circle at 50% 0%, rgba(5, 150, 105, 0.07) 0%, transparent 65%), radial-gradient(circle at 85% 85%, rgba(13, 148, 136, 0.05) 0%, transparent 55%)',
-                    }}
-                />
+                className="fixed inset-0 z-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle at 50% 0%, rgba(5, 150, 105, 0.07) 0%, transparent 65%), radial-gradient(circle at 85% 85%, rgba(13, 148, 136, 0.05) 0%, transparent 55%)',
+                }}
+            />
 
-                {/* Page content */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.5 }}
-                    className="w-full max-w-4xl mx-auto z-10 relative flex flex-col items-center space-y-8 px-4"
-                >
+            {/* Page content */}
+            <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full max-w-4xl mx-auto z-10 relative flex flex-col items-center space-y-8 px-4"
+            >
                     {/* Back button + Step Progress */}
                     <div className="flex flex-col gap-6 w-full">
                         {/* Scaled Branded Header */}
@@ -575,6 +530,5 @@ export default function VoiceAnalysis() {
                     </div>
                 </motion.div>
             </div>
-        </>
     )
 }

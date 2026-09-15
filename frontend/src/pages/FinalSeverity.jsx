@@ -10,20 +10,11 @@ import StepProgress from '../components/StepProgress'
 export default function FinalSeverity() {
     const nav = useNavigate()
     const [data, setData] = useState(null)
-    const [loadStage, setLoadStage] = useState(1) // 1 = success, 2 = calculating, 3 = ready to unblock
     const [apiDataReady, setApiDataReady] = useState(false)
     const [emergency, setEmergency] = useState(false)
     const [acknowledged, setAcknowledged] = useState(false)
     const [counter, setCounter] = useState(0)
     const [expandedCard, setExpandedCard] = useState(null)
-
-    useEffect(() => {
-        // Stage 1 -> Stage 2 (Show Success for 2.5s)
-        const timer1 = setTimeout(() => setLoadStage(2), 2500)
-        // Stage 2 -> Stage 3 (Force Processing Spinner for another 2s)
-        const timer2 = setTimeout(() => setLoadStage(3), 4500) // 2.5s + 2.0s
-        return () => { clearTimeout(timer1); clearTimeout(timer2); }
-    }, [])
 
     useEffect(() => {
         // Parallel API Fetch
@@ -34,11 +25,12 @@ export default function FinalSeverity() {
             
             // Animate counter
             let n = 0
+            const target = r.data.final_severity || 0
             const iv = setInterval(() => {
-                n = Math.min(n + 0.5, r.data.final_severity)
+                n = Math.min(n + 1, target)
                 setCounter(Math.round(n))
-                if (n >= r.data.final_severity) clearInterval(iv)
-            }, 80)
+                if (n >= target) clearInterval(iv)
+            }, 30)
         }).catch(() => { 
             setApiDataReady(true);
             toast.error('Failed to calculate severity') 
@@ -48,69 +40,17 @@ export default function FinalSeverity() {
     const RISK_COLOR = { Low: '#10B981', Moderate: '#F59E0B', High: '#EF4444' }
     const color = data ? RISK_COLOR[data.risk_level] : '#6366F1'
 
-    // Strict Conditional Rendering for the chained loader
-    // Stage 1: Show the Green Success Tick for the first 2.5 seconds
-    if (loadStage === 1) {
+    // Show clean spinner only while waiting for live API response
+    if (!apiDataReady) {
         return (
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key="success"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50"
-                >
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="flex flex-col items-center gap-6"
-                    >
-                        <div className="flex items-center justify-center gap-4 mb-2">
-                            <motion.div animate={{ boxShadow: ['0 0 20px rgba(5,150,105,0.2)', '0 0 45px rgba(5,150,105,0.4)', '0 0 20px rgba(5,150,105,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 border border-emerald-500 flex items-center justify-center shadow-md">
-                                <Brain size={28} className="text-white" />
-                            </motion.div>
-                            <span className="font-display text-3xl font-extrabold tracking-wider bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-600 bg-clip-text text-transparent">
-                                MINDHEALTH
-                            </span>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-slate-500 text-sm font-semibold tracking-wide">
-                                Synthesizing multimodal assessment data...
-                            </p>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            </AnimatePresence>
-        );
-    }
-
-    // Stage 2: Force the Processing Spinner. 
-    if (loadStage === 2 || !apiDataReady) {
-        return (
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key="calculating"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-50"
-                >
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-center flex flex-col items-center gap-6"
-                    >
-                        <div className="relative">
-                            <div className="w-16 h-16 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin shadow-sm" />
-                        </div>
-                        <p className="text-slate-700 font-semibold tracking-wider uppercase text-xs sm:text-sm font-display">
-                            Computing Multimodal Severity Score...
-                        </p>
-                    </motion.div>
-                </motion.div>
-            </AnimatePresence>
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+                <div className="text-center flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-3 border-emerald-200 border-t-emerald-600 rounded-full animate-spin" />
+                    <p className="text-slate-600 font-semibold text-sm">
+                        Computing Multimodal Severity Assessment...
+                    </p>
+                </div>
+            </div>
         );
     }
 

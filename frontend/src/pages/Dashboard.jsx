@@ -31,7 +31,6 @@ export default function Dashboard() {
     const [data, setData] = useState(null)
     const [suggestions, setSuggestions] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [showPreloader, setShowPreloader] = useState(true)
 
     // Chatbot State
     const [chatMessages, setChatMessages] = useState([
@@ -68,10 +67,6 @@ export default function Dashboard() {
             toast.error("Failed to load dashboard")
             setLoading(false)
         })
-
-        // Preloader transition out
-        const timer = setTimeout(() => setShowPreloader(false), 1500)
-        return () => clearTimeout(timer)
     }, [])
 
     useEffect(() => {
@@ -205,42 +200,7 @@ export default function Dashboard() {
     const currentMonthYear = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
     return (
-        <>
-            <motion.div
-                initial={showPreloader ? { opacity: 1 } : false}
-                animate={{ opacity: showPreloader ? 1 : 0 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className={`fixed inset-0 z-[9999] bg-slate-50 flex items-center justify-center pointer-events-none ${!showPreloader ? 'pointer-events-none opacity-0' : ''}`}
-                style={{ display: showPreloader ? 'flex' : 'none' }}
-            >
-                {showPreloader && (
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="flex flex-col items-center gap-6"
-                    >
-                        <div className="flex items-center justify-center gap-4 mb-2">
-                            <motion.div animate={{ boxShadow: ['0 0 20px rgba(5,150,105,0.2)', '0 0 45px rgba(5,150,105,0.4)', '0 0 20px rgba(5,150,105,0.2)'] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 border border-emerald-500 flex items-center justify-center shadow-md">
-                                <Brain size={28} className="text-white" />
-                            </motion.div>
-                            <span className="font-display text-3xl font-extrabold tracking-wider bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-600 bg-clip-text text-transparent">
-                                MINDHEALTH
-                            </span>
-                        </div>
-                        <div className="w-48 h-1.5 bg-slate-200 rounded-full overflow-hidden mt-2">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: "100%" }}
-                                transition={{ duration: 1.4, ease: "easeInOut" }}
-                                className="h-full bg-emerald-600"
-                            />
-                        </div>
-                    </motion.div>
-                )}
-            </motion.div>
-
-            <div className="min-h-screen bg-slate-50 text-slate-800 font-sans relative overflow-x-hidden">
+        <div className="min-h-screen bg-slate-50 text-slate-800 font-sans relative overflow-x-hidden">
                 {/* Soft ambient lighting */}
                 <div
                     className="fixed inset-0 z-0 pointer-events-none"
@@ -901,6 +861,5 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
-        </>
     )
 }
