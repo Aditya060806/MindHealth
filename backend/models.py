@@ -147,3 +147,78 @@ class PasswordResetOTP(Base):
     otp = Column(String(6), nullable=False)
     expires_at = Column(DateTime(timezone=True), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class StudentProfile(Base):
+    __tablename__ = "student_profiles"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("register_database.id"), unique=True)
+    age = Column(Integer, default=20)
+    student_year = Column(String(50), default="2nd Year Undergrad")  # 1st Year, 2nd Year, 3rd Year, Final Year, Postgrad
+    field_of_study = Column(String(100), default="Engineering & Tech")  # Engineering/Tech, Medical, Commerce, Humanities, Science, Law
+    living_situation = Column(String(50), default="Hostel / Campus Dorm")  # Hostel, Shared PG, Commuter / Living with Family
+    academic_stage = Column(String(50), default="Regular Semester")  # Regular, Mid-terms, Final Exams, Placements/Internships, Vacation
+    primary_stressors = Column(JSON, default=list)  # ["Exams", "Placements", "Sleep", "Loneliness"]
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+class StudentAssessmentResult(Base):
+    __tablename__ = "student_assessment_results"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("register_database.id"), index=True)
+    
+    # 8 Core Student Dimensions (0-100 normalized score)
+    academic_stress = Column(Integer, default=50)       # 0 (calm) to 100 (severe overload)
+    anxiety_score = Column(Integer, default=50)         # 0 to 100
+    burnout_score = Column(Integer, default=50)         # 0 to 100
+    sleep_score = Column(Integer, default=50)           # 0 (poor recovery) to 100 (optimal)
+    social_score = Column(Integer, default=50)          # 0 (isolated) to 100 (connected)
+    career_stress = Column(Integer, default=50)         # 0 to 100
+    emotional_score = Column(Integer, default=50)       # 0 (distressed) to 100 (thriving)
+    lifestyle_score = Column(Integer, default=50)       # 0 (unbalanced) to 100 (healthy)
+    
+    overall_score = Column(Integer, default=50)         # 0-100 overall wellbeing index
+    severity_category = Column(String(50), default="Moderate Concern")  # Doing Well, Mild Concern, Moderate Concern, High Concern, Needs Immediate Support
+    risk_level = Column(String(20), default="Low")       # Low, Moderate, High, Crisis
+    
+    responses = Column(JSON, default=dict)              # Raw answers map
+    ai_insights = Column(JSON, default=dict)            # {overview, this_week, watch_for, positive_areas, suggested_tools}
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class DailyCheckIn(Base):
+    __tablename__ = "daily_checkins"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("register_database.id"), index=True)
+    date = Column(String(20), index=True)               # YYYY-MM-DD
+    mood = Column(Integer, default=3)                   # 1 (Low) to 5 (Great)
+    energy = Column(Integer, default=3)                 # 1 to 5
+    stress = Column(Integer, default=3)                 # 1 to 5
+    sleep_hours = Column(Float, default=7.0)
+    sleep_quality = Column(Integer, default=3)          # 1 to 5
+    motivation = Column(Integer, default=3)             # 1 to 5
+    academic_pressure = Column(Integer, default=3)      # 1 to 5
+    tags = Column(JSON, default=list)                   # ["exams", "hostel", "placements", "deadlines"]
+    note = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class StudentJournalEntry(Base):
+    __tablename__ = "student_journal_entries"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("register_database.id"), index=True)
+    title = Column(String(200), default="College Reflection")
+    content = Column(Text, nullable=False)
+    prompt = Column(String(300), nullable=True)
+    category = Column(String(50), default="General")     # Academic, Personal, Career, Hostel, Social
+    mood_tag = Column(String(30), default="Neutral")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class StudySession(Base):
+    __tablename__ = "study_sessions"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("register_database.id"), index=True)
+    subject_or_task = Column(String(200), default="General Study")
+    duration_minutes = Column(Integer, default=25)
+    stress_rating = Column(Integer, default=3)          # 1 to 5
+    burnout_flag = Column(Boolean, default=False)
+    completed = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+

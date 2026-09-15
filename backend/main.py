@@ -90,7 +90,7 @@ app.add_middleware(
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 # Include routers
-from routers import auth, behaviour, chat, face, voice, severity, dashboard
+from routers import auth, behaviour, chat, face, voice, severity, dashboard, student_assessment, student_features
 
 app.include_router(auth.router)
 app.include_router(behaviour.router)
@@ -99,6 +99,8 @@ app.include_router(face.router)
 app.include_router(voice.router)
 app.include_router(severity.router)
 app.include_router(dashboard.router)
+app.include_router(student_assessment.router)
+app.include_router(student_features.router)
 
 @app.get("/")
 def root():

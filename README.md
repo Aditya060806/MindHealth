@@ -1,7 +1,7 @@
-<div align="center">
+﻿<div align="center">
 
 # 🧠 MindHealth
-### *Smart Multimodal AI Mental Health Counselling & Assessment System*
+### *Student Wellbeing & Mental Health Platform for College Students (18–25)*
 
 [![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite_7-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -10,11 +10,18 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow_2.15+-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Gemini](https://img.shields.io/badge/Gemini_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-059669?style=for-the-badge)](LICENSE)
 
 <br/>
 
-> **MindHealth** is an enterprise-grade, multimodal artificial intelligence platform designed to deliver objective, real-time mental wellness evaluations and personalized therapeutic counselling. By simultaneously synthesizing **lifestyle behavioural biometrics**, **psychometric conversational NLP**, **computer vision facial micro-expression telemetry**, and **acoustic vocal biomarkers**, MindHealth eliminates the diagnostic bias of conventional self-reporting questionnaires.
+🌐 **Live Demo:** [mindhealth-three.vercel.app](https://mindhealth-three.vercel.app/)
+
+<br/>
+
+> **MindHealth** is a purpose-built multimodal AI wellbeing screening and support platform designed specifically for college and university students aged **18–25**. It combines an 8-dimension psychometric assessment engine, AI-generated insights via **Google Gemini Flash**, daily habit tracking, burnout monitoring, and interactive coping tools — all grounded in the real-life pressures of academic life: exam stress, placement anxiety, hostel living, sleep debt, and career uncertainty.
+>
+> ⚠️ *MindHealth is a self-awareness and guided support tool, not a clinical diagnostic instrument. It is not a replacement for professional mental health care.*
 
 <br/>
 
@@ -24,669 +31,760 @@
 
 ## 📑 Table of Contents
 
-- [🌟 Executive Summary & Clinical Paradigm](#-executive-summary--clinical-paradigm)
-- [🏗️ End-to-End System Architecture](#️-end-to-end-system-architecture)
-- [✨ Core Multimodal Assessment Modules](#-core-multimodal-assessment-modules)
-  - [Step 1: Behavioural Profiling](#step-1-behavioural-profiling-scikit-learn)
-  - [Step 2: AI Clinical Counselling & NLP](#step-2-ai-clinical-counselling--psychometric-nlp)
-  - [Step 3: Facial Emotion Computer Vision](#step-3-facial-emotion-computer-vision-resnet-50)
-  - [Step 4: Vocal Acoustic Biomarker Telemetry](#step-4-vocal-acoustic-biomarker-telemetry-cnn--librosa)
-  - [Step 5: Multimodal Fusion & Clinical Severity Matrix](#step-5-multimodal-fusion--clinical-severity-matrix)
-- [🩺 Therapeutic Wellness Dashboard](#-therapeutic-wellness-dashboard)
-- [📊 Benchmarks & Comparative Analysis](#-benchmarks--comparative-analysis)
-- [⚡ Efficiency & Performance Metrics](#-efficiency--performance-metrics)
+- [🌟 Executive Summary](#-executive-summary)
+- [🏗️ System Architecture](#️-system-architecture)
+- [✨ Student-Focused Feature Set](#-student-focused-feature-set)
+- [🤖 Multimodal AI Pipeline](#-multimodal-ai-pipeline)
+- [🧠 AI Insights Engine (Gemini Flash)](#-ai-insights-engine-gemini-flash)
 - [🛠️ Complete Technology Stack](#️-complete-technology-stack)
-- [📁 Project Directory Layout](#-project-directory-layout)
-- [⚙️ Machine Learning Models & Resource Setup](#️-machine-learning-models--resource-setup)
-- [🚀 Local Setup & Production Deployment](#-local-setup--production-deployment)
-- [🔌 API Specification Reference](#-api-specification-reference)
-- [🗃️ Relational Database Schema](#️-relational-database-schema)
-- [🖥️ System Interface Showcase](#️-system-interface-showcase)
-- [🛡️ Security, Privacy & Crisis Safeguards](#️-security-privacy--crisis-safeguards)
-- [🎯 Practical Use Cases](#-practical-use-cases)
-- [⚖️ Advantages & Technical Limitations](#️-advantages--technical-limitations)
-- [🔮 Future Scope & Engineering Roadmap](#-future-scope--engineering-roadmap)
+- [🗃️ Database Schema](#️-database-schema)
+- [🔌 API Reference](#-api-reference)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Setup & Local Development](#️-setup--local-development)
+- [🚀 Production Deployment](#-production-deployment)
+- [🖥️ Platform Screenshots](#️-platform-screenshots)
+- [🛡️ Security & Safety Design](#️-security--safety-design)
+- [⚖️ Advantages & Limitations](#️-advantages--limitations)
+- [🔮 Future Scope](#-future-scope)
 
 ---
 
-## 🌟 Executive Summary & Clinical Paradigm
+## 🌟 Executive Summary
 
-Mental health conditions represent one of the most pressing global health challenges. Traditional psychiatric intake and assessment workflows face severe structural bottlenecks:
+### The Problem
 
-1. **Subjective Bias & Social Desirability**: Traditional paper questionnaires (e.g., PHQ-9, GAD-7) rely entirely on conscious self-reporting, where individuals frequently minimize symptoms due to social stigma.
-2. **Static Snapshot Limitations**: Clinical consultations occur at single moments in time, failing to capture continuous physiological and acoustic shifts.
-3. **Unimodal Fragility**: A solitary diagnostic signal (such as sentiment analysis from text) can be easily masked or miscategorized.
+College students aged 18–25 represent the most underserved segment of the mental health landscape. They face a unique convergence of stressors that general-purpose wellness apps fail to address:
 
-### The MindHealth Multimodal Solution
-MindHealth addresses these limitations through a **cross-modal sensory convergence architecture**. The platform interrogates four distinct, non-overlapping channels to construct a cross-validated psychological profile:
+| Stressor | Reality |
+|----------|---------|
+| **Academic Pressure** | Semester deadlines, surprise tests, grade anxiety |
+| **Career & Placement Dread** | Job rejections, LinkedIn comparison, internship burnout |
+| **Living Transitions** | Hostel isolation, shared PGs, first time away from home |
+| **Sleep Deprivation** | Late-night study, irregular meals, caffeine dependency |
+| **Social Overload** | Group projects, social comparison, digital FOMO |
+| **Financial Stress** | Tuition fees, dependency on family, scholarship pressure |
+
+Traditional mental health tools suffer from three structural flaws when applied to students:
+
+1. **Clinical Jargon Barrier** — PHQ-9 and GAD-7 language alienates students who do not see themselves as "patients"
+2. **Unimodal Assessment** — A single self-report questionnaire misses the full psychological picture
+3. **Generic Recommendations** — Breathing exercises with no academic context
+
+### The MindHealth Solution
+
+MindHealth is re-architected from the ground up to serve this cohort through:
+
+- 🎯 **Purpose-built 8-dimension screening** using student-relatable language (no clinical jargon)
+- 🤖 **Gemini Flash AI insights** generating weekly habit plans grounded in academic context
+- 📊 **Daily check-in telemetry** tracking mood, sleep, energy, and academic pressure over time
+- 🔥 **Burnout early-warning system** correlating study sessions with sleep debt
+- 🧘 **Interactive coping toolkit** (Box Breathing, 4-7-8 sleep reset, 5-4-3-2-1 grounding)
+- 🆘 **Always-accessible crisis layer** with verified Indian 24/7 free helplines
+
+---
+
+## 🏗️ System Architecture
 
 ```
-                  ┌─────────────────────────────────────────┐
-                  │          USER MENTAL WELLNESS           │
-                  └────────────────────┬────────────────────┘
-                                       │
-         ┌──────────────────┬──────────┴──────────┬──────────────────┐
-         ▼                  ▼                     ▼                  ▼
-┌─────────────────┐┌─────────────────┐  ┌──────────────────┐┌──────────────────┐
-│   Physiology    ││   Psychology    │  │    Neurology     ││   Acoustics      │
-│   & Lifestyle   ││  & Cognition    │  │   & Visual Cues  ││   & Respiration  │
-│ (Sleep, Steps,  ││ (Clinical NLP,  │  │(Facial Emotions, ││(Vocal Resonance, │
-│  Vitals, BMI)   ││  Coping, Crisis)│  │ Eye Micro-shifts)││ Pitch, Shimmer)  │
-└────────┬────────┘└────────┬────────┘  └────────┬─────────┘└────────┬─────────┘
-         │                  │                    │                   │
-         └──────────────────┼────────────────────┴───────────────────┘
-                            ▼
-              ┌───────────────────────────┐
-              │ MULTIMODAL FUSION ENGINE  │
-              │  Harmonized Severity Map  │
-              └─────────────┬─────────────┘
-                            ▼
-              ┌───────────────────────────┐
-              │ CLINICAL ACTION PROTOCOL  │
-              │ Dashboard / Triage / SOS  │
-              └───────────────────────────┘
++---------------------------------------------------------------------+
+|                        USER (Browser)                               |
+|          College Student, Age 18-25, Any Device                     |
++------------------------------+--------------------------------------+
+                               | HTTPS
+                               v
++---------------------------------------------------------------------+
+|               FRONTEND  .  React 19 + Vite 7                        |
+|               Deployed: Vercel (CDN, global edge)                   |
+|                                                                     |
+|  +------------+ +--------------+ +--------------+ +-------------+  |
+|  |  Landing   | |  Onboarding  | |  Assessment  | |  Dashboard  |  |
+|  |  Page      | |  Modal       | |  Engine      | |  Command Ctr|  |
+|  +------------+ +--------------+ +--------------+ +-------------+  |
+|  +------------+ +--------------+ +--------------+ +-------------+  |
+|  |  Focus &   | |  Career      | |  Wellbeing   | |  Coping     |  |
+|  |  Burnout   | |  Anxiety Hub | |  Journal     | |  Toolkit    |  |
+|  +------------+ +--------------+ +--------------+ +-------------+  |
+|  +------------+ +--------------+ +--------------+                  |
+|  |  Daily     | |  Analytics   | |  Multimodal  |                  |
+|  |  Check-In  | |  Trends      | |  AI Lab      |                  |
+|  +------------+ +--------------+ +--------------+                  |
++------------------------------+--------------------------------------+
+                               | REST API (JSON) . VITE_API_URL
+                               v
++---------------------------------------------------------------------+
+|               BACKEND  .  FastAPI + Uvicorn                         |
+|               Deployed: Render (Docker container, Oregon)           |
+|                                                                     |
+|  +--------------+  +----------------+  +----------------------+    |
+|  |  Auth Router |  | Student Router |  |  Dashboard Router    |    |
+|  |  /api/auth/  |  | /api/student-  |  |  /dashboard-data     |    |
+|  |  JWT + bcrypt|  |  assessment/   |  |  /api/student/       |    |
+|  +--------------+  +----------------+  +----------------------+    |
+|  +--------------+  +----------------+  +----------------------+    |
+|  |  Chat Router |  |  Face Router   |  |  Voice Router        |    |
+|  |  /api/chat/  |  |  /api/face/    |  |  /api/voice/         |    |
+|  +--------------+  +----------------+  +----------------------+    |
++-----------------+----------------------------+----------------------+
+                  |                            |
+        +---------v--------+    +--------------v---------+
+        |  AI / ML Layer   |    |    Database Layer      |
+        |                  |    |                        |
+        |  Google Gemini   |    |  SQLite + SQLAlchemy   |
+        |  Flash (Insights)|    |  13 tables             |
+        |  ResNet-50       |    |  (User, Assessment,    |
+        |  (Face Emotion)  |    |  CheckIn, Journal,     |
+        |  CNN + Librosa   |    |  StudySession, Chat,   |
+        |  (Voice Stress)  |    |  Face, Voice...)       |
+        |  Scikit-Learn    |    |                        |
+        |  (Behaviour ML)  |    +------------------------+
+        +------------------+
+```
+
+### Data Flow — Student Journey
+
+```
+Sign Up / Login
+     |
+     v
+Onboarding Modal  (year, major, living situation, stressors)
+     |
+     v
+8-Dimension Wellbeing Assessment  (20 questions, one at a time)
+     |
+     v
+Results Card + Gemini AI Insights  (overview, habits, watch-for signals)
+     |
+     v
+Student Dashboard  (burnout warning, wellbeing pulse, micro-habits)
+     |
+     +---> Daily Check-In       (mood, sleep, energy, academic pressure)
+     +---> Analytics & Trends   (Recharts 7/30/90-day charts)
+     +---> Focus & Burnout Hub  (Pomodoro, burnout detector)
+     +---> Career Anxiety Hub   (pre-interview grounding)
+     +---> Wellbeing Journal    (AI-prompted private reflection)
+     +---> Coping Toolkit       (breathing, sleep reset, grounding)
+     +---> Multimodal AI Lab    (face emotion, voice stress, chat counselling)
 ```
 
 ---
 
-## 🏗️ End-to-End System Architecture
+## ✨ Student-Focused Feature Set
 
-MindHealth is architected as an asynchronous, decoupled client-server application engineered for high-throughput inference and real-time interaction.
+### 🎓 Student Onboarding
+
+When a student logs in for the first time, an onboarding modal collects lightweight academic context to personalize every subsequent experience:
+
+- **Year of Study**: 1st Year, 2nd Year, 3rd Year, Final Year, Postgraduate
+- **Field of Study**: Engineering/Tech, Medical, Commerce, Humanities, Science, Law
+- **Living Situation**: Hostel/Campus Dorm, Shared PG, Commuter/Living with Family
+- **Academic Stage**: Regular Semester, Mid-terms, Final Exams, Placements/Internships, Vacation
+- **Top Stressors** (multi-select): Exams, Placements, Sleep, Loneliness, Finances, Social Anxiety, Burnout, Family Expectations
+
+This context is stored in the `StudentProfile` table and surfaces throughout the platform.
+
+---
+
+### 📋 8-Dimension Wellbeing Assessment
+
+A conversational, one-question-at-a-time assessment covering 8 psychologically-grounded dimensions specific to college life. Each dimension is scored 0–100 (normalized):
+
+| # | Dimension | What It Measures | High Score Means |
+|---|-----------|-----------------|------------------|
+| 1 | **Academic Stress** | Workload, deadline pressure, study-life balance | Severe overload |
+| 2 | **Anxiety** | Worry frequency, physical symptoms, catastrophizing | High anxiety |
+| 3 | **Burnout** | Emotional exhaustion, motivation loss, cynicism | Active burnout |
+| 4 | **Sleep Health** | Sleep hours, quality, schedule consistency | Poor recovery |
+| 5 | **Social Connection** | Loneliness, peer support, belonging | Isolated |
+| 6 | **Career Stress** | Placement dread, comparison, uncertainty | High career anxiety |
+| 7 | **Emotional Wellbeing** | Mood stability, joy, irritability | Emotionally distressed |
+| 8 | **Lifestyle Balance** | Nutrition, physical activity, breaks | Unbalanced |
+
+The assessment generates an **overall wellbeing index (0–100)** mapped to severity:
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                          CLIENT APPLICATION LAYER (SPA)                          │
-│                                                                                  │
-│   React 19  │  Vite 7  │  Tailwind CSS v4  │  Framer Motion  │  Recharts         │
-│   • Clinical Light Theme Design System          • Web Audio API Processing       │
-│   • WebRTC MediaStream Camera Engine            • Client-Side Face Landmark HUD  │
-└────────────────────────────────────────┬─────────────────────────────────────────┘
-                                         │  HTTPS / REST / JSON & Form-Data
-                                         │  JWT Bearer Authorization
-┌────────────────────────────────────────▼─────────────────────────────────────────┐
-│                          FASTAPI APPLICATION SERVER                              │
-│                                                                                  │
-│   ASGI Asynchronous Gateway  │  Uvicorn 0.32  │  CORS & Rate Limiting Middleware │
-│   ┌──────────────────────────────────────────────────────────────────────────┐   │
-│   │                              ROUTERS LAYER                               │   │
-│   │  /auth  •  /behaviour  •  /chat  •  /face  •  /voice  •  /severity  •   │   │
-│   │  /dashboard                                                              │   │
-│   └─────────────────────────────────────┬────────────────────────────────────┘   │
-│                                         │                                        │
-│   ┌─────────────────────────────────────▼────────────────────────────────────┐   │
-│   │                   MACHINE LEARNING INFERENCE RUNTIMES                    │   │
-│   │                                                                          │   │
-│   │  ┌───────────────────────┐  ┌────────────────────────────────────────┐  │   │
-│   │  │ Scikit-Learn Runtime  │  │ TensorFlow / Keras 2.15+ Runtime       │  │   │
-│   │  │ • Gradient Boosting   │  │ • ResNet-50 FER Classifier (.keras)    │  │   │
-│   │  │ • Label / One-Hot Enc │  │ • 1D Deep Acoustic CNN (.h5 / .json)   │  │   │
-│   │  └───────────────────────┘  └────────────────────────────────────────┘  │   │
-│   │  ┌───────────────────────┐  ┌────────────────────────────────────────┐  │   │
-│   │  │ NLP Analytics Engine  │  │ Acoustic Processing Engine             │  │   │
-│   │  │ • Google Gemini LLM   │  │ • Librosa Signal Decoupling            │  │   │
-│   │  │ • VADER Sentiment     │  │ • MFCC / ZCR / Spectral Chroma         │  │   │
-│   │  └───────────────────────┘  └────────────────────────────────────────┘  │   │
-│   └─────────────────────────────────────┬────────────────────────────────────┘   │
-└─────────────────────────────────────────┼────────────────────────────────────────┘
-                                          │
-                  ┌───────────────────────┴───────────────────────┐
-                  ▼                                               ▼
-┌───────────────────────────────────┐           ┌──────────────────────────────────┐
-│      PERSISTENCE & STORAGE        │           │        EXTERNAL INTEGRATIONS     │
-│  SQLAlchemy ORM (SQLite / PG)     │           │  Google AI Studio (Gemini LLM)   │
-│  File Storage (Uploads Directory) │           │  National Crisis Hotlines (SOS)  │
-└───────────────────────────────────┘           └──────────────────────────────────┘
+Score    Category                  Indicator
+-----    --------                  ---------
+75-100   Doing Well                Green
+55-74    Mild Concern              Yellow
+40-54    Moderate Concern          Orange
+25-39    High Concern              Red
+ 0-24    Needs Immediate Support   Dark Red
 ```
 
 ---
 
-## ✨ Core Multimodal Assessment Modules
+### 🔥 Focus & Burnout Hub
 
-The diagnostic workflow executes sequentially through four specialized sensory modules before feeding into the clinical fusion calculation:
+**Pomodoro Study Timer** — 25-minute focused sprint → 5-minute break. Sessions logged to `StudySession` table.
 
-```
-[Register / Login]
-       │
-       ▼
- [Step 1: Behaviour] ──► Baseline Lifestyle & Physiological Profile (12 Features)
-       │
-       ▼
- [Step 2: Counselling] ──► Conversational Clinical Dialogue & Risk Parameter Extraction
-       │
-       ▼
- [Step 3: Face Vision] ──► 20-Second Optical Facial Micro-Expression Capture (7 Emotions)
-       │
-       ▼
- [Step 4: Voice Audio] ──► Acoustic Waveform Spectrogram & Pitch Telemetry (Librosa + CNN)
-       │
-       ▼
- [Step 5: Aggregation] ──► Fused Severity Map (0-10) ──► Emergency Check ──► Dashboard
-```
+**Burnout Detector** — Aggregates study hours vs. average sleep over 7 days. Triggers three-tier alert:
+- `Monitoring` → `Early Warning` → `Rest Required`
+- Condition: weekly_study_hours > 35 AND avg_sleep < 6h → High Burnout Risk
+
+**5-Minute Action Barrier Rule** — Anti-procrastination reflection for daunting tasks.
 
 ---
+
+### 💼 Career & Placement Anxiety Hub
+
+- LinkedIn Comparison Reframe cards
+- Rejection Recovery Protocol (3-step structured response)
+- 2-Minute Pre-Interview Grounding (Breathe → Ground → Affirm)
+- Uncertainty Tolerance Builder
+
+---
+
+### 📔 Wellbeing Journal
+
+Private reflection with AI-powered category-specific prompts:
+
+| Category | Example Prompt |
+|----------|----------------|
+| Academic | "What subject made you feel most capable this week, and why?" |
+| Career | "Write about one fear around placements you haven't said out loud" |
+| Hostel Life | "Describe a small moment from hostel life that made you smile" |
+| Personal Growth | "What do you know now that you didn't at the start of this semester?" |
+
+---
+
+### 🧘 Coping Toolkit
+
+| Tool | Technique | Best For |
+|------|-----------|----------|
+| **Box Breathing** | 4s inhale, 4s hold, 4s exhale, 4s hold | Pre-exam panic |
+| **4-7-8 Sleep Reset** | 4s inhale, 7s hold, 8s exhale | Late-night insomnia |
+| **5-4-3-2-1 Grounding** | 5 see, 4 hear, 3 touch, 2 smell, 1 taste | Panic prevention |
+
+---
+
+### 🆘 Crisis Safety Layer
+
+Always-accessible via the navbar from every page:
+
+| Helpline | Number | Availability |
+|----------|--------|--------------|
+| **Tele-MANAS** (Govt. of India) | 14416 / 1800-891-4416 | 24/7, Free |
+| **KIRAN Mental Health** | 1800-599-0019 | 24/7, Free |
+| **Vandrevala Foundation** | +91 9999 666 555 | 24/7, Free |
+| **iCall (TISS)** | +91 9152987821 | Mon-Sat 8am-10pm |
+| **988 Suicide & Crisis Lifeline** | 988 | 24/7 (US) |
+
+---
+
+## 🤖 Multimodal AI Pipeline
+
+```
+                +-------------------------------+
+                |      USER MENTAL WELLNESS      |
+                +---------------+---------------+
+                                |
+        +---------------+-------+---------+---------------+
+        v               v                 v               v
++-------------+  +--------------+  +------------+  +------------+
+| Behavioural |  | Conversational|  | Facial     |  | Vocal      |
+| Biometrics  |  |  NLP          |  | Emotion CV |  | Biomarkers |
+|             |  |               |  |            |  |            |
+| Sleep, BMI  |  | Gemini Flash  |  | ResNet-50  |  | CNN+Librosa|
+| HR, BP,     |  | TextBlob      |  | OpenCV     |  | MFCC, Pitch|
+| Scikit-Learn|  | VADER NLP     |  | 7 Emotions |  | Shimmer    |
++------+------+  +------+--------+  +------+-----+  +------+-----+
+       |                |                  |                |
+       +----------------+------------------+----------------+
+                        v
+            +-----------+-----------+
+            |   MULTIMODAL FUSION   |
+            |   SEVERITY MATRIX     |
+            |                       |
+            | Chat NLP   35%        |
+            | Behaviour  25%        |
+            | Face CV    20%        |
+            | Voice      20%        |
+            +-----------+-----------+
+                        v
+            +-----------+-----------+
+            |   FINAL RISK LEVEL    |
+            |   + PDF Report        |
+            +-----------------------+
+```
 
 ### Step 1: Behavioural Profiling (Scikit-Learn)
 
-The behavioural module captures systemic lifestyle parameters that directly correlate with depressive and anxiety disorders.
+Trained Random Forest Classifier on OSMI dataset with lifestyle-correlated features:
 
-- **Underlying Engine**: Scikit-learn Ensemble Classifier (Gradient Boosting / Random Forest).
-- **Artifacts**: `Best_Mental_Behaviour_Model.pkl` and `Model_Encoders.pkl`.
-- **Feature Pipeline**: Twelve categorical and numerical dimensions standardized via pre-fitted encoders:
+| Input Feature | Range |
+|---------------|-------|
+| BMI Category | Underweight / Normal / Overweight / Obese |
+| Sleep Hours | 0-12 hours |
+| Sleep Quality | 1-10 |
+| Physical Activity | Steps/day |
+| Stress Level | 1-10 |
+| Heart Rate | BPM |
+| Systolic / Diastolic BP | mmHg |
 
-| # | Feature Name | Clinical Rationale | Valid Range / Categories |
-|---|--------------|--------------------|--------------------------|
-| 1 | `Gender` | Demographic baseline adjustment | *Male, Female* |
-| 2 | `Age` | Age-adjusted biological resilience | *10 – 100 years* |
-| 3 | `Occupation` | Professional chronic stress index | *Doctor, Engineer, Student, Teacher, etc.* |
-| 4 | `Sleep Duration` | Circadian rhythm equilibrium | *0.0 – 12.0 hours* |
-| 5 | `Quality of Sleep` | Subjective restorative sleep rating | *1 (Insomnia) – 10 (Optimal)* |
-| 6 | `Physical Activity`| Endorphin regulation & mobility | *0 – 120 minutes/day* |
-| 7 | `Stress Level` | Perceived environmental friction | *1 (Minimal) – 10 (Severe)* |
-| 8 | `BMI Category` | Somatic health & metabolic factor | *Underweight, Healthy Weight, Overweight, Obese* |
-| 9 | `Heart Rate` | Autonomic nervous balance | *50 – 130 BPM* |
-| 10 | `Daily Steps` | Ambulatory physical exertion | *500 – 25,000 steps* |
-| 11 | `Systolic BP` | Vascular cardiovascular load | *90 – 190 mmHg* |
-| 12 | `Diastolic BP` | Peripheral vascular resistance | *60 – 120 mmHg* |
+Output: `Low` / `Moderate` / `High` behavioural risk with confidence %.
 
-- **Inference Output**:
-  - `Risk Level`: Low, Medium, High.
-  - `Confidence`: Deterministic probability distribution ($0.0 - 100.0\%$).
-  - `Severity Score`: Low $\rightarrow 3$, Medium $\rightarrow 6$, High $\rightarrow 8$ (normalized to a 10-point scale).
+### Step 2: AI Chat Counselling & NLP
 
----
+Multi-turn Gemini Flash conversation with structured psychometric intake. **TextBlob** (polarity + subjectivity) and **VADER** provide ensemble sentiment cross-validation.
 
-### Step 2: AI Clinical Counselling & Psychometric NLP
+### Step 3: Facial Emotion Detection (ResNet-50)
 
-The conversational counselling module pairs the user with an empathetic, non-judgmental conversational agent that conducts structured psychometric intake while maintaining a therapeutic conversational demeanor.
+- Model: ResNet-50 fine-tuned on FER-2013
+- Processing: OpenCV frame extraction → face detection → classification
+- Output: 7 emotions + confidence + frame-level distribution
 
-- **Underlying Engine**: Google Gemini API via high-speed asynchronous REST integration.
-- **Sentiment & Subjectivity Engine**: VADER (`vaderSentiment`) coupled with TextBlob lexical polarity.
-- **Clinical Parameter Extraction**: The engine secretly extracts 11 diagnostic markers directly from the dialogue stream:
-  1. *Core Problem Identification*
-  2. *Symptom Chronicity & Duration*
-  3. *Self-Reported Severity*
-  4. *Emotional Valence & Polarity*
-  5. *Immediate Environmental Triggers*
-  6. *Functional Impairment on Daily Life*
-  7. *Primary Affective States*
-  8. *Somatic & Physical Manifestations*
-  9. *Existing Coping Mechanisms*
-  10. *Social & Familial Support Availability*
-  11. *Acute Crisis / Self-Harm Risk Flag*
-- **Safety Interceptor**: Dual-layer screening (lexical regex + LLM risk tag) actively intercepts suicidal ideation, triggering emergency crisis banners instantly.
+### Step 4: Vocal Acoustic Analysis (CNN + Librosa)
 
----
+- Features: MFCC, Pitch (F0), Jitter, Shimmer, ZCR, Spectral Centroid
+- Model: 1D CNN trained on RAVDESS + CREMA-D
+- Output: Voice emotion + stress level + mood
 
-### Step 3: Facial Emotion Computer Vision (ResNet-50)
+### Step 5: Final Severity Matrix
 
-The visual module evaluates involuntary facial action units and affective expressions during active speech.
-
-- **Underlying Engine**: Deep Residual Convolutional Neural Network (ResNet-50 architecture), serialized in Keras format (`Resnet_model_version_2.keras`).
-- **Input Pipeline**: Video streams recorded over a 20-second observational window at 30 FPS.
-- **Client-Side HUD**: `@vladmandic/face-api` runs on-device face tracking to provide instantaneous frame validation, displaying real-time floating emotion indicators without saturating network bandwidth.
-- **Classification Output**: Softmax probability array over 7 clinical affective classes:
-
-$$\text{Emotion Classes} = \{\text{Happy}, \text{Neutral}, \text{Sad}, \text{Angry}, \text{Surprise}, \text{Fear}, \text{Disgust}\}$$
-
-- **Affective Severity Weighting**:
-  - `Happy`: 2 | `Neutral`: 4 | `Surprise`: 4
-  - `Sad`: 6 | `Angry`: 7 | `Disgust`: 7 | `Fear`: 8
-
----
-
-### Step 4: Vocal Acoustic Biomarker Telemetry (CNN + Librosa)
-
-The vocal analysis module scrutinizes acoustic characteristics of the user's voice, extracting somatic indicators of mental fatigue and neurological stress.
-
-- **Audio Capture**: 16-bit PCM uncompressed WAV audio captured natively via browser Web Audio API (`AudioContext`).
-- **Feature Extraction (Librosa)**:
-  - **MFCCs (Mel-Frequency Cepstral Coefficients)**: Captures spectral envelope and vocal tract resonance.
-  - **Zero Crossing Rate (ZCR)**: Quantifies vocal friction and high-frequency noise.
-  - **Root Mean Square Energy (RMSE)**: Measures vocal energy and dynamic amplitude variation.
-  - **Spectral Contrast & Chroma**: Evaluates pitch variability, monotonic delivery, and harmonic distribution.
-- **Neural Architecture**: 1D Deep Convolutional Neural Network with spatial batch normalization and dropout regularization (`CNN_model.json` + `CNN_model.weights.h5`), standardized through `scaler2.pickle`.
-- **Inference Output**:
-  - Primary Vocal Emotion
-  - Vocal Stress Classification: *Low, Medium, High*
-  - Mood Categorization: *Calm, Stable, Low Mood, Stressed, Anxious, Distressed*
-
----
-
-### Step 5: Multimodal Fusion & Clinical Severity Matrix
-
-The aggregation engine synthesizes the independent sensor outputs into a unified severity metric:
-
-$$\text{Final Severity} = \operatorname{round}\left(\frac{S_{\text{Behaviour}} + S_{\text{Chat}} + S_{\text{Face}} + S_{\text{Voice}}}{4}\right)$$
-
-Where each constituent score $S \in [1, 10]$.
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                      CLINICAL TRIAGE TIERS                             │
-├─────────────────────┬──────────────┬───────────────────┬───────────────┤
-│ Severity Bracket    │ Risk Tier    │ Visual Indicator  │ Action Plan   │
-├─────────────────────┼──────────────┼───────────────────┼───────────────┤
-│ 1.0 – 4.0           │ Low Risk     │ 🟢 Emerald Badge  │ Self-care     │
-│ 4.1 – 7.0           │ Moderate Risk│ 🟡 Amber Badge    │ Guided CBT    │
-│ 7.1 – 10.0          │ High Risk    │ 🔴 Crimson Badge  │ Urgent Triage │
-└─────────────────────┴──────────────┴───────────────────┴───────────────┘
-```
-
-> 🚨 **Emergency Crisis Intercept**: If $\text{Final Severity} \ge 8$ **and** an affirmative suicide/crisis flag was detected by the NLP engine, an unclosable safety drawer locks the interface, displaying direct one-touch dials for verified national emergency hotlines (e.g., Tele-MANAS `14416`, KIRAN `1800-599-0019`).
-
----
-
-## 🩺 Therapeutic Wellness Dashboard
-
-Upon completing the assessment, users enter an adaptive clinical dashboard tailored to their severity profile:
-
-```
-┌───────────────────────────────────────────────────────────────────────┐
-│                          WELLNESS DASHBOARD                           │
-├───────────────────────────────────┬───────────────────────────────────┤
-│       OVERALL SEVERITY GAUGE      │        HISTORICAL TRENDS          │
-│    Animated SVG Radial Gauge      │   Recharts Area Chart showing     │
-│    Displaying Fused Score (1-10)  │   Severity Drop/Spike Timeline    │
-├───────────────────────────────────┼───────────────────────────────────┤
-│      MULTIMODAL BREAKDOWN         │       DAILY WELLNESS TASKS        │
-│    • Behaviour: 6/10 (Moderate)   │   [✓] 15-min Morning Walk         │
-│    • Chat NLP:  7/10 (High)       │   [ ] 4-7-8 Breathing Session     │
-│    • Face FER:  4/10 (Neutral)    │   [ ] Digital Sunset at 10 PM     │
-│    • Voice:     6/10 (Stressed)   │   (Gamified Habit Tracker)        │
-├───────────────────────────────────┴───────────────────────────────────┤
-│     DR. MINDHEALTH AI THERAPIST & GUIDED MINDFULNESS TOOLS            │
-│   • On-demand continuous chat assistant for emotional check-ins       │
-│   • Interactive Box Breathing & 4-7-8 Respiratory animation guide     │
-└───────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📊 Benchmarks & Comparative Analysis
-
-MindHealth was evaluated against conventional mental health assessment workflows across clinical validity, diagnostic speed, and resistance to manipulation:
-
-| Capability / Metric | Traditional Paper Screening (PHQ-9 / GAD-7) | Text-Only AI Chatbots (e.g., Woebot) | MindHealth Multimodal AI System |
-| :--- | :--- | :--- | :--- |
-| **Sensory Modalities** | 1 (Self-Report Form) | 1 (Text NLP) | **4 (Behaviour, Dialogue, Vision, Audio)** |
-| **Resistance to Deception** | Low (Trivial to falsify) | Moderate (Lexical masking) | **High (Involuntary micro-expressions & vocal acoustic cues)** |
-| **Biomarker Capture** | ❌ None | ❌ None | **✅ Sleep, BMI, HR, BP, ZCR, MFCC, Action Units** |
-| **Assessment Duration** | 15 – 30 minutes | 10 – 20 minutes | **4 – 6 minutes (Streamlined pipeline)** |
-| **Acoustic Stress Telemetry** | ❌ No | ❌ No | **✅ Yes (1D CNN + Librosa)** |
-| **Facial Affect Recognition** | ❌ No | ❌ No | **✅ Yes (ResNet-50 FER)** |
-| **Real-Time Crisis Intercept** | ❌ Manual scoring | ⚠️ Rule-based text match | **✅ Multimodal cross-validated emergency lock** |
-| **Post-Care Habit Loop** | ❌ None | ⚠️ Static advice | **✅ Dynamic severity-adaptive task engine** |
-
----
-
-## ⚡ Efficiency & Performance Metrics
-
-To ensure clinical accessibility across consumer hardware and bandwidth-constrained connections, all neural pipelines were optimized for low latency and deterministic memory footprints:
-
-```
-┌───────────────────────────────────────────────────────────────────────┐
-│               INFERENCE SPEED & MEMORY FOOTPRINT MATRIX               │
-├───────────────────────┬──────────────┬───────────────┬────────────────┤
-│ Subsystem             │ Model Size   │ Avg. Latency  │ Execution Mode │
-├───────────────────────┼──────────────┼───────────────┼────────────────┤
-│ Behaviour Classifier  │ ~9.4 MB      │ ~18 ms        │ Server CPU     │
-│ Chat NLP Analysis     │ Hosted Cloud │ ~650 ms (TTFT)│ Async Stream   │
-│ Face Emotion (ResNet) │ ~92.1 MB     │ ~82 ms / clip │ Server CPU/GPU │
-│ Voice Stress (1D CNN) │ ~1.8 MB      │ ~45 ms / clip │ Server CPU     │
-│ Final Fusion Engine   │ Lightweight  │ < 2 ms        │ Server CPU     │
-├───────────────────────┼──────────────┼───────────────┼────────────────┤
-│ TOTAL PIPELINE RUN    │ ~103.3 MB    │ < 1.2 seconds │ Warm Runtime   │
-└───────────────────────┴──────────────┴───────────────┴────────────────┘
-```
-
-### Runtime Optimization Techniques
-1. **Application Lifespan Pre-Warming**: Neural weights are compiled and cached in host memory during FastAPI `lifespan` initialization, eliminating cold-start latency on inference requests.
-2. **Client-Side Optical Offloading**: Face tracking landmarks and bounding boxes are calculated client-side via WebAssembly (`face-api.js`), streaming only standard compressed WebM segments to the backend.
-3. **Chunked WAV Normalization**: Raw microphone streams are transcoded directly to 16-bit linear PCM in-memory without invoking secondary disk I/O.
+| Score | Risk Level | Platform Response |
+|-------|-----------|-------------------|
+| 0-25 | Minimal | Wellness maintenance |
+| 26-50 | Low | Coping strategies |
+| 51-70 | Moderate | Professional consultation recommended |
+| 71-85 | High | Urgent support resources |
+| 86-100 | Crisis | Immediate helplines + emergency protocol |
 
 ---
 
 ## 🛠️ Complete Technology Stack
 
-### Frontend Architecture
-- **Framework**: [React 19](https://react.dev/) — Component-driven reactive UI architecture.
-- **Build Tool**: [Vite 7](https://vitejs.dev/) — Lightning-fast HMR and optimized production bundling.
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) — Utility-first design tokens with clinical light theme aesthetics.
-- **Motion & Dynamics**: [Framer Motion 12](https://www.framer.com/motion/) — Hardware-accelerated fluid page transitions and layout springs.
-- **Visualization**: [Recharts 3](https://recharts.org/) — SVG-based reactive area graphs and telemetry progress dials.
-- **Audio Processing**: Web Audio API (`AudioContext`, `createScriptProcessor`) — In-browser acoustic normalization.
-- **Computer Vision**: `@vladmandic/face-api` — High-speed client-side facial landmark detection.
-- **Icons & Alerts**: `lucide-react` & `react-hot-toast` — Accessible iconography and alert messaging.
+### Frontend
 
-### Backend Infrastructure
-- **Web Engine**: [FastAPI 0.115](https://fastapi.tiangolo.com/) — Modern high-performance asynchronous Python framework.
-- **Server**: [Uvicorn 0.32](https://www.uvicorn.org/) — ASGI web server implementation.
-- **Deep Learning**: [TensorFlow / Keras 2.15+](https://www.tensorflow.org/) — Neural network forward inference.
-- **Classical ML**: [Scikit-Learn 1.6](https://scikit-learn.org/) — Gradient Boosting classifier and categorical transformers.
-- **Acoustic Signal Processing**: [Librosa 0.10](https://librosa.org/) & `soundfile` — Digital audio processing and spectral feature extraction.
-- **Computer Vision Processing**: [OpenCV Headless 4.10](https://opencv.org/) — Image matrix transformations and frame decoding.
-- **NLP & LLM**: Google Gemini API & `vaderSentiment` — Conversational dialogue and sentiment analysis.
-- **ORM & Database**: [SQLAlchemy 2.0](https://www.sqlalchemy.org/) — Object-relational mapping supporting SQLite and PostgreSQL.
-- **Security & Cryptography**: `passlib[bcrypt]` & `python-jose` — Password salting, hashing, and signed JWT token handling.
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 19 | Core UI framework |
+| Vite | 7 | Build tool and dev server |
+| TailwindCSS | v4 | Utility-first styling |
+| React Router DOM | v7 | Client-side routing |
+| Recharts | 2.x | Analytics charts |
+| Three.js | Latest | 3D landing page effects |
+| Lucide React | Latest | Icon system |
+| Axios | 1.x | API communication |
+
+### Backend
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| FastAPI | 0.115.5 | REST API framework |
+| Uvicorn | 0.32.1 | ASGI server |
+| SQLAlchemy | 2.0.36 | ORM and database abstraction |
+| python-jose | 3.3.0 | JWT tokens |
+| Passlib + bcrypt | 1.7.4 / 4.2.1 | Password hashing |
+| aiofiles | 24.1.0 | Async file I/O |
+| httpx | 0.27.2 | Async HTTP client |
+
+### AI & Machine Learning
+
+| Library | Version | Purpose |
+|---------|---------|---------|
+| Google Gemini Flash | Latest | LLM insights, chat counselling |
+| TensorFlow (CPU) | >=2.15.0 | ResNet-50 facial emotion |
+| Keras | >=2.15.0 | CNN vocal biomarker |
+| Scikit-Learn | 1.6.1 | Random Forest behavioural |
+| Librosa | 0.10.2 | Audio feature extraction |
+| OpenCV (headless) | 4.10.0.84 | Video frame extraction |
+| NumPy | 2.1.0 | Numerical computation |
+| TextBlob | 0.18.0 | NLP sentiment analysis |
+| VADER Sentiment | 3.3.2 | Lexicon-based sentiment |
+| noisereduce | 3.0.3 | Audio denoising |
+| reportlab | 4.2.5 | PDF report generation |
+
+### Infrastructure
+
+| Service | Purpose | Tier |
+|---------|---------|------|
+| **Vercel** | Frontend CDN | Free |
+| **Render** | Backend Docker container | Free |
+| **SQLite** | Embedded database | Embedded |
+| **Docker** | Backend containerisation | — |
 
 ---
 
-## 📁 Project Directory Layout
+## 🗃️ Database Schema
+
+### User & Auth
+
+| Table | Key Columns | Purpose |
+|-------|-------------|---------|
+| `register_database` | id, full_name, age, email, hashed_password, google_id | Core user accounts |
+| `password_reset_otps` | email, otp, expires_at | Password reset via OTP |
+
+### Student-Specific (New)
+
+| Table | Key Columns | Purpose |
+|-------|-------------|---------|
+| `student_profiles` | user_id (unique), student_year, field_of_study, living_situation, academic_stage, primary_stressors (JSON) | Academic context |
+| `student_assessment_results` | user_id, academic_stress, anxiety_score, burnout_score, sleep_score, social_score, career_stress, emotional_score, lifestyle_score, overall_score, severity_category, ai_insights (JSON) | Assessment results |
+| `daily_checkins` | user_id, date, mood, energy, stress, sleep_hours, sleep_quality, motivation, academic_pressure, tags (JSON) | Daily log |
+| `student_journal_entries` | user_id, title, content, prompt, category, mood_tag | Journal entries |
+| `study_sessions` | user_id, subject_or_task, duration_minutes, stress_rating, burnout_flag | Pomodoro log |
+
+### Multimodal AI
+
+| Table | Key Columns | Purpose |
+|-------|-------------|---------|
+| `behaviour_results` | user_id, bmi_category, sleep_hours, behaviour_risk, confidence, severity_score | Behavioural ML |
+| `chat_messages` | user_id, sender, message, timestamp | Chat store |
+| `chat_analysis` | user_id, problem, sentiment, risk_flag, triggers (JSON), emotions (JSON) | NLP analysis |
+| `face_results` | user_id, facial_emotion, confidence, emotion_distribution (JSON) | Facial emotion |
+| `voice_results` | user_id, voice_emotion, voice_stress, voice_mood, severity_score | Vocal analysis |
+| `final_severity_results` | user_id, chat_score, face_score, voice_score, behaviour_score, final_severity, risk_level | Fused severity |
+| `emergency_events` | user_id, severity_score, triggered_reason | Crisis events |
+
+---
+
+## 🔌 API Reference
+
+All endpoints require JWT Bearer token unless marked public.
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/register` | Register new user |
+| `POST` | `/api/auth/login` | Login, returns JWT |
+| `POST` | `/api/auth/forgot-password` | Send OTP to email |
+| `POST` | `/api/auth/reset-password` | Reset with OTP |
+| `GET` | `/health` | Health check (public) |
+
+### Student Assessment
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/student-assessment/submit` | Submit 8-dimension assessment |
+| `GET` | `/api/student-assessment/latest` | Most recent result |
+| `GET` | `/api/student-assessment/history` | All past assessments |
+
+### Student Features
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/student/checkin` | Submit daily check-in |
+| `GET` | `/api/student/checkin/today` | Today's check-in |
+| `GET` | `/api/student/analytics/trends` | Time-series data (7/30/90 days) |
+| `GET` | `/api/student/analytics/correlations` | Sleep-stress correlations |
+| `POST` | `/api/student/journal` | Save journal entry |
+| `GET` | `/api/student/journal` | Get all journal entries |
+| `POST` | `/api/student/focus/session` | Log Pomodoro session |
+| `GET` | `/api/student/burnout/status` | Burnout risk level |
+| `GET/POST` | `/api/student/profile` | Get or update student profile |
+
+### Dashboard & Multimodal
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/dashboard-data` | Aggregated dashboard payload |
+| `POST` | `/api/behaviour/predict` | Behavioural ML prediction |
+| `POST` | `/api/chat/message` | Send chat message to AI |
+| `GET` | `/api/chat/history` | Chat history |
+| `POST` | `/api/face/analyze` | Upload video for facial emotion |
+| `POST` | `/api/voice/analyze` | Upload audio for vocal analysis |
+| `GET` | `/api/severity/final` | Fused multimodal severity |
+
+---
+
+## 📁 Project Structure
 
 ```
-MindHealth/
+MindCareAI/
 ├── backend/
-│   ├── Pre-trained_Models/            # Machine learning weights directory
-│   │   ├── Step1_Behaviour/           # Behaviour classifier & encoders
-│   │   │   ├── Best_Mental_Behaviour_Model.pkl
-│   │   │   └── Model_Encoders.pkl
-│   │   ├── Step3_Face/                # ResNet-50 vision classifier
-│   │   │   └── Resnet_model_version_2.keras
-│   │   └── Step4_Voice/               # 1D CNN acoustic classifier
-│   │       ├── CNN_model.json
-│   │       ├── CNN_model.weights.h5
-│   │       ├── encoder2.pickle
-│   │       └── scaler2.pickle
-│   ├── routers/                       # FastAPI modular route controllers
-│   │   ├── auth.py                    # User registration, login, password recovery
-│   │   ├── behaviour.py               # Step 1: Behavioural assessment API
-│   │   ├── chat.py                    # Step 2: Counselling conversation & NLP
-│   │   ├── face.py                    # Step 3: Video upload & facial emotion
-│   │   ├── voice.py                   # Step 4: Audio upload & vocal stress
-│   │   ├── severity.py                # Step 5: Multimodal fusion calculation
-│   │   └── dashboard.py               # Aggregated metrics, tasks, companion bot
-│   ├── uploads/                       # Temporary audio/video buffer storage
-│   ├── ai_service.py                  # Google Gemini API integration client
-│   ├── database.py                    # Database connection pool & session manager
-│   ├── Dockerfile                     # Containerization build specification
-│   ├── jwt_handler.py                 # JWT token generation and authentication
-│   ├── main.py                        # FastAPI application entry point & lifespan
-│   ├── ml_loader.py                   # Model loading, validation, and inference
-│   ├── models.py                      # SQLAlchemy relational schema declarations
-│   ├── nlp_service.py                 # Sentiment scoring & keyword extraction
-│   └── requirements.txt               # Backend Python dependency manifest
+│   ├── main.py                    # FastAPI app, CORS, router registration
+│   ├── models.py                  # 13 SQLAlchemy ORM models
+│   ├── database.py                # SQLite engine & session factory
+│   ├── ai_service.py              # Gemini Flash integration, student insights
+│   ├── nlp_service.py             # TextBlob + VADER NLP analysis
+│   ├── ml_loader.py               # ML model loading (ResNet-50, CNN, RF)
+│   ├── jwt_handler.py             # JWT encode/decode utilities
+│   ├── email_service.py           # Email OTP service
+│   ├── requirements.txt           # Python dependencies
+│   ├── Dockerfile                 # Docker container definition
+│   └── routers/
+│       ├── auth.py                # Registration, login, password reset
+│       ├── student_assessment.py  # 8-dimension assessment API
+│       ├── student_features.py    # Check-in, journal, analytics, burnout
+│       ├── dashboard.py           # Dashboard aggregation endpoint
+│       ├── chat.py                # AI chat counselling
+│       ├── face.py                # Facial emotion analysis
+│       ├── voice.py               # Vocal biomarker analysis
+│       ├── behaviour.py           # Behavioural ML prediction
+│       └── severity.py            # Multimodal fusion & severity
+│
 ├── frontend/
 │   ├── src/
-│   │   ├── components/                # Reusable UI widgets
-│   │   │   ├── CinematicTransition.jsx# Smooth view transition wrapper
-│   │   │   ├── CustomCursor.jsx       # Interactive precision cursor
-│   │   │   └── StepProgress.jsx       # 4-stage assessment progress tracker
-│   │   ├── pages/                     # Application views
-│   │   │   ├── Landing.jsx            # Product hero page
-│   │   │   ├── Login.jsx              # User sign-in interface
-│   │   │   ├── Register.jsx           # Multi-stage user onboarding
-│   │   │   ├── ForgotPassword.jsx     # OTP password recovery
-│   │   │   ├── BehaviourTest.jsx      # Step 1: Lifestyle evaluation
-│   │   │   ├── ChatCounselling.jsx    # Step 2: Conversational intake
-│   │   │   ├── FaceEmotion.jsx        # Step 3: Webcam facial capture
-│   │   │   ├── VoiceAnalysis.jsx      # Step 4: Voice recording & spectrogram
-│   │   │   ├── FinalSeverity.jsx      # Step 5: Fused clinical severity map
-│   │   │   └── Dashboard.jsx          # Wellness hub & therapeutic companion
-│   │   ├── App.jsx                    # Root router with route authentication guards
-│   │   ├── api.js                     # Axios HTTP client configuration
-│   │   └── index.css                  # Global design system & theme tokens
-│   ├── package.json                   # Frontend npm dependency manifest
-│   ├── vercel.json                    # Single Page Application redirect routing
-│   └── vite.config.js                 # Vite build configuration
-├── assets/                            # Application demonstration captures
-├── run_backend.bat                    # One-click Windows backend launcher
-├── run_frontend.bat                   # One-click Windows frontend launcher
-├── SETUP_AND_DEPLOYMENT.md            # Comprehensive cloud deployment manual
-└── README.md                          # Project documentation
+│   │   ├── App.jsx                # Root routing (React Router v7)
+│   │   ├── index.css              # Global design system & animations
+│   │   ├── api.js                 # Axios instance with JWT interceptor
+│   │   ├── pages/
+│   │   │   ├── Landing.jsx                # Student-focused landing page
+│   │   │   ├── Login.jsx / Register.jsx   # Authentication
+│   │   │   ├── Dashboard.jsx              # Student command center
+│   │   │   ├── StudentAssessment.jsx      # 8-dimension assessment
+│   │   │   ├── AssessmentResult.jsx       # Results + AI insights
+│   │   │   ├── DailyCheckIn.jsx           # 30-second daily log
+│   │   │   ├── StudentAnalytics.jsx       # Trend charts
+│   │   │   ├── FocusBurnoutHub.jsx        # Pomodoro + burnout detector
+│   │   │   ├── CareerAnxietyHub.jsx       # Placement & career tools
+│   │   │   ├── StudentJournal.jsx         # Private AI-prompted journal
+│   │   │   ├── CopingTools.jsx            # Breathing + grounding
+│   │   │   ├── BehaviourTest.jsx          # Behavioural biometrics intake
+│   │   │   ├── ChatCounselling.jsx        # AI chat counselling
+│   │   │   ├── FaceEmotion.jsx            # Facial emotion webcam
+│   │   │   ├── VoiceAnalysis.jsx          # Voice stress microphone
+│   │   │   └── FinalSeverity.jsx          # Multimodal fusion result
+│   │   └── components/
+│   │       ├── StudentNavbar.jsx          # Navbar with crisis button
+│   │       ├── CrisisSafetyModal.jsx      # 24/7 helpline directory
+│   │       └── OnboardingModal.jsx        # First-time student context
+│   └── vite.config.js
+│
+├── assets/screenshots/            # Platform screenshots
+├── render.yaml                    # Render deployment config
+├── PROJECT_DOCUMENTATION.md       # Detailed technical documentation
+└── SETUP_AND_DEPLOYMENT.md        # Step-by-step deployment guide
 ```
 
 ---
 
-## ⚙️ Machine Learning Models & Resource Setup
+## ⚙️ Setup & Local Development
 
-Because deep learning weights exceed standard Git versioning limits, pre-trained binaries are maintained externally:
+### Prerequisites
 
-📦 **[Download MindHealth Pre-Trained Weights Package](https://drive.google.com/file/d/1DdFOl4IC7EVLnwpmbJZWrMve3frvxyzX/view?usp=sharing)**
+- **Node.js** >= 18.x
+- **Python** >= 3.10
+- **Google Gemini API key** (free at [aistudio.google.com](https://aistudio.google.com/))
 
-### Installation Procedure:
-1. Download `MindCare_Resources.zip` from the link above.
-2. Unpack the zip file.
-3. Place the extracted `Pre-trained_Models/` directory directly into `backend/`:
-   ```
-   backend/Pre-trained_Models/
-   ├── Step1_Behaviour/
-   ├── Step3_Face/
-   └── Step4_Voice/
-   ```
+### 1. Clone the Repository
 
----
+```bash
+git clone https://github.com/your-username/MindCareAI.git
+cd MindCareAI
+```
 
-## 🚀 Local Setup & Production Deployment
+### 2. Backend Setup
 
-For an in-depth deployment guide covering Render, Railway, Vercel, and Docker, refer to [**SETUP_AND_DEPLOYMENT.md**](SETUP_AND_DEPLOYMENT.md).
-
-### Quick Start (Local Machine)
-
-#### 1. System Requirements
-- **Python**: `3.10` or `3.11`
-- **Node.js**: `v18.0.0+`
-- **Audio Decoding Libraries** *(Linux/macOS)*:
-  ```bash
-  # Debian / Ubuntu
-  sudo apt-get install -y ffmpeg libsndfile1 libgl1
-  # macOS
-  brew install ffmpeg libsndfile
-  ```
-
-#### 2. Backend Initialization
 ```bash
 cd backend
+
+# Create and activate virtual environment
 python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
 
-# Activate Environment
-# Windows:
-.\venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-
+# Install dependencies
 pip install -r requirements.txt
+
+# Configure environment
+cp .env.example .env
+# Set: GEMINI_API_KEY, JWT_SECRET, CORS_ORIGINS=http://localhost:5173
+
+# Start backend
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Create `backend/.env`:
-```env
-DATABASE_URL=sqlite:///./mindcare.db
-JWT_SECRET=your_super_secret_jwt_random_key_min_32_characters
-GEMINI_API_KEY=AIzaSyYourGeminiApiKeyHere
-CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
-```
+Backend: `http://localhost:8000` | Swagger UI: `http://localhost:8000/docs`
 
-Launch server:
-```bash
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
+### 3. Frontend Setup
 
-#### 3. Frontend Initialization
 ```bash
 cd frontend
 npm install
-```
 
-Create `frontend/.env`:
-```env
-VITE_API_URL=http://localhost:8000
-```
+cp .env.example .env
+# Set: VITE_API_URL=http://localhost:8000
 
-Launch client:
-```bash
 npm run dev
 ```
-Navigate to **`http://localhost:5173`** in your browser.
+
+Frontend: `http://localhost:5173`
 
 ---
 
-## 🔌 API Specification Reference
+## 🚀 Production Deployment
 
-Interactive Swagger UI documentation is automatically generated at `/docs` when the backend is running.
+### Backend — Render (Docker)
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                             PRIMARY API ENDPOINTS                                │
-├──────────┬──────────────────────────┬───────────────────────────────┬────────────┤
-│ Method   │ Endpoint                 │ Description                   │ Auth Guard │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `POST`   │ `/auth/register`         │ Register new user account     │ Public     │
-│ `POST`   │ `/auth/login`            │ Authenticate credentials      │ Public     │
-│ `POST`   │ `/auth/forgot-password`  │ Dispatch OTP for credential   │ Public     │
-│ `POST`   │ `/auth/verify-otp`       │ Validate time-limited OTP     │ Public     │
-│ `POST`   │ `/auth/reset-password`   │ Update account password       │ Public     │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `POST`   │ `/behaviour/submit`      │ Submit lifestyle biometrics   │ Bearer JWT │
-│ `GET`    │ `/behaviour/history`     │ Retrieve historical records   │ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `POST`   │ `/chat/send`             │ Dispatch message to AI intake │ Bearer JWT │
-│ `GET`    │ `/chat/history`          │ Query dialogue transcripts    │ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `POST`   │ `/face/analyze`          │ Ingest video for FER inference│ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `POST`   │ `/voice/analyze`         │ Ingest WAV for vocal stress   │ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `GET`    │ `/final-severity`        │ Compute multimodal fused score│ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `GET`    │ `/dashboard/summary`     │ Query aggregated dashboard    │ Bearer JWT │
-│ `GET`    │ `/dashboard/tasks`       │ Fetch daily habit checklist   │ Bearer JWT │
-│ `POST`   │ `/dashboard/toggle-task` │ Update habit completion status│ Bearer JWT │
-│ `POST`   │ `/dashboard/doctor-chat` │ Query Dr. MindHealth companion│ Bearer JWT │
-├──────────┼──────────────────────────┼───────────────────────────────┼────────────┤
-│ `GET`    │ `/health`                │ Health check & model status   │ Public     │
-└──────────┴──────────────────────────┴───────────────────────────────┴────────────┘
+The `render.yaml` in the project root auto-configures the Render service:
+
+```yaml
+services:
+  - type: web
+    name: mindhealth-backend
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://mindhealth-three.vercel.app,http://localhost:5173
+      - key: DATABASE_URL
+        value: sqlite:///./mindcare.db
 ```
 
----
+> **Note:** The Render free tier has a ~30-second cold-start delay after 15 minutes of inactivity.
 
-## 🗃️ Relational Database Schema
+### Frontend — Vercel
 
-The database model is declared using SQLAlchemy ORM, providing a database-agnostic interface that supports SQLite locally and PostgreSQL in production:
-
-```
-┌────────────────────────────────┐       ┌────────────────────────────────┐
-│             users              │       │       behaviour_results        │
-├────────────────────────────────┤       ├────────────────────────────────┤
-│ id (PK)           INTEGER      │◀──┐   │ id (PK)           INTEGER      │
-│ full_name         VARCHAR(100) │   └───│ user_id (FK)      INTEGER      │
-│ email             VARCHAR(100) │       │ sleep_hours       FLOAT        │
-│ hashed_password   VARCHAR(200) │       │ sleep_quality     INTEGER      │
-│ age               INTEGER      │       │ stress_level      INTEGER      │
-│ gender            VARCHAR(20)  │       │ heart_rate        INTEGER      │
-│ occupation        VARCHAR(50)  │       │ severity_score    INTEGER      │
-│ created_at        DATETIME     │       │ behaviour_risk    VARCHAR(20)  │
-└────────────────────────────────┘       └────────────────────────────────┘
-                │
-                ├────────────────────────┬────────────────────────────────┐
-                ▼                        ▼                                ▼
-┌────────────────────────────────┐┌────────────────────────────────┐┌────────────────────────────────┐
-│         chat_analysis          ││          face_results          ││         voice_results          │
-├────────────────────────────────┤├────────────────────────────────┤├────────────────────────────────┤
-│ id (PK)           INTEGER      ││ id (PK)           INTEGER      ││ id (PK)           INTEGER      │
-│ user_id (FK)      INTEGER      ││ user_id (FK)      INTEGER      ││ user_id (FK)      INTEGER      │
-│ problem           TEXT         ││ facial_emotion    VARCHAR(50)  ││ voice_emotion     VARCHAR(50)  │
-│ severity          FLOAT        ││ confidence        FLOAT        ││ stress_level      VARCHAR(20)  │
-│ sentiment         VARCHAR(20)  ││ severity_score    INTEGER      ││ voice_mood        VARCHAR(50)  │
-│ risk_level        VARCHAR(20)  ││ emotion_dist_json TEXT         ││ severity_score    INTEGER      │
-│ triggers          TEXT         │└────────────────────────────────┘└────────────────────────────────┘
-└────────────────────────────────┘
-                │
-                ▼
-┌────────────────────────────────┐
-│     final_severity_results     │
-├────────────────────────────────┤
-│ id (PK)           INTEGER      │
-│ user_id (FK)      INTEGER      │
-│ behaviour_score   FLOAT        │
-│ chat_score        FLOAT        │
-│ face_score        FLOAT        │
-│ voice_score       FLOAT        │
-│ final_severity    INTEGER      │
-│ risk_level        VARCHAR(20)  │
-│ summary_note      TEXT         │
-│ created_at        DATETIME     │
-└────────────────────────────────┘
+```bash
+cd frontend
+npm run build      # Verify zero build errors first
+npx vercel --prod
 ```
 
----
-
-## 🖥️ System Interface Showcase
-
-| 1. Product Landing View | 2. Clinical Authentication |
-| :---: | :---: |
-| <img src="assets/1_landing.png" alt="MindHealth Landing Hero" width="460"/> | <img src="assets/2_login.png" alt="Secure Authentication" width="460"/> |
-
-| 3. Step 1: Behavioural Biometrics | 4. Behavioural Classification Results |
-| :---: | :---: |
-| <img src="assets/4_behaviour-input.png" alt="Behaviour Assessment Form" width="460"/> | <img src="assets/5_behaviour-result.png" alt="Behaviour Assessment Output" width="460"/> |
-
-| 5. Step 2: AI Clinical Counselling | 6. Step 2: NLP Diagnostic Summary |
-| :---: | :---: |
-| <img src="assets/6_chat-counselling.png" alt="Conversational Counselling Chat" width="460"/> | <img src="assets/7_chat-summary.png" alt="NLP Clinical Summary" width="460"/> |
-
-| 7. Step 3: Facial Affect Capture | 8. Step 3: Computer Vision Results |
-| :---: | :---: |
-| <img src="assets/8_face-emotion-record.png" alt="Facial Emotion Video Capture" width="460"/> | <img src="assets/9_face-emotion-result.png" alt="Facial Emotion Output" width="460"/> |
-
-| 9. Step 4: Voice Acoustic Analysis | 10. Step 4: Vocal Stress Results |
-| :---: | :---: |
-| <img src="assets/10_voice-record.png" alt="Voice Waveform Recording" width="460"/> | <img src="assets/11_voice-result.png" alt="Acoustic Stress Output" width="460"/> |
-
-| 11. Step 5: Fused Multimodal Report | 12. Personalized Clinical Dashboard |
-| :---: | :---: |
-| <img src="assets/12_final-report.png" alt="Final Multimodal Fusion Report" width="460"/> | <img src="assets/13_dashboard.png" alt="Wellness Dashboard and Habit Tracker" width="460"/> |
+Set in Vercel dashboard: `VITE_API_URL = https://your-backend.onrender.com`
 
 ---
 
-## 🛡️ Security, Privacy & Crisis Safeguards
+## 🖥️ Platform Screenshots
 
-MindHealth implements strict clinical data privacy practices:
+### Student Landing Page
+Purpose-built for college students — exam anxiety, hostel life, placement dread, sleep deficit, and burnout.
 
-1. **Ephemeral Sensor Processing**: Video recordings and audio streams collected during assessment steps are processed through memory buffers and can be automatically purged following inference extraction.
-2. **Cryptographic Protection**: Passwords are protected using `bcrypt` with automated salting. All authenticated API transactions require signed JWT tokens validated on every request.
-3. **Automated Crisis Intervention**: The platform continuously monitors assessment inputs for acute self-harm indicators. If detected, an unclosable emergency banner immediately provides validated crisis intervention hotlines:
-   - **Tele-MANAS** (National Tele Mental Health Programme): `14416`
-   - **KIRAN Mental Health Helpline**: `1800-599-0019`
-   - **Vandrevala Foundation**: `+91 9999 666 555`
-4. **Clinical Disclaimer**: MindHealth is an assistive screening and wellness platform. It does not issue official psychiatric diagnoses or prescribe pharmaceutical treatment. Users exhibiting severe distress are directed toward licensed medical practitioners.
+![Student Landing Page](assets/screenshots/01_landing.png)
 
 ---
 
-## 🎯 Practical Use Cases
+### 8-Dimension Assessment Results + AI Insights
+Multi-dimensional wellbeing profile with AI-generated weekly habits, warning signals, and protective buffers.
 
-- **University & Campus Wellness Centers**: High-volume, non-stigmatized preliminary triage allowing students to self-screen before booking psychiatric counseling appointments.
-- **Enterprise Workplace Wellness**: Continuous, voluntary employee stress monitoring to identify systemic burnout before it causes severe clinical exhaustion.
-- **Clinical Intake Pre-Screening**: Provides therapists with a pre-compiled, multimodal intake dossier before a patient's first clinical consultation, saving valuable consultation time.
-- **Remote Tele-Health Screening**: Expands access to structured psychiatric screening in rural or underserved regions lacking dedicated clinical specialists.
+![Assessment Results and AI Insights](assets/screenshots/02_assessment_results.png)
 
 ---
 
-## ⚖️ Advantages & Technical Limitations
+### Student Dashboard (Command Center)
+Daily home base with academic context greeting, wellbeing pulse, burnout early-warning, and one-click feature access.
+
+![Student Dashboard](assets/screenshots/03_dashboard.png)
+
+---
+
+### Focus & Burnout Hub
+Pomodoro timer, burnout detector (study vs. sleep correlation), and 5-minute action barrier tool.
+
+![Focus and Burnout Hub](assets/screenshots/04_focus_burnout.png)
+
+---
+
+### Career & Placement Anxiety Hub
+LinkedIn reframe cards, rejection recovery, and 2-minute pre-interview grounding.
+
+![Career and Placement Anxiety Hub](assets/screenshots/05_career_anxiety.png)
+
+---
+
+### Private Wellbeing Journal
+AI-prompted reflection across Academic, Career, Hostel, and Personal categories.
+
+![Wellbeing Journal](assets/screenshots/06_journal.png)
+
+---
+
+### Interactive Coping Toolkit
+Box Breathing (4-4-4-4), 4-7-8 sleep reset, and 5-4-3-2-1 grounding with animated visualizers.
+
+![Coping Toolkit](assets/screenshots/07_coping_tools.png)
+
+---
+
+### Emergency Safety Modal
+One-click verified Indian 24/7 helplines with clickable tel: links.
+
+![Crisis Safety Modal](assets/screenshots/08_emergency_modal.png)
+
+---
+
+## 🛡️ Security & Safety Design
+
+| Mechanism | Implementation |
+|-----------|----------------|
+| **Password Hashing** | bcrypt via Passlib (work factor 12) |
+| **Session Tokens** | JWT (HS256), 24-hour expiry |
+| **CORS Policy** | Allowlist only — no wildcard origins |
+| **Input Validation** | FastAPI Pydantic models on all request bodies |
+| **File Upload Safety** | Content-type validation, size limits, isolated upload dir |
+| **No advertising** | Zero user data sold or shared |
+| **Local ML inference** | Facial/vocal analysis runs on backend — no cloud vision APIs |
+| **Crisis layer always on** | CrisisSafetyModal is globally mounted; works even if backend is unreachable |
+
+---
+
+## ⚖️ Advantages & Limitations
 
 ### Advantages
-- **Cross-Modality Validation**: Significantly reduces false positives by verifying whether verbal complaints align with acoustic stress and facial affect.
-- **Continuous Tracking**: The longitudinal dashboard tracks severity score trends over time, measuring the effectiveness of lifestyle interventions.
-- **Accessible Client Interface**: Built entirely with browser-native WebRTC and Web Audio APIs—no specialized external hardware or mobile installations required.
 
-### Current Limitations
-- **Hardware Variation Sensitivity**: Low-resolution webcams under poor lighting conditions or noisy microphones can degrade facial recognition confidence and audio feature extraction.
-- **Language Scope**: Conversational NLP and acoustic feature models are currently optimized primarily for English-language speech patterns.
-- **Client Processing Constraints**: Older client devices may experience slight frame drops during real-time client-side face detection rendering.
+| Advantage | Detail |
+|-----------|--------|
+| Purpose-built for students | Every feature grounded in college-life context |
+| Multimodal signal triangulation | Behavioural + textual + facial + vocal signals |
+| Non-clinical accessible language | No PHQ-9/GAD-7 jargon |
+| Local ML inference | No cloud GPU costs for model inference |
+| Longitudinal tracking | Daily check-ins build personal wellbeing time-series |
+| Always-on crisis layer | Verified Indian helplines from every page |
+| Zero deployment cost | Render free + Vercel free |
+| Gemini fallbacks | Static curated insights when LLM is unavailable |
+
+### Limitations
+
+| Limitation | Detail |
+|------------|--------|
+| Not a clinical tool | Cannot replace professional diagnosis or therapy |
+| SQLite concurrency | Not suitable for >50 simultaneous users; needs PostgreSQL |
+| Render cold-start | Free tier sleeps after 15 min of inactivity (~30s first request) |
+| Camera/Mic required | Face/voice AI needs browser permissions |
+| Self-reported assessment | Social desirability bias may affect results |
+| English only | No Hindi or regional language support yet |
+| No licensed counsellor | AI chat is Gemini Flash, not a human therapist |
 
 ---
 
-## 🔮 Future Scope & Engineering Roadmap
+## 🔮 Future Scope
 
-- [ ] **Wearable IoT Biosensor Synchronization**: Direct API ingestion from Apple HealthKit and Google Health Connect to continuously pull real-time Heart Rate Variability (HRV) and electrodermal activity.
-- [ ] **Multilingual Acoustic Models**: Expansion of vocal stress detection pipelines to cover Spanish, Hindi, Mandarin, and regional dialects.
-- [ ] **Edge Inference via ONNX / WebGL**: Compiling ResNet-50 and 1D CNN models to ONNX runtime for full zero-latency edge inference directly inside the browser.
-- [ ] **Clinician Tele-Consultation Portal**: Role-based access control for licensed mental health professionals to review anonymized patient dossiers and conduct secure telehealth video sessions.
+### Near-Term (0–6 months)
+
+- PostgreSQL migration for production-grade concurrency
+- Push notification reminders for daily check-ins (PWA + Web Push)
+- Multi-language support — Hindi, Tamil, Telugu, Marathi
+- Improved voice model fine-tuned on Indian English accents
+
+### Medium-Term (6–18 months)
+
+- Anonymous peer community board
+- Institutional counsellor dashboard for university adoption
+- React Native mobile app (iOS + Android)
+- Peer buddy matching for shared stressors
+
+### Long-Term (18+ months)
+
+- Longitudinal ML model trained on anonymized student check-in data
+- Academic calendar integration (auto-detect exam weeks)
+- Wearable integration (Fitbit, Apple Watch) for objective sleep data
+- IRB-approved efficacy research partnership with universities
+
+---
+
+## 📄 Supplementary Documentation
+
+- [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) — Detailed technical architecture and component documentation
+- [SETUP_AND_DEPLOYMENT.md](SETUP_AND_DEPLOYMENT.md) — Step-by-step setup, ML model downloads, and deployment guide
 
 ---
 
 <div align="center">
 
-**MindHealth — Engineered for Objective, Compassionate Mental Health Screening.**
+**Made with ❤️ for college students everywhere**
 
-*Distributed under the MIT License.*
+*MindHealth is not a medical device. If you are experiencing a mental health crisis, please contact a professional immediately or call your local emergency services.*
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-mindhealth--three.vercel.app-4F46E5?style=for-the-badge&logo=vercel&logoColor=white)](https://mindhealth-three.vercel.app/)
 
 </div>

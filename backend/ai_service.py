@@ -614,3 +614,147 @@ User Question: {user_message}"""
         "suggested_actions": suggested_actions[:3],
         "risk_advice": risk_advice
     }
+
+
+# ============================================================================
+# College Student Wellbeing AI Engine (Ages 18-25)
+# ============================================================================
+
+STUDENT_WELLBEING_PROMPT = """You are MindHealth AI, an empathetic, non-judgmental student wellbeing advisor specializing in university/college student mental health (ages 18-25).
+Your role is to interpret multi-dimensional assessment metrics into practical, student-friendly guidance.
+
+CRITICAL GUIDELINES:
+1. NEVER make a medical diagnosis or use clinical labels (do NOT say 'You have Major Depressive Disorder' or 'Clinical GAD').
+2. Frame insights around real college life: semester pressures, exams, hostel/PG living, loneliness, placement/internship anxiety, peer comparison, and screen overload.
+3. Keep the tone warm, validating, concise, and empowering.
+4. Output MUST be valid JSON with the exact structure:
+{
+  "overview": "2-3 supportive sentences explaining what the scores reflect without sounding clinical.",
+  "this_week": ["Actionable student habit 1", "Actionable student habit 2", "Actionable student habit 3"],
+  "watch_for": ["Warning sign to monitor 1", "Warning sign to monitor 2"],
+  "positive_areas": ["Identified strength or buffer 1", "Identified strength or buffer 2"],
+  "suggested_tools": ["Tool name 1", "Tool name 2"]
+}
+"""
+
+async def generate_student_assessment_insights(scores: dict, profile: dict = None) -> dict:
+    """Generate personalized, student-specific insights from 8-dimension assessment scores."""
+    profile = profile or {}
+    student_year = profile.get("student_year", "College Student")
+    field = profile.get("field_of_study", "General Academics")
+    living = profile.get("living_situation", "Campus / Shared Living")
+    stage = profile.get("academic_stage", "Regular Term")
+    
+    academic = scores.get("academic_stress", 50)
+    anxiety = scores.get("anxiety_score", 50)
+    burnout = scores.get("burnout_score", 50)
+    sleep = scores.get("sleep_score", 50)
+    social = scores.get("social_score", 50)
+    career = scores.get("career_stress", 50)
+    emotional = scores.get("emotional_score", 50)
+    lifestyle = scores.get("lifestyle_score", 50)
+    overall = scores.get("overall_score", 50)
+    severity = scores.get("severity_category", "Moderate Concern")
+
+    prompt = f"""Student Profile:
+- Background: {student_year}, {field}
+- Living Arrangement: {living}
+- Current Academic Phase: {stage}
+
+Assessment Scores (0-100 scale):
+- Academic Stress: {academic}/100
+- Anxiety & Overthinking: {anxiety}/100
+- Burnout Risk: {burnout}/100
+- Sleep & Recovery: {sleep}/100 (higher = better recovery)
+- Social & Relationship Wellbeing: {social}/100 (higher = more connected)
+- Career & Future Anxiety: {career}/100
+- Emotional Wellbeing: {emotional}/100 (higher = more stable)
+- Lifestyle & Digital Balance: {lifestyle}/100 (higher = more balanced)
+- Overall Wellbeing Index: {overall}/100
+- Severity Band: {severity}
+
+Provide the personalized student insights in strictly valid JSON format."""
+
+    # Deterministic fallback tailored to student patterns
+    fallback = {
+        "overview": (
+            f"Your responses reflect that academic workload and future career planning are taking up significant mental bandwidth right now, "
+            f"especially in your current {stage.lower()} phase. While your core resilience is intact, intentional recovery breaks will keep you from hitting burnout."
+            if academic > 60 or career > 60 else
+            "Your wellbeing profile indicates a balanced rhythm across academics and personal life, with steady energy for college commitments."
+        ),
+        "this_week": [
+            "Implement a 25-minute study sprint followed by a mandatory 5-minute screen-free break." if academic > 55 else "Maintain your current steady study cadence without late-night cramming.",
+            "Set a hard 11:30 PM curfew for academic assignments to allow at least 7 hours of restorative sleep." if sleep < 60 else "Keep your consistent sleep-wake schedule going through the weekend.",
+            "Take a 15-minute daily walk outside your hostel/dorm room to disconnect from campus noise." if burnout > 55 else "Dedicate 20 minutes to a creative or offline hobby you enjoy.",
+            "Limit LinkedIn and placement group scrolling to 10 minutes a day to reduce peer comparison." if career > 60 else "Check in with a classmate or friend for an informal coffee or meal."
+        ],
+        "watch_for": [
+            "Staying in bed scrolling on your phone when feeling overwhelmed by coursework.",
+            "Skipping meals or relying solely on caffeine to power through late study blocks.",
+            "Withdrawing from friends when exam or internship deadlines approach."
+        ],
+        "positive_areas": [
+            "You are proactively checking in on your wellbeing—a powerful indicator of self-awareness."
+        ],
+        "suggested_tools": [
+            "Study & Focus Pomodoro Timer",
+            "4-7-8 Deep Sleep Reset",
+            "Placement Anxiety Reframe Tool",
+            "Reflective Student Journal"
+        ]
+    }
+
+    if social > 60:
+        fallback["positive_areas"].append("Strong social connections provide a valuable buffer against campus stress.")
+    if lifestyle > 60:
+        fallback["positive_areas"].append("Good daily habits and movement provide a solid physiological foundation.")
+
+    try:
+        messages = [{"role": "user", "content": prompt}]
+        raw_reply = await call_gemini(messages, STUDENT_WELLBEING_PROMPT)
+        if not raw_reply or "Configuration Error" in raw_reply:
+            raw_reply = await call_openrouter(messages, STUDENT_WELLBEING_PROMPT)
+        
+        # Clean JSON markdown fences
+        clean = re.sub(r"^```json\s*", "", raw_reply.strip(), flags=re.MULTILINE)
+        clean = re.sub(r"^```\s*$", "", clean.strip(), flags=re.MULTILINE).strip()
+        parsed = json.loads(clean)
+        
+        if isinstance(parsed, dict) and "overview" in parsed and "this_week" in parsed:
+            return parsed
+    except Exception as e:
+        logger.warning(f"Student AI insights generation fell back to deterministic rules: {e}")
+        
+    return fallback
+
+
+async def generate_journal_prompt(category: str = "General", mood: str = "Neutral") -> dict:
+    """Generate college-specific reflective prompts."""
+    prompts_by_category = {
+        "Academic": [
+            "What is one deadline or assignment weighing on your mind, and what is the absolute smallest first step you can take today?",
+            "Are you measuring your self-worth by your grades or GPA right now? How would you comfort a friend in this exact position?",
+            "What went right in your studies this week, even if it felt small or incomplete?"
+        ],
+        "Career": [
+            "When you feel anxious about placements or career paths, what is the core fear speaking? What evidence proves you are capable of learning?",
+            "Name three skills or personal traits you bring to a team that cannot be measured by a single test score or resume bullet.",
+            "What does meaningful work look like to you when you ignore other people's expectations?"
+        ],
+        "Hostel": [
+            "How is your living environment (roommates, noise, hostel food) affecting your mood today? What is one boundary or comfort you can create?",
+            "If you are feeling homesick or isolated, what is one familiar comfort or call you can make today?",
+            "What is one positive interaction you had on campus this week?"
+        ],
+        "Personal": [
+            "What expectation are you holding yourself to that you wouldn't demand of anyone else?",
+            "What gave you energy today, and what drained your mental battery?",
+            "Write down 3 things your body did for you today while you were busy worrying."
+        ]
+    }
+    
+    import random
+    selected_list = prompts_by_category.get(category, prompts_by_category["Personal"])
+    prompt = random.choice(selected_list)
+    return {"category": category, "prompt": prompt}
